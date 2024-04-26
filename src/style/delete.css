@@ -1,0 +1,18 @@
+.date-container {
+    margin: 0 auto;
+    display:flex;
+    margin-top:100px;
+    margin-left:200px;
+}
+.date-container label {
+    margin-left:20px;
+}
+.btn-container.fst {
+    display:inline-block;
+    margin-left:320px;
+}
+.btn-container.snd {
+    display:inline-block;
+    margin-top:200px;
+    margin-left:100px;
+}

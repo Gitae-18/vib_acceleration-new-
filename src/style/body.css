@@ -1,0 +1,254 @@
+    .body{
+        padding: 20px;
+        position:absolute;
+        display:flex;
+        flex-direction: column;
+    }
+    .sec_title, .date_title {
+        display: flex; 
+        align-items: center; 
+        margin-bottom: 20px;
+        margin-left:100px;
+    }
+    .sec_title label{
+        display: inline-block;
+        font-weight: bold;
+    }
+    .sec_title h3{
+        display: inline-block;
+    }
+    textarea {
+        border: 1px solid #bbb;
+        border-radius: 2%; 
+        width: 80%; 
+        height: 100px; 
+        padding: 10px; 
+        /* flex-grow: 3; */ 
+        margin-bottom: 20px;    
+    }
+    .form-group {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+    .form-group.labels,
+    .form-group.contents {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group.contents {
+        width: 100%;
+        margin-left:120px;
+    }
+    .form-group.blank{
+        width:1000px;
+    }
+    .group_devinfo,.group_trigger{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: row;
+    }
+    
+    .form-group.labels label {
+        flex-shrink: 0;
+        margin-right: 30px; 
+        margin-left: 150px;  
+        white-space: nowrap;
+        margin-bottom: 20px;
+    }
+    .form-group.date,
+    .form-group.time{
+        display: flex;
+
+    }
+    .group_dateinfo {
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: row;
+    }
+    .form-group.date label,
+    .form-group.time label {
+        margin-left: 150px;
+    }
+    .form-group.contents input[type='text'] {
+        width: 300px; 
+        height: 20px;
+        border: 1px solid #ccc; 
+        border-radius: 4px; 
+        padding: 5px 10px; 
+        font-size: 16px; 
+        margin-bottom:5px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3); 
+        background-color: #ebebeb;
+      }
+      
+    .form-group.contents input[type='text']:focus {
+        border-color: #aaa; /* 포커스 상태일 때 테두리 색상 변경 */
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); /* 포커스 상태일 때 그림자 변경 */
+      }
+    .form-group.contents.ip{
+        position:relative;
+        left:27%;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      
+      table, th, td {
+        border: 1px solid #ccc;
+      }
+      
+      th, td {
+        padding: 10px;
+        text-align: left;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+      }
+      td{
+        justify-content: center;
+        align-items: center;
+      }
+      table td button {
+        display:inline;
+        padding: 10px;
+        margin: 5px;
+        border: none;
+        border-radius: 3px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        width: 180px;
+      }
+      button:hover {
+        opacity: 0.5;
+      }
+      .second,
+      .button-cell{
+        text-align: center;
+      }
+      input[type="date"],
+      input[type="time"],
+      input[type="number"] {
+        margin-left: 10px; /* 라벨과 인풋 사이 간격 */
+        padding: 5px;
+        border: 1px solid #ccc; /* 인풋 테두리 */
+        border-radius: 4px; /* 인풋 모서리 둥글기 */
+      }
+      .checkbox-container.children {
+        margin-left: 20px; /* 하위 체크박스를 들여쓰기 하기 위한 왼쪽 마진 */
+      }
+      .storage-display {
+        font-family: Arial, sans-serif;
+        color: #333;
+        background-color: #e0e0e0; /* 전체 배경 */
+        padding: 10px;
+        border-radius: 5px;
+        margin-left:120px;
+        width:400px;
+      }
+      
+      .storage-amount {
+        text-align: center;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+      .storage-amount span{
+        font-size:1.7rem;
+      }
+      .storage-bars {
+        display: flex;
+      }
+      
+      .storage-bar {
+        padding: 5px;
+        color: black; /* 텍스트 색상을 하얀색으로 */
+        font-size: 0.8em;
+      }
+      
+      .storage-used {
+        background-color: #d2d2d2;
+        width: 29%; /* 사용률에 따라 변경 */
+      }
+      
+      .storage-free {
+        background-color: #000; /* 밝은 회색 */
+        width: 71%; /* 사용률에 따라 변경 */
+        text-align: right;
+      }
+      
+      .storage-total {
+        text-align: center;
+        font-weight: bold;
+      }
+      
+      .storage-bar span {
+        display: block; /* span을 블록 요소로 만듭니다 */
+      }
+      .storage-item {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 5px; /* 아이템 간격 조절 */
+      }
+      
+      .storage-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding:10px 0;
+      }
+      
+      .storage-size {
+        margin-left: 16px; /* 크기 텍스트와 바이트 텍스트 사이 간격 조절 */
+        white-space: nowrap; /* 숫자가 다음 줄로 넘어가지 않게 함 */
+      }
+      .avail_storage{
+        width:15px;
+        height:15px;
+        border:1px solid #ccc;
+        background-color: #eeeded;
+        margin-top:5px;
+      }
+      .used_storage{
+        width:15px;
+        height:15px;
+        border:1px solid #ccc;
+        background-color: #191919;
+        margin-top:5px;
+      }
+        td {
+        width:100%;
+        border-right:none;
+        border-left:none;
+        border-top:none;
+        border-bottom:none;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+      }
+      .storage-label.fst{
+        width:100px;
+      }
+      .storage-label.thd{
+        width:80px;
+        padding-left:40px;
+      }
+      .storage-label.snd{
+        width:140px;
+        margin-left:15px;
+      }
+      .form-group.contents.table{
+        position:relative;
+        bottom:40px;
+      }
+      .form-group.contents.button{
+        justify-content: center;
+        margin-top:50px;
+        margin-left:80px !important;
+      }

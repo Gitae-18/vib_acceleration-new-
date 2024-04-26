@@ -1,0 +1,32 @@
+    a{
+        text-decoration: none;
+        color:white;
+    }
+    .menulist {
+    list-style: none;
+    display: flex;
+    margin:0 auto;
+    justify-content: space-between;
+    align-items: center;
+    color:white;
+    background-color: black;
+    max-width: 100%;
+  }
+  .menulist__left{
+    list-style: none;
+    display: flex;
+  }
+  .menulist li {
+    padding-left: 5%; /* 왼쪽 여백 설정 */
+    padding-right: 20px;
+    cursor: pointer; /* 오른쪽 여백 설정 */
+    font-weight: 500;
+}
+   .menulist__right{
+        list-style: none;
+        display: flex;
+    }
+   .menulist__right li {
+        margin-right:20px;
+    }
+    
