@@ -26,9 +26,9 @@ const Login = () => {
                   <input type="checkbox" name="chksave" id="saveid"/>
                   <label>SAVE ID</label>
                 </div>
-                <div className="reg_login">
+                {/* <div className="reg_login">
                     <button>Register</button>
-                </div>
+                </div> */}
                 </form>
             </div>
         </>
