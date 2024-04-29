@@ -93,7 +93,7 @@ const Storage = () => {
                         <label style={{marginLeft:'20px'}}> ~ </label>
                         <input type="date" id="start_time" name="start_time" />
                         </div>                        
-                        <CustomButton>Data Export</CustomButton>                       
+                        <CustomButton style={{position:'relative',bottom:'40px'}}>Data Export</CustomButton>                       
                     </div>
                 </div>
             </div>  
@@ -111,7 +111,7 @@ const Storage = () => {
 export default Storage;
 const CustomLine = styled.div`
 border-top: 2px solid #ccc; 
-width: calc(100%); 
+width: calc(90%); 
 margin-top: 20px; 
 margin-bottom: 20px; 
 margin-left: 100px;
@@ -122,8 +122,7 @@ width: 180px;
 height:30px;
 border-radius: 8px;
 flex-grow:1;
-margin-bottom:20px;
-margin-left:70%;
+margin-left:40%;
 background-color: #c8c8c8;
 box-shadow: inset 0 0 8px rgba(0,0,0,0.5); 
 `
@@ -134,7 +133,7 @@ height:30px;
 border-radius: 8px;
 flex-grow:1;
 margin-top:20px;
-margin-left:50%;
+margin-left:40%;
 background-color: #c8c8c8;
 box-shadow: inset 0 0 8px rgba(0,0,0,0.5); 
 `

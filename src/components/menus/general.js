@@ -98,7 +98,7 @@ margin-right: 20px;
 `
 const CustomLine = styled.div`
 border-top: 2px solid #ccc; /* 상단 테두리 설정 */
-width: calc(100%); /* padding 값을 고려한 너비 설정 */
+width: calc(95%); /* padding 값을 고려한 너비 설정 */
 margin-top: 20px; /* 선 위 간격 */
 margin-bottom: 20px; 
 margin-left: 100px;

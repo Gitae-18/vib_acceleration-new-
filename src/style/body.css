@@ -92,8 +92,8 @@
         position:relative;
         left:27%;
     }
-    table {
-        width: 100%;
+      table {
+        width: 95%;
         border-collapse: collapse;
         margin-top: 20px;
       }
@@ -222,7 +222,7 @@
         background-color: #191919;
         margin-top:5px;
       }
-        td {
+        .storage-table td {
         width:100%;
         border-right:none;
         border-left:none;
