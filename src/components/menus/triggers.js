@@ -91,11 +91,11 @@ const Triggers = () => {
                 <div className="group_trigger">
                     <div className="form-group contents">
                         <div>                        
-                        <input type="date" id="start_date" name="start_date" />
-                        <input type="time" id="start_time" name="start_time" />
+                        <input type="date" id="start_date" name="start_date" disabled={!timetrigger}/>
+                        <input type="time" id="start_time" name="start_time" disabled={!timetrigger}/>
                         </div>
                         <div>
-                        <input type="number" id="recording_time" name="recording_time" /> Sec
+                        <input type="number" id="recording_time" name="recording_time"  disabled={!timetrigger}/> Sec
                         </div>
                     </div>              
                 </div>
@@ -119,10 +119,10 @@ const Triggers = () => {
                 <div className="group_trigger">
                     <div className="form-group contents">
                         <div>
-                            <input type="number" id="temp_low" name="temp_low" />℃
+                            <input type="number" id="temp_low" name="temp_low" disabled={!temptrigger}/>℃
                         </div>
                         <div>
-                            <input type="number" id="temp_high" name="temp_high" />℃
+                            <input type="number" id="temp_high" name="temp_high" disabled={!temptrigger}/>℃
                         </div>
                     </div>              
                 </div>
@@ -150,16 +150,23 @@ const Triggers = () => {
                 <div className="group_trigger">
                     <div className="form-group contents">
                         <div>
-                            <input type="number" id="x_axis_value" name="x_axis_value" step="0.01" />g
+                            <input type="number" id="x_axis_value" name="x_axis_value" step="0.01" disabled={!axistrigger}/>g
                         </div>
                         <div>
-                            <input type="number" id="y_axis_value" name="y_axis_value" step="0.01" />g
+                            <input type="number" id="y_axis_value" name="y_axis_value" step="0.01" disabled={!axistrigger}/>g
                         </div>
                         <div>
-                            <input type="number" id="z_axis_value" name="z_axis_value" step="0.01" />g
+                            <input type="number" id="z_axis_value" name="z_axis_value" step="0.01" disabled={!axistrigger}/>g
                         </div>
                     </div>              
                 </div>
+            </div>
+            <CustomLine/>
+            <div className="group_devinfo">
+                    <div className="form-group buttons">
+                        <CustomButton>Save</CustomButton>
+                        <CustomButton>Cancel</CustomButton>
+                    </div>
             </div>
         </div>          
         </>
@@ -190,4 +197,15 @@ background-color:${props => props.isEnabled ? 'grey' : 'white'};
 transition: all 150ms;
 color: ${props => props.isEnabled ? '#757575' : '000'};
 borderColor: ${props => props.isEnabled ? '#a0a0a0' : '#ccc'};
+`
+const CustomButton = styled.button`
+border: 1px solid #000;
+width: 180px;
+height:30px;
+border-radius: 8px;
+flex-grow:1;
+margin-bottom:20px;
+margin-left:70%;
+background-color: #c8c8c8;
+box-shadow: inset 0 0 8px rgba(0,0,0,0.5); 
 `

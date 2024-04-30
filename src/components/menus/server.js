@@ -13,7 +13,7 @@ const Server = () => {
             <label>|</label>
             <h3>40g DC ACCELERATION</h3>            
         </div>
-            <div className="group_devinfo">
+            <div className="group_devinfo" style={{marginBottom:'500px'}}>
                 <div className="form-group labels">
                     <label>* Server IP address</label>
                     <label>* Push Port</label>
@@ -36,7 +36,13 @@ const Server = () => {
                     </CustomSelect>
                 </div>
             </div>
-            <CustomLine/> 
+            <CustomLine/>
+            <div className="group_devinfo">
+                <div className="form-group buttons">
+                    <CustomButton>Save</CustomButton>
+                    <CustomButton>Cancel</CustomButton>
+                </div>
+            </div> 
             </div>          
         </>
      )
@@ -69,4 +75,15 @@ width: calc(95%); /* padding 값을 고려한 너비 설정 */
 margin-top: 20px; /* 선 위 간격 */
 margin-bottom: 20px; 
 margin-left: 100px;
+`
+const CustomButton = styled.button`
+border: 1px solid #000;
+width: 180px;
+height:30px;
+border-radius: 8px;
+flex-grow:1;
+margin-bottom:20px;
+margin-left:70%;
+background-color: #c8c8c8;
+box-shadow: inset 0 0 8px rgba(0,0,0,0.5); 
 `

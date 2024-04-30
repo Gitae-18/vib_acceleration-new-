@@ -87,6 +87,13 @@ const Network = () => {
                             </tr>
                         </tbody>
                     </table>
+                    </div>
+                    <CustomLine/>
+                    <div className="group_devinfo">
+                        <div className="form-group buttons">
+                            <CustomButton>Save</CustomButton>
+                            <CustomButton>Cancel</CustomButton>
+                        </div>
                     </div>  
                 </div>
                 </>

@@ -252,3 +252,14 @@
         margin-top:50px;
         margin-left:80px !important;
       }
+      .form-group.buttons {
+        display: flex;
+        position:relative;
+        left:55px;      
+        margin: 0 auto;      
+     }
+     .form-group.buttons button {
+        margin-left:10px;
+        width:200px !important;
+        margin-top:20px;
+     }

@@ -83,11 +83,36 @@ const General = () => {
                         <option>46</option>
                     </TimeSelect>
             </div>
-        </div>        
+            <div className="group_devinfo">
+                <div className="form-group contents">
+                    <CustomButton>Get Local Date/Time</CustomButton>
+                </div>
+            </div>
+        </div>
+        <CustomLine/>    
+            <div className="group_devinfo">
+                <div className="form-group buttons">
+                    <CustomButton>Save</CustomButton>
+                    <CustomButton>Cancel</CustomButton>
+                </div>
+            </div>    
     </div>
     </>
  )
 }
+export default General;
+
+const CustomButton = styled.button`
+border: 1px solid #000;
+width: 300px;
+height:30px;
+border-radius: 8px;
+flex-grow:1;
+margin: 0 auto;
+margin-top:25px;
+background-color: #c8c8c8;
+box-shadow: inset 0 0 8px rgba(0,0,0,0.5); 
+`
 const CustomSelect = styled.select`
 border: 1px solid #bbb;
 width: 300px;
@@ -110,4 +135,3 @@ border-radius: 2%;
 margin-bottom:20px;
 margin-right: 20px;
 `
-export default General;

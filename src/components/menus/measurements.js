@@ -19,7 +19,7 @@ const Measurements = () => {
                 <label>* Sample Rate</label>
                 <label>* Measurement Options</label>
                 </div>
-                <div className="form-group blank"/>
+                <div className="form-group blank"/>                
                 <div className="form-group contents">            
                 <CustomSelect>
                     <option value="use">USE</option>
@@ -43,7 +43,7 @@ const Measurements = () => {
                 <label>|</label>
                 <h3>TEMPERATURE</h3>            
             </div>
-            <div className="group_devinfo">
+            <div className="group_devinfo" style={{marginBottom:'300px'}}>
                 <div className="form-group labels">
                     <label>* Temperature Sensor USE or NOT</label>
                     <label>* Sample Rate</label>
@@ -60,7 +60,14 @@ const Measurements = () => {
                         <option value="30">30 hz</option>
                     </CustomSelect>
                 </div>                       
-            </div>        
+            </div>
+            <CustomLine/>
+            <div className="group_devinfo">
+                <div className="form-group buttons">
+                    <CustomButton>Save</CustomButton>
+                    <CustomButton>Cancel</CustomButton>
+                </div>
+            </div>     
         </div>
         </>
      )
@@ -74,7 +81,7 @@ width: 300px;
 border-radius: 2%;
 flex-grow:1;
 margin-bottom:20px;
-margin-right: 20px;
+margin-left:50%;
 `
 const CustomLine = styled.div`
 border-top: 2px solid #ccc; /* 상단 테두리 설정 */
@@ -82,4 +89,15 @@ width: calc(90%); /* padding 값을 고려한 너비 설정 */
 margin-top: 20px; /* 선 위 간격 */
 margin-bottom: 20px; 
 margin-left: 100px;
+`
+const CustomButton = styled.button`
+border: 1px solid #000;
+width: 300px;
+height:30px;
+border-radius: 8px;
+flex-grow:1;
+margin: 0 auto;
+margin-top:25px;
+background-color: #c8c8c8;
+box-shadow: inset 0 0 8px rgba(0,0,0,0.5); 
 `

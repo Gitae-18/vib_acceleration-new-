@@ -54,15 +54,6 @@ const ModalInner2 = styled.div`
   justify-content: center;
 `;
 
-const Title = styled.h1`
-  font-weight: 500;
-  font-size: 15px;
-  background-color: none;
-  position: relative;
-  left:100px; 
-  top:0;
-  width:auto;
-`;
 const ImgStyle = styled.div`
   background-color: #ffffff;
   width: 1000px;
