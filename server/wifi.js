@@ -195,8 +195,8 @@ class WiFi {
                 // 해당 설정에 필요한 실제 명령을 구현해야 합니다.
                 try {
                     // hostapd와 dnsmasq 패키지 설치
-                    console.log("Installing hostapd and dnsmasq...");
-                    execSync('sudo apt-get install -y hostapd dnsmasq', { stdio: 'inherit' });
+                   // console.log("Installing hostapd and dnsmasq...");
+                    //execSync('sudo apt-get install -y hostapd dnsmasq', { stdio: 'inherit' });
                 
                     // 설정 파일을 백업하고 초기화
                     console.log("Backing up and resetting configuration files...");
