@@ -241,8 +241,17 @@ class WiFi {
                     `);
 
                     // dnsmasq.conf 설정 파일 작성
-                   
-                    const configContent = `
+                    try {
+                        const configContent = `
+                        interface=wlan0
+                        dhcp-range=192.168.1.2,192.168.1.20,255.255.255.0,24h
+                        `;
+                        execSync(`echo "${configContent}" | sudo tee /etc/dnsmasq.conf`);
+                        console.log('Configuration updated successfully');
+                    } catch (error) {
+                        console.error('Failed to write to /etc/dnsmasq.conf', error);
+                    }
+                   /*  const configContent = `
                     interface=wlan0
                     dhcp-range=192.168.1.2,192.168.1.20,255.255.255.0,24h
                     `;
@@ -253,7 +262,7 @@ class WiFi {
                         } else {
                             console.log('Configuration updated successfully');
                         }
-                    });
+                    }); */
 
                     // IP forwarding 활성화
                     try {
