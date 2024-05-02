@@ -2,7 +2,7 @@ const fs = require('fs');
 const ini  = require('ini');
 const path = require('path');
 
-const CONFIG_FILE = require('./etc/vibnet.conf');
+const CONFIG_FILE = './etc/vibnet.conf';
 const ENCODING = "utf-8";
 const SECTION_COMMON = "Common";
 const KEYS = {
@@ -21,7 +21,6 @@ const DEFAULTS = {
     sub_addr: 'tcp://192.168.0.100:5555',
     push_addr: 'tcp://192.168.0.100:5557',
     req_addr: 'tcp://192.168.0.100:5559'
-
 }
 class VibnetConfig{
     constructor() {

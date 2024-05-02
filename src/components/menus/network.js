@@ -11,8 +11,8 @@ const Network = ({devId}) => {
         Mode:'',
         SSID:'',
     });
+    const [handleAP, setHandleAP] = useState(false);
     const isMounted = useRef(true);
-
     const getDefaultNetworkInfo = useCallback(async() => {
         try {
             const res = await fetch(`http://192.168.10.14:3000/net_information?devId=${devId}`, {
@@ -48,6 +48,39 @@ const Network = ({devId}) => {
             isMounted.current = false;
         };
     },[getDefaultNetworkInfo])
+    useEffect(() => {
+        let isMounted = true;
+        const handleApMode = async() => {
+            try {
+                const res = await fetch(`http://192.168.10.14:3000/handle_ap?devId=${devId}`, {
+                    method: 'post',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        param: handleAP,
+                    })            
+                });
+    
+                if (!res.ok) {
+                    console.log('오류가 발생했습니다.');
+                    return;
+                }
+                if (isMounted) {
+                    setMessage("AP Mode has been successfully updated.");
+                }           
+            } catch (error) {
+                console.error('Failed to handle apmode :', error);
+            }
+        }
+
+        handleApMode();
+
+        return () => {
+            isMounted = false;
+        }
+    },[handleAP])
+    
 
     return(
         <>
@@ -88,7 +121,7 @@ const Network = ({devId}) => {
                         </div> 
                         <div className="form-group blank"/>    
                         <div className="form-group contents">       
-                            <CustomButton>SETUP Mode Stop</CustomButton>                             
+                            <CustomButton onClick={()=> {setHandleAP(!handleAP)}}>SETUP Mode Stop</CustomButton>                             
                         </div>                       
                     </div>
                     <CustomLine/>        

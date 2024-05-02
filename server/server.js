@@ -5,11 +5,13 @@ const { spawn, exec } = require('child_process');
 const wifi = require('./wifi');
 const child = spawn('pwd');
 const app = express();
+const cors = require('cors');
 const vibConfig = require('./vib-config');
 
 app.set('view engine', 'ejs');
-
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 const port = 5001;
 
 
@@ -28,7 +30,7 @@ app.get("/", async(req,res) => {
     res.render('index', { devInfo, wifi});
 })
 
-app.post('/', async (req, res) => {
+/* app.post('/', async (req, res) => {
     const param = req.body.param;
 
     switch (param) {
@@ -56,6 +58,22 @@ app.post('/', async (req, res) => {
     }
 
     res.redirect('/');
+});
+ */
+app.post('/handle_ap', async (req,res) => {
+    const param = req.body.param;
+    const dev_id = req.query.id;
+    if(dev_id) {
+        if(param) {
+            wifi.startApMode();
+        }
+        else {
+            wifi.stopApMode();
+        }
+        res.status(200).send({ message: "AP mode updated successfully." });
+    } else {
+        res.status(400).send({ error: "Invalid device ID" });
+    }    
 });
 app.get("/dev_information", async (req, res) => {
     const dev_id = req.query.id;

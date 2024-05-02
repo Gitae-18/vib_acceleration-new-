@@ -58,6 +58,7 @@ border-radius: 2%;
 flex-grow:1;
 margin-bottom:20px;
 margin-right: 20px;
+margin-left:50%;
 `
 const CustomInput = styled.input`
 width:280px !important; 
@@ -69,6 +70,7 @@ font-size: 16px;
 margin-bottom:20px !important;
 box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3); 
 background-color: #ebebeb;
+margin-left:50%;
 `
 const CustomLine = styled.div`
 border-top: 2px solid #ccc; /* 상단 테두리 설정 */

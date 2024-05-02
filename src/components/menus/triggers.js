@@ -183,6 +183,7 @@ border-radius: 2%;
 flex-grow:1;
 margin-bottom:20px;
 margin-right: 20px;
+margin-left:70%;
 `
 const CustomLine = styled.div`
 border-top: 2px solid #ccc; /* 상단 테두리 설정 */
