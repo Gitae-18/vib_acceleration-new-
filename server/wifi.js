@@ -105,12 +105,27 @@ class WiFi {
             });
         });
     }
-    checkApMode() {
+    /* checkApMode() {
         try{
             const result = execSync(`iw dev ${this.inter}`).toString();
             return result.includes('type AP');    
         } catch (error) {
             console.error(`checkApMode error: ${error}`);
+            return false;
+        }
+    } */
+    checkApMode() {
+        try {
+            const result = execSync('iw dev').toString();
+            const lines = result.split('\n');
+            for (const line of lines) {
+                if (line.includes('type AP')) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (error) {
+            console.error('오류가 발생했습니다:', error);
             return false;
         }
     }
