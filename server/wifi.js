@@ -175,7 +175,7 @@ class WiFi {
     }
 
 }
-if (require.main === module) {
+/* if (require.main === module) {
     const wifi = new WiFi('wlan0');
 
     wifi.checkApMode().then(isApMode => {
@@ -193,5 +193,5 @@ if (require.main === module) {
             });
         }
     });
-}
+} */
 module.exports = WiFi;

@@ -2,7 +2,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { spawn, exec } = require('child_process');
-const wifi = require('./wifi');
+const WiFi = require('./wifi');
+const wifi = new WiFi('wlan0');
 const child = spawn('pwd');
 const app = express();
 const cors = require('cors');
@@ -60,22 +61,27 @@ app.get("/", async(req,res) => {
     res.redirect('/');
 });
  */
-app.post('/handle_ap', async (req,res) => {
+app.post('/handle_ap', async (req, res) => {
     const param = req.body.param;
-    /* const dev_id = req.query.id; */
-    const dev_id = 'D000001'
-    if(dev_id) {
-        if(param) {
-            wifi.startApMode();
+    const dev_id = 'D000001'; // 임시 하드코딩된 device ID
+
+    if (dev_id) {
+        try {
+            if (param) {
+                await wifi.startApMode();
+            } else {
+                await wifi.stopApMode();
+            }
+            res.status(200).send({ message: "AP mode updated successfully." });
+        } catch (error) {
+            console.error("Error handling AP mode:", error);
+            res.status(500).send({ error: "Failed to update AP mode." });
         }
-        else {
-            wifi.stopApMode();
-        }
-        res.status(200).send({ message: "AP mode updated successfully." });
     } else {
         res.status(400).send({ error: "Invalid device ID" });
-    }    
+    }
 });
+
 app.get("/dev_information", async (req, res) => {
     const dev_id = req.query.id;
 
