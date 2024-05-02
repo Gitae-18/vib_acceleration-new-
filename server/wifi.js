@@ -290,16 +290,21 @@ class WiFi {
         });
     }
 
-    stopApMode() {
-        return new Promise((resolve, reject) => {
-            // NetworkManager 재시작
-            exec('sudo systemctl restart NetworkManager', (error, stdout, stderr) => {
-                if (error) {
-                    console.error("Failed to restart NetworkManager:", stderr);
-                    reject(new Error(`NetworkManager restart failed: ${stderr}`));
-                    return;
-                }
-                
+    async stopApMode() {
+        try {
+            await new Promise((resolve, reject) => {
+                // NetworkManager 재시작
+                exec('sudo systemctl restart NetworkManager', (error, stdout, stderr) => {
+                    if (error) {
+                        console.error("Failed to restart NetworkManager:", stderr);
+                        reject(new Error(`NetworkManager restart failed: ${stderr}`));
+                        return;
+                    }
+                    resolve();
+                });
+            });
+    
+            await new Promise((resolve, reject) => {
                 // hostapd 서비스 중지
                 exec('sudo systemctl stop hostapd', (error, stdout, stderr) => {
                     if (error) {
@@ -307,32 +312,43 @@ class WiFi {
                         reject(new Error(`hostapd stop failed: ${stderr}`));
                         return;
                     }
-
-                    // dnsmasq 서비스 중지
-                    exec('sudo systemctl stop dnsmasq', (error, stdout, stderr) => {
-                        if (error) {
-                            console.error("Failed to stop dnsmasq service:", stderr);
-                            reject(new Error(`dnsmasq stop failed: ${stderr}`));
-                            return;
-                        }
-
-                        // IP forwarding 비활성화 (옵셔널)
-                        exec('sudo sh -c "echo 0 > /proc/sys/net/ipv4/ip_forward"', (error, stdout, stderr) => {
-                            if (error) {
-                                console.error("Failed to disable IP forwarding:", stderr);
-                                reject(new Error(`IP forwarding disable failed: ${stderr}`));
-                                return;
-                            }
-
-                            this.apMode = false; // AP 모드 상태 업데이트
-                            console.log("AP mode stopped successfully.");
-                            resolve(true);
-                        });
-                    });
+                    resolve();
                 });
             });
-        });    
+    
+            await new Promise((resolve, reject) => {
+                // dnsmasq 서비스 중지
+                exec('sudo systemctl stop dnsmasq', (error, stdout, stderr) => {
+                    if (error) {
+                        console.error("Failed to stop dnsmasq service:", stderr);
+                        reject(new Error(`dnsmasq stop failed: ${stderr}`));
+                        return;
+                    }
+                    resolve();
+                });
+            });
+    
+            await new Promise((resolve, reject) => {
+                // IP forwarding 비활성화 (옵셔널)
+                exec('sudo sh -c "echo 0 > /proc/sys/net/ipv4/ip_forward"', (error, stdout, stderr) => {
+                    if (error) {
+                        console.error("Failed to disable IP forwarding:", stderr);
+                        reject(new Error(`IP forwarding disable failed: ${stderr}`));
+                        return;
+                    }
+                    resolve();
+                });
+            });
+    
+            this.apMode = false; // AP 모드 상태 업데이트
+            console.log("AP mode stopped successfully.");
+            return true;
+        } catch (error) {
+            console.error(`An error occurred while stopping AP mode: ${error.message}`);
+            throw new Error('Stopping AP mode failed');
+        }
     }
+    
 
 }
 
