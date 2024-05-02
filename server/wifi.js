@@ -212,7 +212,7 @@ class WiFi {
                     console.error("Failed to complete setup:", error);
                 }
                     execSync('sudo chmod u+w /etc/dnsmasq.conf');
-                    execSync('sudo chmod u+w /etc/hostapd.conf');
+                    //execSync('sudo chmod u+w /etc/hostapd.conf');
                 fs.writeFileSync('/etc/hostapd/hostapd.conf', `
                     interface=wlan0
                     driver=nl80211
