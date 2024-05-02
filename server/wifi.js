@@ -223,7 +223,7 @@ class WiFi {
                 }
                     execSync('sudo chmod u+w /etc/dnsmasq.conf');
                     //execSync('sudo chmod u+w /etc/hostapd.conf');
-                fs.writeFileSync('/etc/hostapd/hostapd.conf', `
+                    fs.writeFileSync('/etc/hostapd/hostapd.conf', `
                     interface=wlan0
                     driver=nl80211
                     ssid=My_AP
@@ -241,10 +241,19 @@ class WiFi {
                     `);
 
                     // dnsmasq.conf 설정 파일 작성
-                    fs.writeFileSync('/etc/dnsmasq.conf', `
+                   
+                    const configContent = `
                     interface=wlan0
                     dhcp-range=192.168.1.2,192.168.1.20,255.255.255.0,24h
-                    `);
+                    `;
+
+                    fs.writeFile('/etc/dnsmasq.conf', configContent, (error) => {
+                        if (error) {
+                            console.error('Failed to write to /etc/dnsmasq.conf:', error);
+                        } else {
+                            console.log('Configuration updated successfully');
+                        }
+                    });
 
                     // IP forwarding 활성화
                     try {
