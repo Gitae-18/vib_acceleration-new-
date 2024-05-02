@@ -17,6 +17,8 @@ class WiFi {
         this.updateHostapdSsid(`vib-${this.mac}`);
         this.apMode = false;
         this.updateApMode();
+        this.stopApMode();
+        this.startApMode();
     }
 
     get ssidList() {
