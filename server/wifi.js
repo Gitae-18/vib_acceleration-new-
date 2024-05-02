@@ -228,8 +228,31 @@ class WiFi {
                         console.error("Failed to enable IP forwarding:", error);
                     }
                     
-                execSync(`sudo systemctl restart hostapd.service`);
-                execSync(`sudo systemctl restart dnsmasq.service`);
+                    exec('sudo service dhcpcd restart', (error, stdout, stderr) => {
+                        if (error) {
+                            console.error(`Failed to restart dhcpcd: ${stderr}`);
+                            return;
+                        }
+                        console.log('dhcpcd restarted successfully.');
+                    });
+                
+                    // dnsmasq 서비스 재시작
+                    exec('sudo systemctl restart dnsmasq.service', (error, stdout, stderr) => {
+                        if (error) {
+                            console.error(`Failed to restart dnsmasq service: ${stderr}`);
+                            return;
+                        }
+                        console.log('dnsmasq service restarted successfully.');
+                    });
+                
+                    // hostapd 서비스 재시작
+                    exec('sudo systemctl restart hostapd.service', (error, stdout, stderr) => {
+                        if (error) {
+                            console.error(`Failed to restart hostapd service: ${stderr}`);
+                            return;
+                        }
+                        console.log('hostapd service restarted successfully.');
+                    });
                 this.updateApMode();
                 console.log("AP mode started.");
                 resolve(true);
@@ -242,17 +265,46 @@ class WiFi {
 
     stopApMode() {
         return new Promise((resolve, reject) => {
-            try {
-                execSync(`sudo systemctl stop hostapd`);
-                execSync(`sudo systemctl stop dnsmasq`);
-                this.updateApMode();
-                console.log("AP mode stopped.");
-                resolve(true);
-            } catch (error) {
-                console.error("Failed to stop AP mode:", error);
-                reject(false);
-            }
-        });
+            // NetworkManager 재시작
+            exec('sudo systemctl restart NetworkManager', (error, stdout, stderr) => {
+                if (error) {
+                    console.error("Failed to restart NetworkManager:", stderr);
+                    reject(new Error(`NetworkManager restart failed: ${stderr}`));
+                    return;
+                }
+                
+                // hostapd 서비스 중지
+                exec('sudo systemctl stop hostapd', (error, stdout, stderr) => {
+                    if (error) {
+                        console.error("Failed to stop hostapd service:", stderr);
+                        reject(new Error(`hostapd stop failed: ${stderr}`));
+                        return;
+                    }
+
+                    // dnsmasq 서비스 중지
+                    exec('sudo systemctl stop dnsmasq', (error, stdout, stderr) => {
+                        if (error) {
+                            console.error("Failed to stop dnsmasq service:", stderr);
+                            reject(new Error(`dnsmasq stop failed: ${stderr}`));
+                            return;
+                        }
+
+                        // IP forwarding 비활성화 (옵셔널)
+                        exec('sudo sh -c "echo 0 > /proc/sys/net/ipv4/ip_forward"', (error, stdout, stderr) => {
+                            if (error) {
+                                console.error("Failed to disable IP forwarding:", stderr);
+                                reject(new Error(`IP forwarding disable failed: ${stderr}`));
+                                return;
+                            }
+
+                            this.apMode = false; // AP 모드 상태 업데이트
+                            console.log("AP mode stopped successfully.");
+                            resolve(true);
+                        });
+                    });
+                });
+            });
+        });    
     }
 
 }
