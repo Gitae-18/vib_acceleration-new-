@@ -3,7 +3,7 @@ import React, {useEffect, useState, useCallback, useRef }from "react";
 import Menu from "../menu";
 import '../../style/body.css';
 import styled from "styled-components";
-const Network = ({devId}) => {
+const Network = ({}) => {
     const [netInfo, setNetInfo] = useState({
         IP_Address:'',
         SubnetMask:'',
@@ -13,9 +13,10 @@ const Network = ({devId}) => {
     });
     const [handleAP, setHandleAP] = useState(false);
     const isMounted = useRef(true);
+    const devId = 'D000001';
     const getDefaultNetworkInfo = useCallback(async() => {
         try {
-            const res = await fetch(`http://192.168.10.14:3000/net_information?devId=${devId}`, {
+            const res = await fetch(`http://192.168.10.14:4001/net_information?devId=${devId}`, {
                 method: 'GET'
             });
 
@@ -52,7 +53,7 @@ const Network = ({devId}) => {
         let isMounted = true;
         const handleApMode = async() => {
             try {
-                const res = await fetch(`http://192.168.10.14:3000/handle_ap?devId=${devId}`, {
+                const res = await fetch(`http://192.168.10.14:4001/handle_ap?devId=${devId}`, {
                     method: 'post',
                     headers: {
                         "Content-Type": "application/json"

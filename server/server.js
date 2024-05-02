@@ -12,7 +12,7 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-const port = 5001;
+const port = 4001;
 
 
 function restartVibnet() {
@@ -62,7 +62,8 @@ app.get("/", async(req,res) => {
  */
 app.post('/handle_ap', async (req,res) => {
     const param = req.body.param;
-    const dev_id = req.query.id;
+    /* const dev_id = req.query.id; */
+    const dev_id = 'D000001'
     if(dev_id) {
         if(param) {
             wifi.startApMode();
@@ -80,7 +81,8 @@ app.get("/dev_information", async (req, res) => {
 
 })
 app.get("/net_information", async (req, res) => {
-    const dev_id = req.query.id;
+    /* const dev_id = req.query.id; */
+    const dev_id = 'D000001'
     const config = new vibConfig();
     const deviceConfig = config.getConfig();
 
@@ -89,6 +91,7 @@ app.get("/net_information", async (req, res) => {
         return;
     }
 
+    console.log('Device Config : ', deviceConfig);
 
     res.json({
         IP_Address: deviceConfig.ip_address, 
@@ -97,6 +100,7 @@ app.get("/net_information", async (req, res) => {
         Mode: deviceConfig.mode,
         SSID: deviceConfig.ssid
     });
+    res.status(200);
 })
 // 서버 시작
 app.listen(port, () => {
