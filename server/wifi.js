@@ -24,20 +24,23 @@ class WiFi {
     get ssidList() {
         return this.ssidList;
     }
-
+    set ssidList(value) {
+        this._ssidList = value;
+    }
     scanSsid() {
         return new Promise((resolve, reject) => {
             exec(`iwlist ${this.inter} scan`, (error, stdout, stderr) => {
-                if(error) {
+                if (error) {
                     console.error(`scan SSID error : ${stderr}`);
                     reject(stderr);
                     return;
                 }
                 const lines = stdout.split('\n');
-                this.ssidList = lines
+                const ssids = lines
                     .filter(line => line.trim().startsWith('ESSID:'))
                     .map(line => line.split(':')[1].trim().replace(`/"/g,"`))
                     .filter(ssid => ssid && !ssid.startsWith('\x00'));
+                this.ssidList = ssids; // setter를 통해 값을 업데이트
                 resolve(this.ssidList);
             });
         });
@@ -175,7 +178,9 @@ class WiFi {
     }
 
 }
-if (require.main === module) {
+
+module.exports = WiFi;
+/* if (require.main === module) {
     const wifi = new WiFi('wlan0');
 
     wifi.checkApMode().then(isApMode => {
@@ -193,5 +198,4 @@ if (require.main === module) {
             });
         }
     });
-}
-module.exports = WiFi;
+} */
