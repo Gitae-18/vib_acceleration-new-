@@ -29,23 +29,27 @@ class WiFi {
     }
     scanSsid() {
         return new Promise((resolve, reject) => {
-            exec(`iwlist ${this.inter} scan`, (error, stdout, stderr) => {
-                if (error) {
-                    console.error(`scan SSID error : ${stderr}`);
-                    reject(stderr);
-                    return;
-                }
-                const lines = stdout.split('\n');
-                const ssids = lines
-                    .filter(line => line.trim().startsWith('ESSID:'))
-                    .map(line => line.split(':')[1].trim().replace(`/"/g,"`))
-                    .filter(ssid => ssid && !ssid.startsWith('\x00'));
-                this.ssidList = ssids; // setter를 통해 값을 업데이트
-                resolve(this.ssidList);
-            });
+            try {
+                exec(`iwlist ${this.inter} scan`, (error, stdout, stderr) => {
+                    if (error) {
+                        console.error(`scan SSID error : ${stderr}`);
+                        reject(stderr);
+                        return;
+                    }
+                    const lines = stdout.split('\n');
+                    const ssids = lines
+                        .filter(line => line.trim().startsWith('ESSID:'))
+                        .map(line => line.split(':')[1].trim().replace(`/"/g,"`))
+                        .filter(ssid => ssid && !ssid.startsWith('\x00'));
+                    this.ssidList = ssids; // setter를 통해 값을 업데이트
+                    resolve(this.ssidList);
+                });
+            } catch (error) {
+                console.error("An error occurred in scanSsid:", error);
+                reject(error);
+            }
         });
-    }
-    updateGateway() {
+    }    updateGateway() {
         exec(`ip route show dev ${this.interface}`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error: ${stderr}`);
@@ -89,22 +93,28 @@ class WiFi {
         });
     }
 
-    connectToWiFi(ssid, password) {
-        return new Promise((resolve, reject) => {
-            exec(`nmcli -w 30 device wifi connect ${ssid} password ${password}`, (error, stdout, stderr) => {
-                if (error) {
-                    console.error(`Error connecting to WiFi ${ssid}: ${stderr}`);
-                    this.connectionWifi = false;
-                    reject(new Error(`Failed to connect to WiFi ${ssid}: ${stderr}`));
-                } else {
-                    console.log(`Connected to WiFi ${ssid}`);
-                    this.updateNetworkInfo();
-                    this.connectionWifi = true;
-                    resolve(true);
-                }
+    async connectToWiFi(ssid, password) {
+        try {
+            return await new Promise((resolve, reject) => {
+                exec(`nmcli -w 30 device wifi connect ${ssid} password ${password}`, (error, stdout, stderr) => {
+                    if (error) {
+                        console.error(`Error connecting to WiFi ${ssid}: ${stderr}`);
+                        this.connectionWifi = false;
+                        reject(new Error(`Failed to connect to WiFi ${ssid}: ${stderr}`));
+                    } else {
+                        console.log(`Connected to WiFi ${ssid}`);
+                        this.updateNetworkInfo();
+                        this.connectionWifi = true;
+                        resolve(true);
+                    }
+                });
             });
-        });
+        } catch (error) {
+            console.error(`An error occurred: ${error.message}`);
+            throw new Error('WiFi connection failed');
+        }
     }
+    
     /* checkApMode() {
         try{
             const result = execSync(`iw dev ${this.inter}`).toString();
