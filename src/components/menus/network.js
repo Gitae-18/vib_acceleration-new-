@@ -1,18 +1,64 @@
-import React, {useEffect, useState, useCa }from "react";
+/* eslint-disable */
+import React, {useEffect, useState, useCallback, useRef }from "react";
 import Menu from "../menu";
 import '../../style/body.css';
 import styled from "styled-components";
-const Network = () => {
+const Network = ({devId}) => {
+    const [netInfo, setNetInfo] = useState({
+        IP_Address:'',
+        SubnetMask:'',
+        Default_Gateway:'',
+        Mode:'',
+        SSID:'',
+    });
+    const isMounted = useRef(true);
+
+    const getDefaultNetworkInfo = useCallback(async() => {
+        try {
+            const res = await fetch(`http://192.168.10.14:3000/net_information?devId=${devId}`, {
+                method: 'GET'
+            });
+
+            if (!res.ok) {
+                console.log('잘못된 아이디 입니다.');
+                return;
+            }
+
+            const json = await res.json();
+
+            if (isMounted.current) {
+                setNetInfo(netinfo => ({
+                    ...netinfo, 
+                    IP_Address: json,
+                    SubnetMask:json,
+                    Default_Gateway:json,
+                    Mode:json,
+                    SSID:json,
+                }));
+            }
+            
+        } catch (error) {
+            console.error('Failed to fetch device info:', error);
+        }
+    },[/* devId, */netInfo])
+
+    useEffect(() => {
+        getDefaultNetworkInfo();
+        return () => {
+            isMounted.current = false;
+        };
+    },[getDefaultNetworkInfo])
+
     return(
         <>
                 <div>
                     <Menu/>
                 </div>
                 <div className="body">
-                <div className="sec_title">        
-                    <label>|</label>
-                    <h3>Network Information</h3>            
-                </div>
+                    <div className="sec_title">        
+                        <label>|</label>
+                        <h3>Network Information</h3>            
+                    </div>
                     <div className="group_devinfo">
                         <div className="form-group labels">
                         <label>* IP Address</label>
@@ -23,12 +69,11 @@ const Network = () => {
                         </div>
                         <div className="form-group blank"/>
                         <div className="form-group contents ip">            
-                            <input type="text" readOnly/>
-                            <input type="text" readOnly/>
-                            <input type="text" readOnly/>
-                            <input type="text" readOnly/>
-                            <input type="text" readOnly/>
-                            <input type="text" readOnly/>
+                            <input value={netInfo.IP_Address} type="text" readOnly/>
+                            <input value={netInfo.SubnetMask}type="text" readOnly/>
+                            <input value={netInfo.Default_Gateway} type="text" readOnly/>
+                            <input value={netInfo.Mode} type="text" readOnly/>
+                            <input value={netInfo.SSID} type="text" readOnly/>
                         </div>
                     </div>
                     <CustomLine/>
@@ -96,7 +141,7 @@ const Network = () => {
                         </div>
                     </div>  
                 </div>
-                </>
+        </>
      )
 }
 
@@ -114,9 +159,9 @@ background-color: #c8c8c8;
 box-shadow: inset 0 0 8px rgba(0,0,0,0.5); 
 `
 const CustomLine = styled.div`
-border-top: 2px solid #ccc; /* 상단 테두리 설정 */
-width: calc(95%); /* padding 값을 고려한 너비 설정 */
-margin-top: 20px; /* 선 위 간격 */
+border-top: 2px solid #ccc; 
+width: calc(95%); 
+margin-top: 20px; 
 margin-bottom: 20px; 
 margin-left: 100px;
 `

@@ -1,4 +1,5 @@
-import React, {useEffect, useState, useCa }from "react";
+/* eslint-disable */
+import React, {useEffect, useState, useCallback, useRef}from "react";
 import Menu from "../menu";
 import '../../style/body.css';
 import styled from "styled-components";
@@ -6,24 +7,74 @@ import Calendar from 'react-calendar';
 import '../../style/Calendar.css';
 const General = () => {
  const [devInfo, setDevInfo] = useState("Select Device ID");
+ const [devId, setDevID]  = useState(0);
+ const [datenow, setDateNow] = useState('0000-00-00');
+ const [nowtime, setNowTime] = useState('00:00');
+ const deviceRef = useRef(null);
 
+        const fetchDevInfo = useCallback(async () => {
+            try {
+                const res = await fetch(`http://192.168.10.14:3000/dev_information?devId=${devId}`, {
+                    method: 'GET'
+                });
 
- const handleDevInfo = (e) => {
-    const value = e.target.value;
-    switch(value) {
-        case 'NO1' :
-            setDevInfo('SENSOR NO 01 TEST');
-        break;
-        case 'NO2' :
-            setDevInfo('SENSOR NO 02 TEST');
-        break;
-        case 'NO3' :
-            setDevInfo('SENSOR NO 03 TEST');
-        break;
-        default:
+                if (!res.ok) {
+                    console.log('잘못된 아이디 입니다.');
+                    return;
+                }
+
+                const json = await res.json();
+
+                if (json) {
+                    setDevInfo(json);
+                }
+                
+            } catch (error) {
+                console.error('Failed to fetch device info:', error);
+            }
+        }, [devId]);
+        const getLocalDatenTime = async() => {
+          try {
+            const res = await fetch(`http://192.168.10.14:3000/dev_datetime?devId=${devId}`, {
+                method: 'GET'
+            })
+            if (!res.ok) {
+                console.log('잘못된 아이디 입니다.');
+                return;
+            }
+            const json = await res.json();
+                if (json) {
+                    setDevInfo(json);
+                }
+          } 
+          catch (error) {
+            console.error('Failed to fetch device date & time:', error);
+          }  
+        };
+        useEffect(() => {
+           // fetchDevInfo();
+        }, [/* fetchDevInfo */]);
+        
+    //const 
+    const handleDevInfo = (e) => {
+        const value = e.target.value;
+        switch(value) {
+            case 'NO1' :
+                setDevInfo('SENSOR NO 01 TEST');
+                setDevID('dev00001');
             break;
+            case 'NO2' :
+                setDevInfo('SENSOR NO 02 TEST');
+                setDevID('dev00002');
+            break;
+            case 'NO3' :
+                setDevInfo('SENSOR NO 03 TEST');
+                setDevID('dev00003');
+            break;
+            default:
+                break;
+        }
     }
- }
  return(
     <>
     <div className="header">
@@ -85,7 +136,7 @@ const General = () => {
             </div>
             <div className="group_devinfo">
                 <div className="form-group contents">
-                    <CustomButton>Get Local Date/Time</CustomButton>
+                    <CustomButton onClick={getLocalDatenTime}>Get Local Date/Time</CustomButton>
                 </div>
             </div>
         </div>

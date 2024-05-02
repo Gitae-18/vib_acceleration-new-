@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {useEffect, useState, useCa }from "react";
 import Menu from "../menu";
 import '../../style/body.css';
