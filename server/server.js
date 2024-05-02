@@ -87,27 +87,32 @@ app.get("/dev_information", async (req, res) => {
 
 })
 app.get("/net_information", async (req, res) => {
-    /* const dev_id = req.query.id; */
-    const dev_id = 'D000001'
-    const config = new vibConfig();
-    const deviceConfig = config.getConfig();
+    try {
+        // const dev_id = req.query.id; // 실제 사용 시 주석을 해제하고 req.query.id를 사용하세요.
+        const dev_id = 'D000001';
+        const config = new vibConfig();
+        const deviceConfig = config.getConfig(); // getConfig()가 동기 메소드라 가정합니다.
 
-    if (deviceConfig.device_id !== dev_id) {
-        res.status(404).send({ error: "Invalid device ID" });
-        return;
+        if (deviceConfig.device_id !== dev_id) {
+            res.status(404).send({ error: "Invalid device ID" });
+            return;
+        }
+
+        console.log('Device Config : ', deviceConfig);
+
+        res.json({
+            IP_Address: deviceConfig.ip_address,
+            SubnetMask: deviceConfig.subnet_mask,
+            Default_Gateway: deviceConfig.default_gateway,
+            Mode: deviceConfig.mode,
+            SSID: deviceConfig.ssid
+        });
+    } catch (error) {
+        console.error('Error fetching device config:', error);
+        res.status(500).send({ error: "An error occurred while fetching device configuration." });
     }
+});
 
-    console.log('Device Config : ', deviceConfig);
-
-    res.json({
-        IP_Address: deviceConfig.ip_address, 
-        SubnetMask: deviceConfig.subnet_mask,
-        Default_Gateway: deviceConfig.default_gateway,
-        Mode: deviceConfig.mode,
-        SSID: deviceConfig.ssid
-    });
-    res.status(200);
-})
 // 서버 시작
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
