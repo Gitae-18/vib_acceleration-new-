@@ -261,7 +261,7 @@ class WiFi {
                 });
             }); */
     
-            await new Promise((resolve, reject) => {
+            /* await new Promise((resolve, reject) => {
                 // dnsmasq 서비스 중지
                 exec('sudo systemctl stop dnsmasq', (error, stdout, stderr) => {
                     if (error) {
@@ -271,7 +271,7 @@ class WiFi {
                     }
                     resolve();
                 });
-            });
+            }); */
     
             await new Promise((resolve, reject) => {
                 // IP forwarding 비활성화 (옵셔널)
