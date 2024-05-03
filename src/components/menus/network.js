@@ -16,7 +16,7 @@ const Network = ({}) => {
     const devId = 'D000001';
     const getDefaultNetworkInfo = useCallback(async() => {
         try {
-            const res = await fetch(`http://localhost:4001/net_information?devId=${devId}`, {
+            const res = await fetch(`http://192.168.10.14:4001/net_information?devId=${devId}`, {
                 method: 'GET'
             });
 
