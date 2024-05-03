@@ -192,110 +192,22 @@ class WiFi {
     
     startApMode() {
         return new Promise((resolve, reject) => {
-            try {
-                // 해당 설정에 필요한 실제 명령을 구현해야 합니다.
-                try {
-                    // hostapd와 dnsmasq 패키지 설치
-                   // console.log("Installing hostapd and dnsmasq...");
-                    //execSync('sudo apt-get install -y hostapd dnsmasq', { stdio: 'inherit' });
-                
-                    // 설정 파일을 백업하고 초기화
-                    console.log("Backing up and resetting configuration files...");
-                    execSync('sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig');
-                    execSync('echo "" | sudo tee /etc/dnsmasq.conf'); // 파일을 비웁니다.
-                
-                    // DAEMON_CONF 추가
-                    console.log("Adding DAEMON_CONF to hostapd...");
-                    execSync('echo \'DAEMON_CONF="/etc/hostapd/hostapd.conf"\' | sudo tee -a /etc/default/hostapd');
-                
-                    console.log("Setup completed successfully.");
-                } catch (error) {
-                    console.error("Failed to complete setup:", error);
+            // 시스템 명령 실행하여 dhcpcd, dnsmasq, hostapd 재시작
+            exec('sudo service dhcpcd restart && sudo systemctl restart dnsmasq.service && sudo systemctl restart hostapd.service', (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error restarting services: ${stderr}`);
+                    reject(stderr);
+                } else {
+                    console.log('Services restarted successfully');
+                    // 실제 AP 모드 상태를 확인하는 로직 필요
+                    // 예제에서는 AP 모드 상태를 확인하는 별도의 함수가 필요하다고 가정
+                    this.checkApMode().then(isApMode => {
+                        resolve(isApMode);  // AP 모드의 상태를 반환
+                    }).catch(err => {
+                        reject(err);
+                    });
                 }
-                    execSync('sudo chmod u+w /etc/dnsmasq.conf');
-                    //execSync('sudo chmod u+w /etc/hostapd.conf');
-                    fs.writeFileSync('/etc/hostapd/hostapd.conf', `
-                    interface=wlan0
-                    driver=nl80211
-                    ssid=My_AP
-                    hw_mode=g
-                    channel=7
-                    wmm_enabled=0
-                    macaddr_acl=0
-                    auth_algs=1
-                    ignore_broadcast_ssid=0
-                    wpa=2
-                    wpa_passphrase=MyPassword
-                    wpa_key_mgmt=WPA-PSK
-                    wpa_pairwise=TKIP
-                    rsn_pairwise=CCMP
-                    `);
-
-                    // dnsmasq.conf 설정 파일 작성
-                    try {
-                        const configContent = `
-                        interface=wlan0
-                        dhcp-range=192.168.1.2,192.168.1.20,255.255.255.0,24h
-                        `;
-                        execSync(`echo "${configContent}" | sudo tee /etc/dnsmasq.conf`);
-                        console.log('Configuration updated successfully');
-                    } catch (error) {
-                        console.error('Failed to write to /etc/dnsmasq.conf', error);
-                    } 
-                     const configContent = `
-                    interface=wlan0
-                    dhcp-range=192.168.1.2,192.168.1.20,255.255.255.0,24h
-                    `;
-
-                    fs.writeFile('/etc/dnsmasq.conf', configContent, (error) => {
-                        if (error) {
-                            console.error('Failed to write to /etc/dnsmasq.conf:', error);
-                        } else {
-                            console.log('Configuration updated successfully');
-                        }
-                    });
-
-                    // IP forwarding 활성화
-                    try {
-                        execSync('echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf');
-                        execSync('sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"');
-                        console.log("IP forwarding has been enabled.");
-                    } catch (error) {
-                        console.error("Failed to enable IP forwarding:", error);
-                    }
-                    
-                    exec('sudo service dhcpcd restart', (error, stdout, stderr) => {
-                        if (error) {
-                            console.error(`Failed to restart dhcpcd: ${stderr}`);
-                            return;
-                        }
-                        console.log('dhcpcd restarted successfully.');
-                    });
-                
-                    // dnsmasq 서비스 재시작
-                    exec('sudo systemctl restart dnsmasq.service', (error, stdout, stderr) => {
-                        if (error) {
-                            console.error(`Failed to restart dnsmasq service: ${stderr}`);
-                            return;
-                        }
-                        console.log('dnsmasq service restarted successfully.');
-                    });
-                
-                    // hostapd 서비스 재시작
-                    exec('sudo systemctl restart hostapd.service', (error, stdout, stderr) => {
-                        if (error) {
-                            console.error(`Failed to restart hostapd service: ${stderr}`);
-                            return;
-                        }
-                        console.log('hostapd service restarted successfully.');
-                    });
-                this.updateApMode();
-                console.log("AP mode started.");
-                resolve(true);
-            } catch (error) {
-                console.error("Failed to start AP mode:", error);
-                reject(false);
-            }
+            });
         });
     }
 
