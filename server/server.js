@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { spawn, exec } = require('child_process');
 const WiFi = require('./wifi');
-const wifi = new WiFi('wlan0');
+
 const child = spawn('pwd');
 const app = express();
 const cors = require('cors');
@@ -64,7 +64,7 @@ function restartVibnet() {
 app.post('/handle_ap', async (req, res) => {
     const param = req.body.param;
     const dev_id = 'D000001'; 
-
+    const wifi = new WiFi('wlan0');
     if (dev_id) {
         try {
             if (param) {
