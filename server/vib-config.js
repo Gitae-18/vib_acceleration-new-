@@ -2,7 +2,7 @@ const fs = require('fs');
 const ini  = require('ini');
 const path = require('path');
 
-const CONFIG_FILE = './etc/vibnet.conf';
+const CONFIG_FILE = path.resolve('/etc/vibnet.conf'); // 절대 경로 사용
 const ENCODING = "utf-8";
 const SECTION_COMMON = "Common";
 const KEYS = {

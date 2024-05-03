@@ -91,8 +91,7 @@ app.get("/net_information", async (req, res) => {
         // const dev_id = req.query.id; // 실제 사용 시 주석을 해제하고 req.query.id를 사용하세요.
         const dev_id = 'D000001';
         const config = new vibConfig();
-        const deviceConfig = config.getConfig(); // getConfig()가 동기 메소드라 가정합니다.
-
+        const deviceConfig = config.getConfig(); 
         if (deviceConfig.device_id !== dev_id) {
             res.status(404).send({ error: "Invalid device ID" });
             return;
