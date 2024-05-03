@@ -26,9 +26,9 @@ function restartVibnet() {
 }
 
 app.get("/", async(req,res) => {
-    /* const devInfo = await vibConfig.getDeviceInfo();
+    const devInfo = await vibConfig.getDeviceInfo();
     await wifi.updateNetworkInfo();
-    res.render('index', { devInfo, wifi}); */
+    res.render('index', { devInfo, wifi});
 })
 
 /* app.post('/', async (req, res) => {
@@ -62,8 +62,8 @@ app.get("/", async(req,res) => {
 });
  */
 app.post('/handle_ap', async (req, res) => {
-    /* const param = req.body.param;
-    const dev_id = 'D000001'; // 임시 하드코딩된 device ID
+    const param = req.body.param;
+    const dev_id = 'D000001'; 
 
     if (dev_id) {
         try {
@@ -79,7 +79,7 @@ app.post('/handle_ap', async (req, res) => {
         }
     } else {
         res.status(400).send({ error: "Invalid device ID" });
-    } */
+    }
 });
 
 app.get("/dev_information", async (req, res) => {

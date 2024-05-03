@@ -49,7 +49,7 @@ const Network = ({}) => {
             isMounted.current = false;
         };
     },[getDefaultNetworkInfo])
-    /* const handleApMode = async() => {
+    const handleApMode = async() => {
         try {
             const res = await fetch(`http://192.168.10.14:4001/handle_ap?devId=${devId}`, {
                 method: 'post',
@@ -71,8 +71,8 @@ const Network = ({}) => {
         } catch (error) {
             console.error('Failed to handle apmode :', error);
         }
-    } */
-   /*  useEffect(() => {
+    }
+    useEffect(() => {
         let isMounted = true;
         
 
@@ -81,7 +81,7 @@ const Network = ({}) => {
         return () => {
             isMounted = false;
         }
-    },[handleAP]) */
+    },[handleAP])
     
 
     return(

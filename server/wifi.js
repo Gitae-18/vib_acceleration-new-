@@ -4,7 +4,7 @@ const ini  = require('ini');
 const path = require('path');
 
 class WiFi {
-    /* constructor(inter) {
+    constructor(inter) {
         this.inter = inter;
         this.apMode = this.checkApMode();
         this.mac = '00:00:00:00:00:00';
@@ -19,9 +19,9 @@ class WiFi {
         this.updateApMode();
         this.stopApMode();
         this.startApMode();
-    } */
+    }
 
-    /* get ssidList() {
+    get ssidList() {
         return this.ssidList;
     }
     set ssidList(value) {
@@ -241,8 +241,8 @@ class WiFi {
                         console.log('Configuration updated successfully');
                     } catch (error) {
                         console.error('Failed to write to /etc/dnsmasq.conf', error);
-                    } */
-                   /*  const configContent = `
+                    } 
+                     const configContent = `
                     interface=wlan0
                     dhcp-range=192.168.1.2,192.168.1.20,255.255.255.0,24h
                     `;
@@ -253,10 +253,10 @@ class WiFi {
                         } else {
                             console.log('Configuration updated successfully');
                         }
-                    }); */
+                    });
 
                     // IP forwarding 활성화
-                    /* try {
+                    try {
                         execSync('echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf');
                         execSync('sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"');
                         console.log("IP forwarding has been enabled.");
@@ -359,7 +359,6 @@ class WiFi {
     }
     
 
-} */
 }
 module.exports = WiFi;
 /* if (require.main === module) {
