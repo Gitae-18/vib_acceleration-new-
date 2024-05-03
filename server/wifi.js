@@ -115,7 +115,7 @@ class WiFi {
         }
     }
     
-    checkApMode() {
+    /* checkApMode() {
         try {
             const result = execSync('iw dev').toString();
             const lines = result.split('\n');
@@ -127,6 +127,16 @@ class WiFi {
             return false;
         } catch (error) {
             console.error('오류가 발생했습니다:', error);
+            return false;
+        }
+    } */
+    checkApMode() {
+        try {
+            const result = execSync('iw dev').toString();  // 결과를 문자열로 변환
+            const isApModeActive = result.includes('type AP');  // 'type AP' 포함 여부 확인
+            return isApModeActive;
+        } catch (error) {
+            console.error('AP 모드 상태 확인 중 오류가 발생했습니다:', error);
             return false;
         }
     }
@@ -190,7 +200,7 @@ class WiFi {
         }
     }
     
-    startApMode() {
+    /* startApMode() {
         return new Promise((resolve, reject) => {
             // 시스템 명령 실행하여 dhcpcd, dnsmasq, hostapd 재시작
             exec('sudo service dhcpcd restart && sudo systemctl restart dnsmasq.service && sudo systemctl restart hostapd.service', (error, stdout, stderr) => {
@@ -209,9 +219,23 @@ class WiFi {
                 }
             });
         });
+    } */
+    startApModeSync() {
+        try {
+            // dhcpcd, dnsmasq, hostapd 서비스를 동기적으로 재시작
+            execSync('sudo service dhcpcd restart');
+            execSync('sudo systemctl restart dnsmasq.service');
+            execSync('sudo systemctl restart hostapd.service');
+            console.log('Services restarted successfully');
+            
+            // AP 모드 상태를 동기적으로 확인
+            return this.checkApMode(); // 동기적인 AP 모드 확인 함수가 필요합니다
+        } catch (error) {
+            console.error(`Error restarting services: ${error.stderr}`);
+            return false;
+        }
     }
-
-    async stopApMode() {
+    /* async stopApMode() {
         try {
             await new Promise((resolve, reject) => {
                 // NetworkManager 재시작
@@ -267,6 +291,32 @@ class WiFi {
         } catch (error) {
             console.error(`An error occurred while stopping AP mode: ${error.message}`);
             throw new Error('Stopping AP mode failed');
+        }
+    } */
+    stopApMode() {
+        try {
+            // NetworkManager 재시작
+            execSync('sudo systemctl restart NetworkManager');
+            console.log("NetworkManager restarted successfully.");
+    
+            // hostapd 서비스 중지
+            execSync('sudo systemctl stop hostapd');
+            console.log("hostapd service stopped successfully.");
+    
+            // dnsmasq 서비스 중지
+            execSync('sudo systemctl stop dnsmasq');
+            console.log("dnsmasq service stopped successfully.");
+    
+            // IP forwarding 비활성화 (옵셔널)
+            execSync('sudo sh -c "echo 0 > /proc/sys/net/ipv4/ip_forward"');
+            console.log("IP forwarding disabled successfully.");
+    
+            this.apMode = false; // AP 모드 상태 업데이트
+            console.log("AP mode stopped successfully.");
+            return true;
+        } catch (error) {
+            console.error(`An error occurred while stopping AP mode: ${error}`);
+            throw new Error('Stopping AP mode failed: ' + error.message);
         }
     }
     
