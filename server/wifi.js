@@ -200,7 +200,7 @@ class WiFi {
         }
     }
     
-    /* startApMode() {
+    startApMode() {
         return new Promise((resolve, reject) => {
             // 시스템 명령 실행하여 dhcpcd, dnsmasq, hostapd 재시작
             exec('sudo service dhcpcd restart && sudo systemctl restart dnsmasq.service && sudo systemctl restart hostapd.service', (error, stdout, stderr) => {
@@ -219,8 +219,8 @@ class WiFi {
                 }
             });
         });
-    } */
-    startApModeSync() {
+    }
+    /* startApModeSync() {
         try {
             // dhcpcd, dnsmasq, hostapd 서비스를 동기적으로 재시작
             execSync('sudo service dhcpcd restart');
@@ -234,8 +234,8 @@ class WiFi {
             console.error(`Error restarting services: ${error.stderr}`);
             return false;
         }
-    }
-    /* async stopApMode() {
+    } */
+    async stopApMode() {
         try {
             await new Promise((resolve, reject) => {
                 // NetworkManager 재시작
@@ -292,12 +292,12 @@ class WiFi {
             console.error(`An error occurred while stopping AP mode: ${error.message}`);
             throw new Error('Stopping AP mode failed');
         }
-    } */
-    stopApMode() {
+    }
+    /* stopApMode() {
         try {
             // NetworkManager 재시작
-            /* execSync('sudo systemctl restart NetworkManager');
-            console.log("NetworkManager restarted successfully."); */
+            execSync('sudo systemctl restart NetworkManager');
+            console.log("NetworkManager restarted successfully.");
     
             // hostapd 서비스 중지
             execSync('sudo systemctl stop hostapd');
@@ -318,7 +318,7 @@ class WiFi {
             console.error(`An error occurred while stopping AP mode: ${error}`);
             throw new Error('Stopping AP mode failed: ' + error.message);
         }
-    }
+    } */
     
 
 }
