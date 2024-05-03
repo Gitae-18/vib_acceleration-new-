@@ -25,8 +25,8 @@ const Network = ({}) => {
                 return;
             }
 
-            const json = await res.json();
-
+            const json = await res.json();  console.log(json);
+            
             if (isMounted.current) {
                 setNetInfo(netinfo => ({
                     ...netinfo, 
@@ -49,31 +49,32 @@ const Network = ({}) => {
             isMounted.current = false;
         };
     },[getDefaultNetworkInfo])
+    const handleApMode = async() => {
+        try {
+            const res = await fetch(`http://192.168.10.14:4001/handle_ap?devId=${devId}`, {
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    param: handleAP,
+                })            
+            });
+
+            if (!res.ok) {
+                console.log('오류가 발생했습니다.');
+                return;
+            }
+            if (isMounted) {
+                setMessage("AP Mode has been successfully updated.");
+            }           
+        } catch (error) {
+            console.error('Failed to handle apmode :', error);
+        }
+    }
     useEffect(() => {
         let isMounted = true;
-        const handleApMode = async() => {
-            try {
-                const res = await fetch(`http://192.168.10.14:4001/handle_ap?devId=${devId}`, {
-                    method: 'post',
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        param: handleAP,
-                    })            
-                });
-    
-                if (!res.ok) {
-                    console.log('오류가 발생했습니다.');
-                    return;
-                }
-                if (isMounted) {
-                    setMessage("AP Mode has been successfully updated.");
-                }           
-            } catch (error) {
-                console.error('Failed to handle apmode :', error);
-            }
-        }
+        
 
         handleApMode();
 
