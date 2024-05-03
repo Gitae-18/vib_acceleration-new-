@@ -237,7 +237,7 @@ class WiFi {
     } */
     async stopApMode() {
         try {
-            await new Promise((resolve, reject) => {
+            /* await new Promise((resolve, reject) => {
                 // NetworkManager 재시작
                 exec('sudo systemctl restart NetworkManager', (error, stdout, stderr) => {
                     if (error) {
@@ -247,7 +247,7 @@ class WiFi {
                     }
                     resolve();
                 });
-            });
+            }); */
     
             await new Promise((resolve, reject) => {
                 // hostapd 서비스 중지
