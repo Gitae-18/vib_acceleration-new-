@@ -50,7 +50,7 @@ class WiFi {
             }
         });
     }    updateGateway() {
-        exec(`ip route show dev ${this.interface}`, (error, stdout, stderr) => {
+        exec(`ip route show dev ${this.inter}`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error: ${stderr}`);
                 return;
@@ -64,7 +64,7 @@ class WiFi {
         });
     }
     updateNetworkInfo() {
-        exec(`ifconfig ${this.interface}`, (error, stdout, stderr) => {
+        exec(`ifconfig ${this.inter}`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error: ${stderr}`);
                 return;
