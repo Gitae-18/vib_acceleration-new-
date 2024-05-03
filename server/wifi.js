@@ -249,7 +249,7 @@ class WiFi {
                 });
             }); */
     
-            await new Promise((resolve, reject) => {
+            /* await new Promise((resolve, reject) => {
                 // hostapd 서비스 중지
                 exec('sudo systemctl stop hostapd', (error, stdout, stderr) => {
                     if (error) {
@@ -259,7 +259,7 @@ class WiFi {
                     }
                     resolve();
                 });
-            });
+            }); */
     
             await new Promise((resolve, reject) => {
                 // dnsmasq 서비스 중지
