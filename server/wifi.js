@@ -296,8 +296,8 @@ class WiFi {
     stopApMode() {
         try {
             // NetworkManager 재시작
-            execSync('sudo systemctl restart NetworkManager');
-            console.log("NetworkManager restarted successfully.");
+            /* execSync('sudo systemctl restart NetworkManager');
+            console.log("NetworkManager restarted successfully."); */
     
             // hostapd 서비스 중지
             execSync('sudo systemctl stop hostapd');
