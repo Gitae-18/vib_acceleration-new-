@@ -62,7 +62,7 @@ app.get("/", async(req,res) => {
 });
  */
 app.post('/handle_ap', async (req, res) => {
-    const param = req.body.param;
+    /* const param = req.body.param;
     const dev_id = 'D000001'; // 임시 하드코딩된 device ID
 
     if (dev_id) {
@@ -79,7 +79,7 @@ app.post('/handle_ap', async (req, res) => {
         }
     } else {
         res.status(400).send({ error: "Invalid device ID" });
-    }
+    } */
 });
 
 app.get("/dev_information", async (req, res) => {
