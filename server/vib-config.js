@@ -25,6 +25,7 @@ const DEFAULTS = {
 class VibnetConfig{
     constructor() {
         if(!fs.existsSync(CONFIG_FILE)) {
+            console.log('파일이 없습니다. 새 파일을 생성합니다.')
             this.generateDefault();
         }
     }
