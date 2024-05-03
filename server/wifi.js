@@ -4,7 +4,7 @@ const ini  = require('ini');
 const path = require('path');
 
 class WiFi {
-    constructor(inter) {
+    /* constructor(inter) {
         this.inter = inter;
         this.apMode = this.checkApMode();
         this.mac = '00:00:00:00:00:00';
@@ -19,7 +19,7 @@ class WiFi {
         this.updateApMode();
         this.stopApMode();
         this.startApMode();
-    }
+    } */
 
     /* get ssidList() {
         return this.ssidList;
