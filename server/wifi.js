@@ -360,7 +360,7 @@ class WiFi {
     
 
 } */
-
+}
 module.exports = WiFi;
 /* if (require.main === module) {
     const wifi = new WiFi('wlan0');
