@@ -25,13 +25,13 @@ function restartVibnet() {
     });
 }
 
-/* app.get("/", async(req,res) => {
+app.get("/", async(req,res) => {
     const devInfo = await vibConfig.getDeviceInfo();
     await wifi.updateNetworkInfo();
     res.render('index', { devInfo, wifi});
-}) */
+})
 
-/* app.post('/', async (req, res) => {
+app.post('/', async (req, res) => {
     const param = req.body.param;
 
     switch (param) {
@@ -60,11 +60,11 @@ function restartVibnet() {
 
     res.redirect('/');
 });
- */
+
 app.post('/handle_ap', async (req, res) => {
     const param = req.body.param;
     const dev_id = 'D000001'; 
-    c
+
     if (dev_id) {
         try {
             if (param) {
