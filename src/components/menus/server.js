@@ -18,7 +18,7 @@ const Server = () => {
                 <div className="form-group labels">
                     <label>* Server IP address</label>
                     <label>* Push Port</label>
-                    <label>* Reg Port</label>
+                    <label>* Req Port</label>
                 </div>
 
                 <div className="form-group blank"/>
@@ -26,14 +26,14 @@ const Server = () => {
                 <div className="form-group contents">            
                     <CustomInput type="text" readOnly/>
                     <CustomSelect>
-                        <option value="1">1,000 hz</option>
-                        <option value="2">2,000 hz</option>
-                        <option value="3">3,000 hz</option>
-                        <option value="4">4,000 hz</option>
+                        <option value="1">5553</option>
+                        <option value="2">5554</option>
+                        <option value="3">5555</option>
                     </CustomSelect>
                     <CustomSelect>
-                        <option value="avg">Average</option>
-                        <option value="sum">Sum</option>
+                        <option value="avg">5559</option>
+                        <option value="sum">5560</option>
+                        <option value="sum">5561</option>
                     </CustomSelect>
                 </div>
             </div>

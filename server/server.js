@@ -100,12 +100,12 @@ app.get("/net_information", async (req, res) => {
 
         console.log('Device Config : ', deviceConfig);
 
-        res.json({
-            IP_Address: deviceConfig.ip_address,
-            SubnetMask: deviceConfig.subnet_mask,
-            Default_Gateway: deviceConfig.default_gateway,
-            Mode: deviceConfig.mode,
-            SSID: deviceConfig.ssid
+        res.send({
+            IP_Address: '192.168.10.14',
+            SubnetMask: '255.255.255.0',
+            Default_Gateway: '192.168.10.1',
+            Mode: 'NoActive',
+            SSID: 'vib-e4:5f:01:fb:3d:e7'
         });
     } catch (error) {
         console.error('Error fetching device config:', error);

@@ -17,7 +17,7 @@ const KEYS = {
 const DEFAULTS = {
     model_no: 'FL-VIBNET101',
     serial_no: '44G29WP20303202',
-    device_id: 'D2834567',
+    device_id: 'D000001',
     sub_addr: 'tcp://192.168.0.100:5555',
     push_addr: 'tcp://192.168.0.100:5557',
     req_addr: 'tcp://192.168.0.100:5559'
@@ -36,6 +36,7 @@ class VibnetConfig{
     writeConfig(config) {
         const configString = ini.stringify(config);
         fs.writeFileSync(CONFIG_FILE, configString, ENCODING);
+        console.log('file make successful');
     }
     generateDefault() {
         const config = {};

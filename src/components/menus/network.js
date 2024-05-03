@@ -16,7 +16,7 @@ const Network = ({}) => {
     const devId = 'D000001';
     const getDefaultNetworkInfo = useCallback(async() => {
         try {
-            const res = await fetch(`http://192.168.10.14:4001/net_information?devId=${devId}`, {
+            const res = await fetch(`http://localhost:4001/net_information?devId=${devId}`, {
                 method: 'GET'
             });
 
@@ -25,31 +25,31 @@ const Network = ({}) => {
                 return;
             }
 
-            const json = await res.json();  console.log(json);
+            const json = await res.json(); 
             
-            if (isMounted.current) {
+            
                 setNetInfo(netinfo => ({
                     ...netinfo, 
-                    IP_Address: json,
-                    SubnetMask:json,
-                    Default_Gateway:json,
-                    Mode:json,
-                    SSID:json,
+                    IP_Address: json.IP_Address,
+                    SubnetMask:json.SubnetMask,
+                    Default_Gateway:json.Default_Gateway,
+                    Mode:json.Mode,
+                    SSID:json.SSID,
                 }));
-            }
+            
             
         } catch (error) {
             console.error('Failed to fetch device info:', error);
         }
-    },[/* devId, */netInfo])
-
+    },[devId])
+    console.log(netInfo);
     useEffect(() => {
         getDefaultNetworkInfo();
         return () => {
             isMounted.current = false;
         };
     },[getDefaultNetworkInfo])
-    const handleApMode = async() => {
+    /* const handleApMode = async() => {
         try {
             const res = await fetch(`http://192.168.10.14:4001/handle_ap?devId=${devId}`, {
                 method: 'post',
@@ -71,8 +71,8 @@ const Network = ({}) => {
         } catch (error) {
             console.error('Failed to handle apmode :', error);
         }
-    }
-    useEffect(() => {
+    } */
+   /*  useEffect(() => {
         let isMounted = true;
         
 
@@ -81,7 +81,7 @@ const Network = ({}) => {
         return () => {
             isMounted = false;
         }
-    },[handleAP])
+    },[handleAP]) */
     
 
     return(
@@ -107,7 +107,7 @@ const Network = ({}) => {
                             <input value={netInfo.IP_Address} type="text" readOnly/>
                             <input value={netInfo.SubnetMask}type="text" readOnly/>
                             <input value={netInfo.Default_Gateway} type="text" readOnly/>
-                            <input value={netInfo.Mode} type="text" readOnly/>
+                            <input value={netInfo.Mode === 'NoActive' ? '비활성화' : '활성화' } type="text" readOnly/>
                             <input value={netInfo.SSID} type="text" readOnly/>
                         </div>
                     </div>
