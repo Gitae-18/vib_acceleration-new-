@@ -27,7 +27,7 @@ const Network = ({}) => {
             }
 
             const json = await res.json(); 
-            
+            console.log(json);
             
                 setNetInfo(netinfo => ({
                     ...netinfo, 
