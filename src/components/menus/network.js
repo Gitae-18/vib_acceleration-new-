@@ -181,7 +181,7 @@ const Network = ({}) => {
                         <tbody>
                             {ssidList.map((network, index) => (
                                 <tr key={index}>
-                                    <td className="first">{network.ssid}</td>
+                                    <td className="first">{network}</td>
                                     <td className="second">{network.connected ? "Connected" : "Not Connected"}</td>
                                     <td className="button-cell">
                                         {network.connected ? (
