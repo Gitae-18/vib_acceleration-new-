@@ -129,12 +129,11 @@ const Network = ({}) => {
     useEffect(() => {
         const savedSSIDs = localStorage.getItem('ssids');
         if (savedSSIDs) {
-            const parsedData = JSON.parse(savedSSIDs);
-            setSSIDList(parsedData);
+            setSSIDList(savedSSIDs);
         }
     }, []);
     useEffect(() => {
-        localStorage.setItem('ssids', JSON.stringify(ssidList));
+        localStorage.setItem('ssids', ssidList);
     }, [ssidList]);
     const handleConnectWiFi = async(network) => {
         try {
