@@ -110,8 +110,26 @@ const Network = ({}) => {
             console.error('Failed to fetch device info:', error);
         }
     },[]);
-    const handleConnectWiFi = () => {
+    const handleConnectWiFi = async(network) => {
+        try {
+            const res = await fetch(`http://192.168.10.14:5001/network/connection`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ssid: network,
+                    password: password, 
+                    action: network.connected ? 'disconnect' : 'connect'
+                }),
+            });
 
+            if (!res.ok) {
+                console.error('Server responded with status:', res.status);
+            } 
+                const json = await res.json();            
+                setSSIDList(json);                        
+        } catch (error) {
+            console.error('Failed to fetch device info:', error);
+        }
     } 
     return(
         <>
@@ -181,19 +199,34 @@ const Network = ({}) => {
                         <tbody>
                             {ssidList.map((network, index) => (
                                 <tr key={index}>
-                                    <td className="first">{network}</td>
+                                    <td className="first">{networ.ssid}</td>
                                     <td className="second">{network.connected ? "Connected" : "Not Connected"}</td>
                                     <td className="button-cell">
-                                        {network.connected ? (
-                                            <button onClick={() => handleDisconnect(network.ssid)}>Disconnect</button>
+                                    {network.connected ? (
+                                        <button onClick={() => handleConnectWiFi(network.ssid, '')}>Disconnect</button>
                                         ) : (
-                                            <button onClick={() => handleConnectWiFi(network.ssid)}>Connect</button>
-                                        )}
+                                        <button onClick={() => openModal(network.ssid)}>Connect</button>
+                                    )}
                                     </td>
                                 </tr>
                              ))}
                         </tbody>
                     </table>
+                        {showModal && (
+                            <div className="modal">
+                            <div className="modal-content">
+                                <h2>Enter Password for {selectedSSID}</h2>
+                                <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Password"
+                                />
+                                <button onClick={connect}>Connect</button>
+                                <button onClick={() => setShowModal(false)}>Cancel</button>
+                            </div>
+                            </div>
+                        )}
                     </div>
                     <CustomLine/>
                     <div className="group_devinfo">
