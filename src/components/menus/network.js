@@ -121,13 +121,13 @@ const Network = ({}) => {
             } 
                 const json = await res.json();                            
                 setSSIDList(json);                        
-                localStorage.setItem('ssids', JSON.stringify(json));                
+                sessionStorage.setItem('ssids', JSON.stringify(json));                
         } catch (error) {
             console.error('Failed to fetch device info:', error);
         }
     },[]);
     useEffect(() => {
-        const savedSSIDs = localStorage.getItem('ssids');
+        const savedSSIDs = sessionStorage.getItem('ssids');
         if (savedSSIDs) {
             setSSIDList(JSON.parse(savedSSIDs));
         }
