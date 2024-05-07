@@ -54,7 +54,7 @@ const Network = ({}) => {
                 console.error('Server responded with status:', res.status);
             } 
                 const json = await res.json();  
-                setSSIDList(json);                                      
+                //setSSIDList(json);                                      
         } catch (error) {
             console.error('Failed to fetch device info:', error);
         }
