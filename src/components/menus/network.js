@@ -13,6 +13,11 @@ const Network = ({}) => {
     });
     const [handleAP, setHandleAP] = useState(false);
     const [ssidList, setSSIDList] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [selectedSSID, setSelectedSSID] = useState('');
+    const [password, setPassword] = useState('');
+  
+  
     const isMounted = useRef(true);
     const devId = 'D000001';
     const getDefaultNetworkInfo = useCallback(async() => {
@@ -60,6 +65,18 @@ const Network = ({}) => {
             isMounted.current = false;
         };
     },[getDefaultNetworkInfo])
+
+    const openModal = (ssid) => {
+        setSelectedSSID(ssid);
+        setShowModal(true);
+      };
+    
+      const connect = () => {
+        handleConnectWiFi(selectedSSID, password);
+        setShowModal(false);
+        setPassword('');  // 비밀번호 필드 초기화
+      };
+
     const handleApMode = async() => {
         try {
             const res = await fetch(`http://192.168.10.14:5001/handle_ap?devId=${devId}`, {
