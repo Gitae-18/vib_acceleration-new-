@@ -16,8 +16,9 @@ const Network = ({}) => {
     const devId = 'D000001';
     const getDefaultNetworkInfo = useCallback(async() => {
         try {
-            const res = await fetch(`http://192.168.10.14:4001/network`, {
-                method: 'POST'
+            const res = await fetch(`http://192.168.10.14:5001/network`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
             });
 
             if (!res.ok) {
@@ -51,7 +52,7 @@ const Network = ({}) => {
     },[getDefaultNetworkInfo])
     const handleApMode = async() => {
         try {
-            const res = await fetch(`http://192.168.10.14:4001/handle_ap?devId=${devId}`, {
+            const res = await fetch(`http://192.168.10.14:5001/handle_ap?devId=${devId}`, {
                 method: 'post',
                 headers: {
                     "Content-Type": "application/json"
