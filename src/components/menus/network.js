@@ -121,21 +121,20 @@ const Network = ({}) => {
             } 
                 const json = await res.json();                            
                 setSSIDList(json);                        
-                sessionStorage.setItem('ssids', JSON.stringify(json));
-                console.log('Saved to sessionStorage');
+                localStorage.setItem('ssids', JSON.stringify(json));                
         } catch (error) {
             console.error('Failed to fetch device info:', error);
         }
     },[]);
     useEffect(() => {
-        const savedSSIDs = sessionStorage.getItem('ssids');
+        const savedSSIDs = localStorage.getItem('ssids');
         if (savedSSIDs) {
             const parsedData = JSON.parse(savedSSIDs);
             setSSIDList(parsedData);
         }
     }, []);
     useEffect(() => {
-        sessionStorage.setItem('ssids', JSON.stringify(ssidList));
+        localStorage.setItem('ssids', JSON.stringify(ssidList));
     }, [ssidList]);
     const handleConnectWiFi = async(network) => {
         try {
