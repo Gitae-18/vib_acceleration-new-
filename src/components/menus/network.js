@@ -67,15 +67,7 @@ const Network = ({}) => {
         };
     },[getDefaultNetworkInfo])
 
-    useEffect(() => {
-        const savedSSIDs = sessionStorage.getItem('ssids');
-        if (savedSSIDs) {
-            setSSIDList(JSON.parse(savedSSIDs));
-        }
-    }, []);
-    useEffect(() => {
-        sessionStorage.setItem('ssids', JSON.stringify(ssidList));
-    }, [ssidList]);
+    
 
     const openModal = (ssid) => {
         const buttonRect = event.target.getBoundingClientRect();
@@ -140,10 +132,20 @@ const Network = ({}) => {
                 const json = await res.json();                            
                 setSSIDList(json);                        
                 sessionStorage.setItem('ssids', JSON.stringify(json));
+                console.log('Saved to sessionStorage');
         } catch (error) {
             console.error('Failed to fetch device info:', error);
         }
     },[]);
+    useEffect(() => {
+        const savedSSIDs = sessionStorage.getItem('ssids');
+        if (savedSSIDs) {
+            setSSIDList(JSON.parse(savedSSIDs));
+        }
+    }, []);
+    useEffect(() => {
+        sessionStorage.setItem('ssids', JSON.stringify(ssidList));
+    }, [ssidList]);
     const handleConnectWiFi = async(network) => {
         try {
             const res = await fetch(`http://192.168.10.14:5001/network/connection`, {
@@ -159,8 +161,7 @@ const Network = ({}) => {
             if (!res.ok) {
                 console.error('Server responded with status:', res.status);
             } 
-                const json = await res.json();            
-                setSSIDList(json);                        
+                const json = await res.json();                                                  
         } catch (error) {
             console.error('Failed to fetch device info:', error);
         }
