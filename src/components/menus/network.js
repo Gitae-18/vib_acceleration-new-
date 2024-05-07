@@ -131,7 +131,7 @@ const Network = ({}) => {
         if (savedSSIDs) {
             setSSIDList(JSON.parse(savedSSIDs));
         }
-    }, [ssidList]);
+    }, []);
     const handleConnectWiFi = async(network) => {
         try {
             const res = await fetch(`http://192.168.10.14:5001/network/connection`, {
