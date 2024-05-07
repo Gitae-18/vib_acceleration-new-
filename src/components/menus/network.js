@@ -62,9 +62,9 @@ const Network = ({}) => {
 
     useEffect(() => {
         getDefaultNetworkInfo();
-        return () => {
+        /* return () => {
             isMounted.current = false;
-        };
+        }; */
     },[getDefaultNetworkInfo])
 
     
@@ -108,16 +108,6 @@ const Network = ({}) => {
             console.error('Failed to handle apmode :', error);
         }
     }
-    useEffect(() => {
-        let isMounted = true;
-        
-
-        //handleApMode();
-
-        return () => {
-            isMounted = false;
-        }
-    },[handleAP])
     
     const scanSsidList = useCallback(async() => {
         try {
