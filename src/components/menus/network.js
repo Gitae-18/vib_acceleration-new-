@@ -23,13 +23,7 @@ const Network = ({}) => {
 
             if (!res.ok) {
                 console.error('Server responded with status:', res.status);
-            } else {
-                const text = await res.text();
-                
-                const data = await res.json();
-                console.log(text);
-            }
-
+            } 
                 const json = await res.json();
                 setNetInfo(netinfo => ({
                     ...netinfo, 
