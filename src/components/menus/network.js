@@ -12,7 +12,7 @@ const Network = ({}) => {
         SSID:'',
     });
     const [handleAP, setHandleAP] = useState(false);
-    const [ssidList, setSSIDList] = useState([]);
+    const [ssidList, setSSIDList] = useState([{ssid:'none', connceted:'none'}]);
     const [modalPosition, setModalPosition] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [selectedSSID, setSelectedSSID] = useState('');
