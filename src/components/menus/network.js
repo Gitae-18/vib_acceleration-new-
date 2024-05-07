@@ -12,6 +12,7 @@ const Network = ({}) => {
         SSID:'',
     });
     const [handleAP, setHandleAP] = useState(false);
+    const [ssidList, setSSIDList] = useState([]);
     const isMounted = useRef(true);
     const devId = 'D000001';
     const getDefaultNetworkInfo = useCallback(async() => {
@@ -80,7 +81,23 @@ const Network = ({}) => {
         }
     },[handleAP])
     
+    const scanSsidList = useCallback(async() => {
+        try {
+            const res = await fetch(`http://192.168.10.14:5001/network/getssid`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            });
 
+            if (!res.ok) {
+                console.error('Server responded with status:', res.status);
+            } 
+                const json = await res.json();
+                console.log(json);
+                setSSIDList(json);                        
+        } catch (error) {
+            console.error('Failed to fetch device info:', error);
+        }
+    },[]);    
     return(
         <>
                 <div>
@@ -134,7 +151,7 @@ const Network = ({}) => {
                         </div> 
                         <div className="form-group blank"/>    
                         <div className="form-group contents">            
-                            <CustomButton>Rescan</CustomButton> 
+                            <CustomButton onClick={scanSsidList}>Rescan</CustomButton> 
                         </div>                       
                     </div>
                     <div className="form-group contents">            
