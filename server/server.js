@@ -86,7 +86,7 @@ app.post('/handle_ap', async (req, res) => {
     const dev_id = req.query.id;
 
 }) */
-app.get("/net_information", async (req, res) => {
+app.get("/network", async (req, res) => {
     try {
         // const dev_id = req.query.id; // 실제 사용 시 주석을 해제하고 req.query.id를 사용하세요.
         const dev_id = 'D000001';
