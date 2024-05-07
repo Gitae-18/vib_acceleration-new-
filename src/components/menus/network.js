@@ -25,19 +25,20 @@ const Network = ({}) => {
                 console.error('Server responded with status:', res.status);
             } else {
                 const text = await res.text();
-                const json = JSON.parse(text);
+                
                 const data = await res.json();
-                console.log(json);
+                console.log(text);
             }
-            
-                /* setNetInfo(netinfo => ({
+
+                const json = await res.json();
+                setNetInfo(netinfo => ({
                     ...netinfo, 
                     IP_Address: json.IP_Address,
                     SubnetMask:json.SubnetMask,
                     Default_Gateway:json.Default_Gateway,
                     Mode:json.Mode,
                     SSID:json.SSID,
-                })); */
+                }));
             
             
         } catch (error) {
