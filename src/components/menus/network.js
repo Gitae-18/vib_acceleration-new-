@@ -76,7 +76,7 @@ const Network = ({}) => {
         setShowModal(false);
         setPassword('');  // 비밀번호 필드 초기화
       };
-
+      
     const handleApMode = async() => {
         try {
             const res = await fetch(`http://192.168.10.14:5001/handle_ap?devId=${devId}`, {
@@ -122,6 +122,7 @@ const Network = ({}) => {
                 console.error('Server responded with status:', res.status);
             } 
                 const json = await res.json();            
+                console.log(json);
                 setSSIDList(json);                        
         } catch (error) {
             console.error('Failed to fetch device info:', error);
