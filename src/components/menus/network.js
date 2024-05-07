@@ -22,8 +22,10 @@ const Network = ({}) => {
             });
 
             if (!res.ok) {
-                console.log('잘못된 아이디 입니다.');
-                return;
+                console.error('Server responded with status:', res.status);
+            } else {
+                const data = await res.json();
+                console.log(data);
             }
 
             const json = await res.json(); 
