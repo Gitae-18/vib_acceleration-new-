@@ -13,6 +13,7 @@ const Network = ({}) => {
     });
     const [handleAP, setHandleAP] = useState(false);
     const [ssidList, setSSIDList] = useState([]);
+    const [modalPosition, setModalPosition] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [selectedSSID, setSelectedSSID] = useState('');
     const [password, setPassword] = useState('');
@@ -67,8 +68,13 @@ const Network = ({}) => {
     },[getDefaultNetworkInfo])
 
     const openModal = (ssid) => {
+        const buttonRect = event.target.getBoundingClientRect();
         setSelectedSSID(ssid);
         setShowModal(true);
+        setModalPosition({
+            top: buttonRect.top + window.scrollY - 110,  // 스크롤에 따라 조정
+            left: buttonRect.right + 10,
+          });
       };
     
       const connect = () => {
@@ -231,9 +237,9 @@ const Network = ({}) => {
                         </tbody>
                     </table>
                         {showModal && (
-                            <div className="modal">
+                            <div className="modal" style={{ position: 'absolute', top: modalPosition.top + 'px', left: modalPosition.left + 'px' }}>
                             <div className="modal-content">
-                                <h2>Enter Password for {selectedSSID}</h2>
+                                <h3>Enter Password for {selectedSSID}</h3>
                                 <input
                                 type="password"
                                 value={password}
