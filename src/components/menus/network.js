@@ -97,7 +97,10 @@ const Network = ({}) => {
         } catch (error) {
             console.error('Failed to fetch device info:', error);
         }
-    },[]);    
+    },[]);
+    const handleConnectWiFi = () => {
+
+    } 
     return(
         <>
                 <div>
@@ -164,21 +167,19 @@ const Network = ({}) => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                            <td className="first">C&C_ring_2.4G</td>
-                            <td className="second">Not Connected</td>
-                            <td className="button-cell"><button>Connect</button></td>
-                            </tr>
-                            <tr>
-                            <td className="first">FEELINK_2.4G</td>
-                            <td className="second">Not Connected</td>
-                            <td className="button-cell"><button>Connect</button></td>
-                            </tr>
-                            <tr>
-                            <td className="first">Vibnet_a2:22:bb:cc:dd</td>
-                            <td className="second">Connected</td>
-                            <td className="button-cell"><button>Disconnect</button></td>
-                            </tr>
+                            {ssidList.map((network, index) => (
+                                <tr key={index}>
+                                    <td className="first">{network.ssid}</td>
+                                    <td className="second">{network.connected ? "Connected" : "Not Connected"}</td>
+                                    <td className="button-cell">
+                                        {network.connected ? (
+                                            <button onClick={() => handleDisconnect(network.ssid)}>Disconnect</button>
+                                        ) : (
+                                            <button onClick={() => handleConnectWiFi(network.ssid)}>Connect</button>
+                                        )}
+                                    </td>
+                                </tr>
+                             ))}
                         </tbody>
                     </table>
                     </div>
