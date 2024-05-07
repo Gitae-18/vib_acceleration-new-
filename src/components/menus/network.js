@@ -62,9 +62,9 @@ const Network = ({}) => {
 
     useEffect(() => {
         getDefaultNetworkInfo();
-        /* return () => {
+        return () => {
             isMounted.current = false;
-        }; */
+        };
     },[getDefaultNetworkInfo])
 
     
@@ -130,7 +130,8 @@ const Network = ({}) => {
     useEffect(() => {
         const savedSSIDs = sessionStorage.getItem('ssids');
         if (savedSSIDs) {
-            setSSIDList(JSON.parse(savedSSIDs));
+            const parsedData = JSON.parse(savedSSIDs);
+            setSSIDList(parsedData);
         }
     }, []);
     useEffect(() => {
