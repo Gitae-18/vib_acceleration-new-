@@ -125,16 +125,13 @@ const Network = ({}) => {
         } catch (error) {
             console.error('Failed to fetch device info:', error);
         }
-    },[]);
+    },[ssidList]);
     useEffect(() => {
         const savedSSIDs = localStorage.getItem('ssids');
         if (savedSSIDs) {
-            setSSIDList(savedSSIDs);
+            setSSIDList(JSON.parse(savedSSIDs));
         }
     }, []);
-    useEffect(() => {
-        localStorage.setItem('ssids', ssidList);
-    }, [ssidList]);
     const handleConnectWiFi = async(network) => {
         try {
             const res = await fetch(`http://192.168.10.14:5001/network/connection`, {
