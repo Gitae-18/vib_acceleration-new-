@@ -25,42 +25,6 @@ function restartVibnet() {
     });
 }
 
-app.get("/", async(req,res) => {
-    const devInfo = await vibConfig.getDeviceInfo();
-    await wifi.updateNetworkInfo();
-    res.render('index', { devInfo, wifi});
-})
-
-app.post('/', async (req, res) => {
-    const param = req.body.param;
-
-    switch (param) {
-        case 'set_ap':
-            wifi.startApMode();
-            break;
-        case 'unset_ap':
-            wifi.stopApMode();
-            break;
-        case 'edit_devinfo':
-            await vibConfig.setDeviceInfo(req.body);
-            restartVibnet();
-            break;
-        case 'scan':
-            const ssids = await wifi.scanSsid();
-            console.log("검색된 WiFi SSID 목록:", ssids);
-            break;
-        case 'connect':
-            const { ssid, password } = req.body;
-            const connected = await wifi.connectToWifi(ssid, password);
-            if (!connected) wifi.startApMode();
-            break;
-        default:
-            break;
-    }
-
-    res.redirect('/');
-});
-
 app.post('/handle_ap', async (req, res) => {
     const param = req.body.param;
     const dev_id = 'D000001'; 
