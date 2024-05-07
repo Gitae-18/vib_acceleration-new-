@@ -17,7 +17,7 @@ const Network = ({}) => {
     const getDefaultNetworkInfo = useCallback(async() => {
         try {
             const res = await fetch(`http://192.168.10.14:4001/network`, {
-                method: 'GET'
+                method: 'POST'
             });
 
             if (!res.ok) {
