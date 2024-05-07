@@ -59,13 +59,23 @@ const Network = ({}) => {
             console.error('Failed to fetch device info:', error);
         }
     },[devId])
-    console.log(netInfo);
+
     useEffect(() => {
         getDefaultNetworkInfo();
         return () => {
             isMounted.current = false;
         };
     },[getDefaultNetworkInfo])
+
+    useEffect(() => {
+        const savedSSIDs = sessionStorage.getItem('ssids');
+        if (savedSSIDs) {
+            setSSIDList(JSON.parse(savedSSIDs));
+        }
+    }, []);
+    useEffect(() => {
+        sessionStorage.setItem('ssids', JSON.stringify(ssidList));
+    }, [ssidList]);
 
     const openModal = (ssid) => {
         const buttonRect = event.target.getBoundingClientRect();
@@ -127,9 +137,9 @@ const Network = ({}) => {
             if (!res.ok) {
                 console.error('Server responded with status:', res.status);
             } 
-                const json = await res.json();            
-                console.log(json);
+                const json = await res.json();                            
                 setSSIDList(json);                        
+                sessionStorage.setItem('ssids', JSON.stringify(json));
         } catch (error) {
             console.error('Failed to fetch device info:', error);
         }
