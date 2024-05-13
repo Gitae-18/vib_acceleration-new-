@@ -88,7 +88,7 @@ const Storage = () => {
                 <div className="form-group blank"/>
 
                 <div className="form-group contents">            
-                    <div className="form-group contents">
+                    <div className="form-group contents date">
                         <div>                        
                         <input type="date" id="start_date" name="start_date" />
                         <label style={{marginLeft:'20px'}}> ~ </label>

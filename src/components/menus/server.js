@@ -4,6 +4,27 @@ import Menu from "../menu";
 import '../../style/body.css';
 import styled from "styled-components";
 const Server = () => {
+    const [sub_addr, setSubAddr] = useState('5555');
+    const [push_addr, setPushAddr] = useState('5557');
+    const [req_addr, setReqAddr] = useState('5559');
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+    
+        switch (name) {
+          case 'sub_addr':
+            setSubAddr(value);
+            break;
+          case 'push_addr':
+            setPushAddr(value);
+            break;
+          case 'req_addr':
+            setReqAddr(value);
+            break;
+          default:
+            break;
+        }
+    }
     return(
         <>
         <div>
@@ -17,6 +38,7 @@ const Server = () => {
             <div className="group_devinfo" style={{marginBottom:'500px'}}>
                 <div className="form-group labels">
                     <label>* Server IP address</label>
+                    <label>* Sub Port</label>
                     <label>* Push Port</label>
                     <label>* Req Port</label>
                 </div>
@@ -25,16 +47,10 @@ const Server = () => {
 
                 <div className="form-group contents">            
                     <CustomInput type="text" readOnly/>
-                    <CustomSelect>
-                        <option value="1">5553</option>
-                        <option value="2">5554</option>
-                        <option value="3">5555</option>
-                    </CustomSelect>
-                    <CustomSelect>
-                        <option value="avg">5559</option>
-                        <option value="sum">5560</option>
-                        <option value="sum">5561</option>
-                    </CustomSelect>
+                    <InputPort defaultValue={sub_addr} name="sub" onChange={handleChange}/>
+                    <InputPort defaultValue={push_addr} name="push" onChange={handleChange}/>
+                    <InputPort defaultValue={req_addr} name="req" onChange={handleChange}/>
+
                 </div>
             </div>
             <CustomLine/>
@@ -51,13 +67,16 @@ const Server = () => {
 
 export default Server;
 
-const CustomSelect = styled.select`
-border: 1px solid #bbb;
-width: 300px;
-border-radius: 2%;
-flex-grow:1;
-margin-bottom:20px;
-margin-right: 20px;
+const InputPort = styled.input`
+width:280px !important; 
+height: 15px !important;
+border: 1px solid #ccc; 
+border-radius: 4px; 
+padding: 5px 10px; 
+font-size: 16px; 
+margin-bottom:20px !important;
+box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3); 
+background-color: #ffffff;
 margin-left:50%;
 `
 const CustomInput = styled.input`

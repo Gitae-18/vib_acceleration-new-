@@ -5,11 +5,13 @@ import '../../style/body.css';
 import styled from "styled-components";
 import Calendar from 'react-calendar';
 import '../../style/Calendar.css';
+import moment from "moment/moment";
 const General = () => {
  const [devInfo, setDevInfo] = useState("Select Device ID");
  const [devId, setDevID]  = useState(0);
  const [datenow, setDateNow] = useState('0000-00-00');
  const [nowtime, setNowTime] = useState('00:00');
+ const [dateTime, setDateTime] = useState(moment(new Date(), "YYYY-MM-dd hh:mm:ss").format())
  const deviceRef = useRef(null);
 
         const fetchDevInfo = useCallback(async () => {
@@ -33,23 +35,8 @@ const General = () => {
                 console.error('Failed to fetch device info:', error);
             }
         }, [devId]);
-        const getLocalDatenTime = async() => {
-          try {
-            const res = await fetch(`http://192.168.10.14:3000/dev_datetime?devId=${devId}`, {
-                method: 'GET'
-            })
-            if (!res.ok) {
-                console.log('잘못된 아이디 입니다.');
-                return;
-            }
-            const json = await res.json();
-                if (json) {
-                    setDevInfo(json);
-                }
-          } 
-          catch (error) {
-            console.error('Failed to fetch device date & time:', error);
-          }  
+        const setLocalDatenTime = async() => {
+            
         };
         useEffect(() => {
            // fetchDevInfo();
@@ -136,7 +123,7 @@ const General = () => {
             </div>
             <div className="group_devinfo">
                 <div className="form-group contents">
-                    <CustomButton onClick={getLocalDatenTime}>Get Local Date/Time</CustomButton>
+                    <CustomButton /* onClick={} */>Get Local Date/Time</CustomButton>
                 </div>
             </div>
         </div>
