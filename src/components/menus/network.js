@@ -11,7 +11,7 @@ const Network = ({}) => {
         Mode:'',
         SSID:'',
     });
-    const [handleAP, setHandleAP] = useState(false);
+    const [handleAP, setHandleAP] = useState();
     const [ssidList, setSSIDList] = useState([{ssid:'none', connceted:'none'}]);
     const [modalPosition, setModalPosition] = useState({});
     const [showModal, setShowModal] = useState(false);
@@ -20,7 +20,7 @@ const Network = ({}) => {
   
   
     const isMounted = useRef(true);
-    const devId = 'D000001';
+    const devId = 'D2834567';
     const getDefaultNetworkInfo = useCallback(async() => {
         try {
             const res = await fetch(`http://192.168.10.14:5001/network`, {
@@ -45,16 +45,17 @@ const Network = ({}) => {
             console.error('Failed to fetch device info:', error);
         }
         try {
-            const res = await fetch(`http://192.168.10.14:5001/network/ssidlist`, {
+            const res = await fetch(`http://192.168.10.14:5001/network/getapmode?devId=${devId}`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
 
             if (!res.ok) {
-                console.error('Server responded with status:', res.status);
+                throw new Error(`Server responded with status: ${response.status}`);        
             } 
-                const json = await res.json();  
-                //setSSIDList(json);                                      
+                const json = await res.json(); 
+                console.log(json);   
+                setHandleAP(json.ap_status);                               
         } catch (error) {
             console.error('Failed to fetch device info:', error);
         }
@@ -84,30 +85,7 @@ const Network = ({}) => {
         setShowModal(false);
         setPassword('');  // 비밀번호 필드 초기화
       };
-      
-    const handleApMode = async() => {
-        try {
-            const res = await fetch(`http://192.168.10.14:5001/handle_ap?devId=${devId}`, {
-                method: 'post',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    param: handleAP,
-                })            
-            });
-
-            if (!res.ok) {
-                console.log('오류가 발생했습니다.');
-                return;
-            }
-            if (isMounted) {
-                setMessage("AP Mode has been successfully updated.");
-            }           
-        } catch (error) {
-            console.error('Failed to handle apmode :', error);
-        }
-    }
+         
     
     const scanSsidList = useCallback(async() => {
         try {
@@ -132,6 +110,26 @@ const Network = ({}) => {
             setSSIDList(JSON.parse(savedSSIDs));
         }
     }, []);
+
+    const handleModeChange = async() => {
+        try {
+            const res = await fetch('http://192.168.10.14:5001/network/setapmode', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ap_mode : handleAP,
+                    id : devId
+                })
+            });
+            if (!res.ok) {
+                console.error('Server responded with status:', res.status);
+            }
+            const json = await res.json();                    
+        }
+        catch (error) {
+            console.error('Failed to fetch AP Mode:', error);
+        }        
+    }
     const handleConnectWiFi = async(network) => {
         try {
             const res = await fetch(`http://192.168.10.14:5001/network/connection`, {
@@ -191,7 +189,7 @@ const Network = ({}) => {
                         </div> 
                         <div className="form-group blank"/>    
                         <div className="form-group contents">       
-                            <CustomButton onClick={()=> {setHandleAP(!handleAP)}}>SETUP Mode Stop</CustomButton>                             
+                            <CustomButton onClick={()=> {handleModeChange}}>SETUP Mode Stop</CustomButton>                             
                         </div>                       
                     </div>
                     <CustomLine/>        
