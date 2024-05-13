@@ -111,26 +111,30 @@ const Network = ({}) => {
         }
     }, []);
 
-    const handleModeChange = useCallback(async() => {
+    const handleModeChange = useCallback(async () => {
+        const newHandleAP = !handleAP; 
+        setHandleAP(newHandleAP); 
+    
         try {
             const res = await fetch('http://192.168.10.14:5001/network/setapmode', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    ap_mode : handleAP,
-                    id : devId
+                    ap_mode: newHandleAP, 
+                    id: devId
                 })
             });
             if (!res.ok) {
                 console.error('Server responded with status:', res.status);
             }
-            const json = await res.json();                    
-        }
-        catch (error) {
+            const json = await res.json();
+        } catch (error) {
             console.error('Failed to fetch AP Mode:', error);
         }
-        console.log('mode : ' + handleAP);
-    },[handleAP]) 
+    
+        console.log('mode : ' + newHandleAP); 
+    }, [handleAP]);
+     
     const handleConnectWiFi = async(network) => {
         try {
             const res = await fetch(`http://192.168.10.14:5001/network/connection`, {
