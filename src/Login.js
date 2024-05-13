@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import './style/new.css';
 import { Link, useNavigate} from "react-router-dom";
 const Login = () => {
