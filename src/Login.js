@@ -17,12 +17,13 @@ const Login = () => {
           alert('입력한 정보가 잘못되었습니다.');
         }
       }
-    const saveID = () => {
-        if(isSaved) {
-            const saved = localStorage.getItem('savedid');
-            setSavedID(saved);
-        }
-    }
+    useEffect(()=> {
+        const saveID = localStorage.getItem('savedid');
+        if(saveID) {
+                setSavedID(savedID);           
+        }        
+    },[])
+   
     return(
         <>
             <div className="login_box"> 
