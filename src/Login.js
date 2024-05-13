@@ -10,7 +10,7 @@ const Login = () => {
         e.preventDefault(); // 폼의 기본 제출 동작을 막습니다.
         const id = document.getElementById('id').value;
         const pwd = document.getElementById('pwd').value;
-        localStorage.setitem('savedid',id);
+        localStorage.setItem('savedid',id);
         if (id === 'admin' && pwd === 'admin') {
           history('/general');
         } else {
