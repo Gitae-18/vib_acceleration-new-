@@ -178,7 +178,7 @@ const Network = ({}) => {
                             <input value={netInfo.IP_Address} type="text" readOnly/>
                             <input value={netInfo.SubnetMask}type="text" readOnly/>
                             <input value={netInfo.Default_Gateway} type="text" readOnly/>
-                            <input value={netInfo.Mode === 'NoActive' ? '비활성화' : '활성화' } type="text" readOnly/>
+                            <input value={netInfo.Mode === 'Disabled' ? '비활성화' : '활성화' } type="text" readOnly/>
                             <input value={netInfo.SSID} type="text" readOnly/>
                         </div>
                     </div>
