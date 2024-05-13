@@ -5,7 +5,7 @@ import '../../style/body.css';
 import styled from "styled-components";
 import Calendar from 'react-calendar';
 import '../../style/Calendar.css';
-import moment from "moment/moment";
+import moment from "moment";
 const General = () => {
  const [devInfo, setDevInfo] = useState("Select Device ID");
  const [devId, setDevID]  = useState(0);
