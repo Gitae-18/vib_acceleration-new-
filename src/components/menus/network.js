@@ -20,7 +20,7 @@ const Network = ({}) => {
   
   
     const isMounted = useRef(true);
-    const devId = 'D2834567';
+    const devId = 'D000001';
     const getDefaultNetworkInfo = useCallback(async() => {
         try {
             const res = await fetch(`http://192.168.10.14:5001/network`, {
@@ -111,7 +111,7 @@ const Network = ({}) => {
         }
     }, []);
 
-    const handleModeChange = async() => {
+    const handleModeChange = useCallback(async() => {
         try {
             const res = await fetch('http://192.168.10.14:5001/network/setapmode', {
                 method: 'POST',
@@ -129,7 +129,7 @@ const Network = ({}) => {
         catch (error) {
             console.error('Failed to fetch AP Mode:', error);
         }        
-    }
+    },[handleAP])
     const handleConnectWiFi = async(network) => {
         try {
             const res = await fetch(`http://192.168.10.14:5001/network/connection`, {
