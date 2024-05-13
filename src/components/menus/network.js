@@ -189,7 +189,7 @@ const Network = ({}) => {
                         </div> 
                         <div className="form-group blank"/>    
                         <div className="form-group contents">       
-                            <CustomButton onClick={()=> {handleModeChange}}>SETUP Mode Stop</CustomButton>                             
+                            <CustomButton onClick={handleModeChange}>SETUP Mode Stop</CustomButton>                             
                         </div>                       
                     </div>
                     <CustomLine/>        
