@@ -136,6 +136,7 @@ const Network = ({}) => {
      
     const handleConnectWiFi = async(network) => {
         console.log(network);
+        console.log(password);
         try {
             const res = await fetch(`http://192.168.10.14:5001/network/connection`, {
                 method: 'POST',
