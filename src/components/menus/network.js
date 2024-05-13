@@ -128,8 +128,9 @@ const Network = ({}) => {
         }
         catch (error) {
             console.error('Failed to fetch AP Mode:', error);
-        }        
-    },[handleAP])
+        }
+        console.log('mode : ' + handleAP);
+    },[handleAP]) 
     const handleConnectWiFi = async(network) => {
         try {
             const res = await fetch(`http://192.168.10.14:5001/network/connection`, {
