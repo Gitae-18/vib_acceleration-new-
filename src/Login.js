@@ -32,7 +32,7 @@ const Login = () => {
                 <form action="" onSubmit={handleLogin}>
                 <div class="input_area_and_btn">
                     <div className="input_area">
-                        <div><label className="id">MEMBER ID</label> <input type="text" id="id" name="id" value={savedID.length > 0 && savedID}/></div>
+                        <div><label className="id">MEMBER ID</label> <input type="text" id="id" name="id" defaultvalue={isSaved && savedID}/></div>
                         <div><label className="pwd">PASSWORD</label> <input type="password" id="pwd" name="pwd"/></div>
                     </div>
                     <div className="login_btn">
