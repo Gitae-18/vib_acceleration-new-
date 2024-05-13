@@ -86,7 +86,6 @@ const Network = ({}) => {
         setPassword('');  // 비밀번호 필드 초기화
       };
          
-    console.log(netInfo);
     const scanSsidList = useCallback(async() => {
         try {
             const res = await fetch(`http://192.168.10.14:5001/network/getssid`, {
