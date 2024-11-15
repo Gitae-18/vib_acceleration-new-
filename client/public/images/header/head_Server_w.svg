@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20.7" height="23" viewBox="0 0 20.7 23">
+  <g id="database_7718420" transform="translate(-3 -2)">
+    <g id="그룹_13" data-name="그룹 13" transform="translate(3 2)">
+      <path id="패스_14" data-name="패스 14" d="M13.35,12C7.485,12,3,9.9,3,7S7.485,2,13.35,2,23.7,4.1,23.7,7,19.215,12,13.35,12Zm0-8C8.75,4,5.3,5.6,5.3,7s3.45,3,8.05,3S21.4,8.4,21.4,7,17.95,4,13.35,4Z" transform="translate(-3 -2)" fill="#f2f2f2"/>
+    </g>
+    <g id="그룹_14" data-name="그룹 14" transform="translate(3 14)">
+      <path id="패스_15" data-name="패스 15" d="M13.35,17C7.485,17,3,14.9,3,12H5.3c0,1.4,3.45,3,8.05,3s8.05-1.6,8.05-3h2.3C23.7,14.9,19.215,17,13.35,17Z" transform="translate(-3 -12)" fill="#f2f2f2"/>
+    </g>
+    <g id="그룹_15" data-name="그룹 15" transform="translate(3 7)">
+      <path id="패스_16" data-name="패스 16" d="M13.35,25C7.485,25,3,22.48,3,19V7H5.3V19c0,1.68,3.45,3.6,8.05,3.6S21.4,20.68,21.4,19V7h2.3V19C23.7,22.48,19.215,25,13.35,25Z" transform="translate(-3 -7)" fill="#f2f2f2"/>
+    </g>
+  </g>
+</svg>

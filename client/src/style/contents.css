@@ -1,0 +1,468 @@
+@charset "utf-8";
+
+.mainArea {
+	padding: 70px 0;
+}
+
+.mainArea .contIn {
+	width: 1300px;
+	margin: 0 auto;
+}
+
+.mainArea .contIn .cont_Tit {
+	display: flex;
+	gap: 17px;
+	align-items: center;
+}
+
+.mainArea .contIn .contBox {
+	border: 1px solid #4A4D56;
+	border-radius: 5px;
+	padding: 30px 53px;
+    overflow-x:hidden;
+    overflow-y:auto;
+    white-space: nowrap;
+}
+
+.mainArea .contIn .contBox > ul {
+	display: flex;
+	align-items: center;
+    justify-content: space-between;
+}
+
+.mainArea .contIn .contBox ul.flex-start {
+	align-items: flex-start !important;
+}
+
+.select-container {
+	position: relative;
+}
+
+.select-box {
+    padding: 18px 28px;
+	background-color: #373737;
+    border-radius: 5px;
+    width: 678px;
+    height: 58px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.select-box .arrow {
+    background: url("/public/images/sel_arrow.png") no-repeat;
+    width: 15px;
+    height: 10px;
+}
+
+.select-box.active {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+}
+
+.options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #373737;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    overflow-y: auto;
+    z-index: 10;
+	display: none;
+}
+
+.option {
+    padding: 18px 28px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.option:hover {
+    background-color: #5f5f5f;
+}
+
+.date {
+    align-items: center;
+    justify-content: space-between;
+    width: 678px;
+}
+
+.date input[type="text"] {
+    width: 312px;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    box-sizing: border-box;
+    padding: 18px 28px;
+    border-radius: 5px;
+    color: #F5F5F5;
+    background: #373737 url("/public/images/calender_icon.png") no-repeat center right 18px;
+}
+
+input[type="text"]:focus {
+    border-color: #fff;
+    outline: none;
+    color: #F5F5F5;
+}
+
+.timepicker {
+    width: 678px;
+    border: none;
+    font-size: 18px;
+    box-sizing: border-box;
+    padding: 18px 28px;
+    border-radius: 5px;
+    color: #F5F5F5;
+    background: #373737 url("/public/images/time_icon.png") no-repeat center right 18px !important;
+}
+
+.default_button {
+    background-color: #6662FD;
+    display: block;
+    width: 319px;
+    padding: 14.5px 0;
+    text-align: center;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.default_button:hover,
+.default_button:focus {
+    background-color: #5a55dd;
+}
+
+.common_button {
+    justify-content: center;
+    gap: 30px;
+    padding-top: 64px;
+}
+
+.common_button button {
+    background-color: #6662FD;
+    display: block;
+    width: 232px;
+    padding: 20px 0;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+.common_button button:hover,
+.common_button button:focus {
+    background-color: #5a55dd;
+}
+
+.common_button button.cancel_btn {
+    background-color: #373737;
+    transition: all 0.3s;
+}
+
+.common_button button.cancel_btn:hover,
+.common_button button.cancel_btn:focus {
+    background-color: #4a4a4a;   
+}
+
+.disabledInput {
+    width: 678px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    box-sizing: border-box;
+    padding: 18px 28px;
+    border-radius: 5px;
+}
+
+.Rescan_btn {
+    width: 162px;
+    margin-bottom: 15px;
+}
+
+.tableTit {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.table_normal {    
+    width: 100%;
+    border: none;
+    border-spacing: 0;
+    border-collapse: collapse;
+    line-height: 1.3;
+    border-bottom: 1px solid #BFBFBF;
+}
+
+.table_normal thead tr th {
+    padding: 25px 15px;
+    background-color: #373737;
+    color: #BFBFBF;
+    text-align: center;
+    font-weight: 400;
+}
+
+.table_normal tbody tr td {
+    text-align: center;
+    border-bottom: 1px solid #4A4D56;
+    padding: 25px 15px;
+    box-sizing: border-box;
+    font-weight: 400;
+}
+
+.table_normal tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.table_normal tbody tr td .tableInput {
+    background-color: #373737;
+    border: none;
+    border-radius: 5px;
+    padding: 18px 28px;
+    font-size: 18px;
+    color: #f5f5f5;
+}
+
+.table_normal tbody tr td .table_button {
+    background-color: #474747;
+    width: 188px;
+    padding: 14.5px 0;
+    text-align: center;
+    border-radius: 5px;
+    color: #BFBFBF;
+}
+
+.table_normal tbody tr td .disconnect_btn {
+    background-color: #111113;
+}
+
+.commonInput {
+    background-color: #373737;
+    color: #f5f5f5;
+    width: 678px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    box-sizing: border-box;
+    padding: 18px 28px;
+    border-radius: 5px;
+}
+
+.mainArea .contIn .tree > ul{
+    display: block;
+}
+
+.tree .second_tree::before {
+    content: "";
+    display: block;
+    background: url("/public/images/tree.png") no-repeat center right -10px;
+    width: 32px;
+    height: 59px;
+}
+
+.tree .second_tree > div {
+    margin-left: 50px;
+    margin-top: -35px;
+}
+
+.number input[type="number"] {
+    width: 233.4px;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    box-sizing: border-box;
+    padding: 18px 28px;
+    border-radius: 5px;
+    color: #F5F5F5;
+    background: #373737 no-repeat center right 18px;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+    cursor: pointer;
+    background-color: #111113;
+}
+
+.progress {
+    width: 100%;
+    max-width: 488px;
+}
+
+#progress-bar {
+	width: 100%;
+	height: 30px;
+	-webkit-appearance: none;
+	appearance: none;
+    margin: 22px 0 32px;
+}
+
+#progress-bar::-webkit-progress-bar {
+	background-color: #E5E5E5; /* progress 바 배경색 */
+	border-radius: 5px;
+}
+
+#progress-bar::-webkit-progress-value {
+	background-color:#6662FD; /* progress 바 채워진 부분 색상 */
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.progress-info {
+    font-size: 35px;
+    font-weight: 600;
+}
+
+.progress-info span {
+    color: #6662FD;
+}
+
+.progress-txt .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.progress-txt .color-box {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
+.progress-txt .available {
+    background-color: #d3d3d3;
+}
+
+.progress-txt .used {
+    background-color: #6c63ff;
+}
+
+.progress-txt .text {
+    flex: 1; 
+    min-width: 100px;
+    text-align: left;
+}
+
+.progress-txt .value {
+    flex: 1;
+    min-width: 200px;
+    text-align: left;
+}
+
+.progress-txt .value:last-child {
+    margin-left: 10px;
+    min-width: 120px;
+    text-align: right;
+}
+
+.Data_btn {
+    width: 233px;
+}
+
+/* modal */
+.pop-up .pop-in.middle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.pop-wrap {
+    position: fixed;
+    top: 0px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.modal_wrap {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    padding-top: 9.1vw;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+}
+
+.modal_wrap .confirm_container {
+    width: 34%;
+    height: fit-content;
+    background-color: #202020;
+    padding: 1.6vw 1.6vw 1.6vw 1.6vw;
+    border-radius: 0.78vw;
+}
+
+.modal_title {
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal_wrap .close-btn {
+    cursor: pointer;
+    width: 1.8vw;
+    height: 1.8vw;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    background-size: 40%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/public/images/ico_close.svg");
+    opacity: 0.5;
+}
+
+.modal_wrap .close-btn:hover {
+    opacity: 1;
+}
+
+.confirm_container .modal_buttons .Delete_button {
+    background-color: #6662FD;
+}
+
+.confirm_container .modal_buttons .Delete_button:hover,
+.confirm_container .modal_buttons .Delete_button:focus {
+    background-color: #5a55dd;
+}
+
+.confirm_container .modal_buttons .cancel_button {
+    background-color: #373737;
+}
+
+.confirm_container .modal_buttons .cancel_button:hover, 
+.confirm_container .modal_buttons .cancel_button:focus {
+    background-color: #4a4a4a;
+}
+
+.confirm_container .modal_buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.confirm_container .modal_buttons > button {
+    width: 50%;
+    padding: 15px 0;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.modal_wrap .description .date {
+    width: auto;
+}
+
+.modal_wrap .description .date input[type="text"] {
+    width: auto;
+}
+
+
+

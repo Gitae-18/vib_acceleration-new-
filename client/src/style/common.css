@@ -1,0 +1,460 @@
+@charset "utf-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+hr {
+	display:none
+}
+a {
+	text-decoration:none
+}
+
+*, :after, :before {
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+body {
+    color:#F5F5F5;
+    font-size:18px;
+	font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif !important;
+	overflow-x: hidden;
+    letter-spacing: -1px;
+    position: relative;
+    font-weight: 400;
+    word-break: keep-all;
+	letter-spacing : -0.23px;
+	background-color: #212121;
+} 
+a {
+	color: #F5F5F5;
+	text-decoration: none;
+}
+img {
+	border: none;
+	vertical-align: top;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+p,
+ul,
+li,
+ol,
+dl,
+dt,
+dd {
+	box-sizing: border-box;
+}
+
+x select::-ms-expand {
+	display: none;
+}
+
+br {
+	font-family: dotum;
+}
+
+input:focus,
+select:focus,
+input[type=radio]:focus,
+input[type=checkbox]:focus {
+	outline: none;
+}
+
+input[type="checkbox"] {
+	width: 0;
+	height: 0;
+	opacity: 0; 
+	position: absolute; 
+}
+
+[type="number"] {
+    opacity: 1;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    opacity: 1;
+}
+input[type="number"].input-num::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+	background: #373737 url("/public/images/number_updown.png") no-repeat center center;
+	background-position: calc(100% - 20px) center;
+    width: 2em;    
+    opacity: 1; /* shows Spin Buttons per default (Chrome >= 39) */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration{
+	display:none;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+}
+
+address {
+    font-style: normal;
+}
+
+.cf {}
+
+.cf:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+button {
+	background: inherit ; 
+	border:none; 
+	box-shadow:none; 
+	border-radius:0; 
+	padding:0; 
+	overflow:visible; 
+	cursor:pointer;
+	color: #F5F5F5;
+	font-size:18px;
+	font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif !important;
+}
+
+.mt10{
+	margin-top:10px;
+}
+
+.mt30{
+	margin-top:30px;
+}
+.mt40{
+	margin-top:40px;
+}
+.mt50{
+	margin-top:50px;
+}
+.mb5 {
+	margin-bottom: 5px;
+}
+.mb15 {
+	margin-bottom: 15px;
+}
+.mb23 {
+	margin-bottom:23px;
+}
+.mb25 {
+	margin-bottom:25px;
+}
+.mb30{
+	margin-bottom:30px;
+}
+.mb35{
+	margin-bottom:35px;
+}
+.mb40{
+	margin-bottom:40px;
+}
+.mb50{
+	margin-bottom:50px;
+}
+.mt50{
+	margin-top: 50px;
+}
+.mr-32 {
+	margin-right: -32px;
+}
+.mr47 {
+	margin-right: 47px;
+}
+.f-20 {
+	font-size: 20px;
+}
+.cursor{
+	cursor:pointer;
+}
+.c-red {
+	color: #FF5858;
+}
+.d-flex {
+	display: flex;
+	align-items: center;
+}
+.justify-between {
+	justify-content: space-between;
+}
+.justify-center {
+	justify-content: center;
+}
+.gap10 {
+	gap: 10px;
+}
+.gap20 {
+	gap: 20px;
+}
+
+textarea {
+	width: 678px;
+    height: 150px;
+    border: none;
+    resize: none;
+	border-radius: 5px;
+	background-color: #373737;
+	color: #F5F5F5;
+	font-size:18px;
+	padding: 18px 28px;
+	overflow-y: scroll;
+	font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif !important;
+}
+
+::placeholder {
+    color: #f5f5f5;
+	font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif !important;
+}
+
+.c-red ::placeholder {
+	color: #FF5858;
+}
+
+.custom-checkbox {
+	display: inline-block;
+	width: 21px;
+	height: 21px;
+	border: 1px solid #F5F5F5;
+	border-radius: 5px;
+	position: relative;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	vertical-align: middle;
+}
+
+input[type="checkbox"]:checked + .custom-checkbox {
+	background-color: #6662FD;
+	border-color: #6662FD;
+}
+
+input[type="checkbox"]:checked + .custom-checkbox::after {
+	content: '';
+	position: absolute;
+	left: 6px;
+	top: 2px;
+	width: 6px;
+	height: 13px;
+	border: solid #fff;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+}
+
+.all_check input[type="checkbox"]:checked + .custom-checkbox::after {
+	left: 8px;
+}
+
+.checkbox-label {
+	display:flex;
+	align-items: center;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.checkbox-text {
+	margin-left: 13px;
+}
+
+.tree .all_check .custom-checkbox {
+    width: 24px;
+    height: 24px;
+}
+
+.tree .all_check .custom-checkbox input[type="checkbox"]:checked + .custom-checkbox::after {
+	left: 7px;
+}
+
+/* 스크롤바 스타일 */
+textarea::-webkit-scrollbar {
+	width: 13px;
+}
+
+textarea::-webkit-scrollbar-track {
+	background: #575757; /* 스크롤바 트랙 색상 */
+	border-radius: 10px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+	background-color: #AAAAAA; /* 스크롤바 색상 */
+	border-radius: 10px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+	background-color: #888; /* 스크롤바 호버 색상 */
+}
+
+/* 전체 폼 스타일 */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 300px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+}
+
+*:disabled {
+	background-color: #585858;
+	color: #BFBFBF;
+}  
+
+/* header */
+#header {
+    width: 100%;
+    z-index: 2000;
+    position: relative;
+    top: 0;
+    left: 0;
+	border-bottom: 1px solid #4A4D56;
+	padding: 25px 0;
+}
+
+#header .headerIn {
+    width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#header .logo {
+    background: url("/public/images/header/logo.svg") no-repeat center;
+    width: 175px;
+    text-indent: -9999px;
+    display: inline-block;
+}
+
+#header .topmenu ul {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+	gap: 66px;
+}
+
+#header .topmenu ul li {
+    height: 100%;
+}
+
+#header .topmenu ul li span {
+	position: relative;
+}
+
+#header .topmenu ul li span {
+	font-size: 20px;
+	color: #BFBFBF;
+	padding-left: 32px;
+	font-weight: 500;
+}
+
+#header .topmenu ul .General.active span,
+#header .topmenu ul .General span:hover,
+#header .topmenu ul .General span:focus {
+	background: url("/public/images/header/head_General_w.svg") no-repeat !important;
+	color: #f2f2f2;
+	position: relative;
+}
+
+#header .topmenu ul .Measurements.active span,
+#header .topmenu ul .Measurements span:hover,
+#header .topmenu ul .Measurements span:focus {
+	background: url("/public/images/header/head_Measurements_w.svg") no-repeat !important;
+	color: #f2f2f2;
+	position: relative;
+}
+
+#header .topmenu ul .Server.active span,
+#header .topmenu ul .Server span:hover,
+#header .topmenu ul .Server span:focus {
+	background: url("/public/images/header/head_Server_w.svg") no-repeat !important;
+	color: #f2f2f2;
+	position: relative;
+}
+
+
+#header .topmenu ul .Network.active span,
+#header .topmenu ul .Network span:hover,
+#header .topmenu ul .Network span:focus  {
+	background: url("/public/images/header/head_Network_w.svg") no-repeat !important;
+	color: #f2f2f2;
+	position: relative;
+}
+
+#header .topmenu ul .Triggers.active span,
+#header .topmenu ul .Triggers span:hover,
+#header .topmenu ul .Triggers span:focus  {
+	background: url("/public/images/header/head_Triggers_w.svg") no-repeat !important;
+	color: #f2f2f2;
+	position: relative;
+}
+
+#header .topmenu ul .Storage.active span,
+#header .topmenu ul .Storage span:hover,
+#header .topmenu ul .Storage span:focus  {
+	background: url("/public/images/header/head_Storage_w.svg") no-repeat !important;
+	color: #f2f2f2;
+	position: relative;
+}
+
+#header .topmenu ul li.active span span {
+	display: block;
+    width: 100%;
+    height: 5px;
+    background: #6662FD;
+    position: absolute;
+    left: 0;
+    top: 54px;
+    transform: scaleX(1.3);
+    transition: 0.3s;
+	border-radius: 5px;
+}
+
+#header .topmenu ul li.General span {
+	background: url("/public/images/header/head_General.svg") no-repeat;
+}
+
+#header .topmenu ul li.Measurements span {
+	background: url("/public/images/header/head_Measurements.svg") no-repeat;
+}
+
+#header .topmenu ul li.Network span {
+	background: url("/public/images/header/head_Network.svg") no-repeat;
+}
+
+#header .topmenu ul li.Server span {
+	background: url("/public/images/header/head_Server.svg") no-repeat;
+}
+
+#header .topmenu ul li.Triggers span {
+	background: url("/public/images/header/head_Triggers.svg") no-repeat;
+}
+
+#header .topmenu ul li.Storage span {
+	background: url("/public/images/header/head_Storage.svg") no-repeat;
+}

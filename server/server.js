@@ -76,6 +76,9 @@ app.get("/network", async (req, res) => {
     }
 });
 
+app.get('', async(req, res) => {
+    
+})
 // 서버 시작
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
