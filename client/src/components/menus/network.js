@@ -240,7 +240,7 @@ const Network = ({}) => {
                             <img src="images/wifi_icon.png"/>
                             <h2>Wi-Fi Network</h2>
                         </div>
-                        <button className="default_button Rescan_btn">Rescan</button>
+                        <button className="default_button Rescan_btn" onClick={scanSsidList}>Rescan</button>
                     </div>
                     <div className="contBox">
                         <h4 className="tableTit mb25">
@@ -248,9 +248,9 @@ const Network = ({}) => {
                         </h4>
                         <table className="table_normal mt0">
                             <colgroup>
-                                <col/> 
-                                <col style={{width:'25%'}}/>
-                                <col style={{width:'35%'}}/>
+                                <col /> 
+                                <col style={{ width: '25%' }} />
+                                <col style={{ width: '35%' }} />
                             </colgroup>
                             <thead id="listTh">
                                 <tr className="mobH">
@@ -260,98 +260,54 @@ const Network = ({}) => {
                                 </tr>
                             </thead>
                             <tbody id="listForm">
-                                <tr>
-                                    <td>
-                                        WIFI (0)
-                                    </td>
-                                    <td>
-                                        <ul className="d-flex mb15 justify-center gap20">
-                                            <li>SSID</li>
-                                            <li>
-                                                <input type="text" id="tableInput" className="tableInput" placeholder=""/>
-                                            </li>
-                                        </ul>
-                                        <ul className="d-flex justify-center gap20">
-                                            <li>PWD</li>
-                                            <li>
-                                                <input type="text" id="tableInput" className="tableInput" placeholder=""/>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        <button className="table_button">Connect</button>
-                                    </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>
-                                        WIFI (1)
-                                    </td>
-                                    <td>
-                                        <ul className="d-flex mb15 justify-center gap20">
-                                            <li>SSID</li>
-                                            <li>
-                                                <input type="text" id="tableInput" className="tableInput" placeholder=""/>
-                                            </li>
-                                        </ul>
-                                        <ul className="d-flex justify-center gap20">
-                                            <li>PWD</li>
-                                            <li>
-                                                <input type="text" id="tableInput" className="tableInput" placeholder=""/>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        <button className="table_button">Connect</button>
-                                    </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>
-                                        WIFI (2)
-                                    </td>
-                                    <td>
-                                        <ul className="d-flex mb15 justify-center gap20">
-                                            <li>SSID</li>
-                                            <li>
-                                                <input type="text" id="tableInput" className="tableInput" placeholder=""/>
-                                            </li>
-                                        </ul>
-                                        <ul className="d-flex justify-center gap20">
-                                            <li>PWD</li>
-                                            <li>
-                                                <input type="text" id="tableInput" className="tableInput" placeholder=""/>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        <button className="table_button disconnect_btn">Disconnect</button>
-                                    </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>
-                                        WIFI (3)
-                                    </td>
-                                    <td>
-                                        <ul className="d-flex mb15 justify-center gap20">
-                                            <li>SSID</li>
-                                            <li>
-                                                <input type="text" id="tableInput" className="tableInput" placeholder=""/>
-                                            </li>
-                                        </ul>
-                                        <ul className="d-flex justify-center gap20">
-                                            <li>PWD</li>
-                                            <li>
-                                                <input type="text" id="tableInput" className="tableInput" placeholder=""/>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        <button className="table_button">Connect</button>
-                                    </td>
-                                    
-                                </tr>
+                                {ssidList.map((item, index) => (
+                                    <tr key={index}>
+                                        <td>
+                                            WIFI ({index})
+                                        </td>
+                                        <td>
+                                            <ul className="d-flex mb15 justify-center gap20">
+                                                <li>SSID</li>
+                                                <li>
+                                                    <input
+                                                        type="text"
+                                                        id="tableInput"
+                                                        className="tableInput"
+                                                        value={item.ssid || ""}
+                                                        placeholder="SSID"
+                                                        readOnly
+                                                    />
+                                                </li>
+                                            </ul>
+                                            <ul className="d-flex justify-center gap20">
+                                                <li>PWD</li>
+                                                <li>
+                                                    <input
+                                                        type="text"
+                                                        id="tableInput"
+                                                        className="tableInput"
+                                                        placeholder="Enter Password"
+                                                        onChange={(e) => {
+                                                            const updatedList = [...ssidList];
+                                                            updatedList[index].password = e.target.value;
+                                                            setSSIDList(updatedList);
+                                                        }}
+                                                    />
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <button
+                                                className={`table_button ${item.connected ? 'disconnect_btn' : ''}`}
+                                                onClick={() =>
+                                                    handleWiFiAction(item.ssid, item.connected ? 'disconnect' : 'connect')
+                                                }
+                                            >
+                                                {item.connected ? 'Disconnect' : 'Connect'}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
