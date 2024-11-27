@@ -23,9 +23,10 @@ const Network = ({}) => {
   
     const isMounted = useRef(true);
     const devId = 'D000001';
+    
     const getDefaultNetworkInfo = useCallback(async() => {
         try {
-            const res = await fetch(`http://192.168.10.14:5001/network`, {
+            const res = await fetch(`http://192.168.10.21:5001/network`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -47,7 +48,7 @@ const Network = ({}) => {
             console.error('Failed to fetch device info:', error);
         }
         try {
-            const res = await fetch(`http://192.168.10.14:5001/network/getapmode?devId=${devId}`, {
+            const res = await fetch(`http://192.168.10.21:5001/network/getapmode?devId=${devId}`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -90,7 +91,7 @@ const Network = ({}) => {
          
     const scanSsidList = useCallback(async() => {
         try {
-            const res = await fetch(`http://192.168.10.14:5001/network/getssid`, {
+            const res = await fetch(`http://192.168.10.21:5001/network/getssid`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -117,7 +118,7 @@ const Network = ({}) => {
         setHandleAP(newHandleAP); 
     
         try {
-            const res = await fetch('http://192.168.10.14:5001/network/setapmode', {
+            const res = await fetch('http://192.168.10.21:5001/network/setapmode', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -140,7 +141,7 @@ const Network = ({}) => {
         console.log(network);
         console.log(password);
         try {
-            const res = await fetch(`http://192.168.10.14:5001/network/connection`, {
+            const res = await fetch(`http://192.168.10.21:5001/network/connection`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
