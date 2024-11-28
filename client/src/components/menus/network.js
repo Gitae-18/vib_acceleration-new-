@@ -80,6 +80,7 @@ const Network = ({}) => {
                 console.error('Invalid data received:', data);
                 return;
             }
+            console.log(data);
             setNetInfo({
                 IP_Address: data.wifi_info.ip || "N/A",
                 SubnetMask: data.wifi_info.netmask || "N/A",
@@ -88,7 +89,7 @@ const Network = ({}) => {
             });
 
             setDevInfo({
-                deviceId: data.dev_info.dev_id || "N/A",
+                deviceId: data.dev_info.device_id || "N/A",
                 IP: data.wifi_info.ip || "N/A",
                 SubPort: data.dev_info.sub_port || "N/A",
                 PushPort: data.dev_info.push_port || "N/A",
