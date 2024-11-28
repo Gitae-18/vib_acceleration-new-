@@ -34,13 +34,7 @@ const Network = ({}) => {
     const isMounted = useRef(true);
     const devId = 'D000001';
     
-    useEffect(() => {        
-        updateNetworkInfo();
-        fetchNetworkInfo();
-        return () => {
-            isMounted.current = false;
-        };
-    },[ updateNetworkInfo, fetchNetworkInfo])
+    
     const updateNetworkInfo = async () => {
         try {
             const res = await fetch(`/api/network/update`, { method: 'POST' });
@@ -73,6 +67,13 @@ const Network = ({}) => {
             console.error('Failed to fetch network info:', error);
         }        
     };
+    useEffect(() => {        
+        updateNetworkInfo();
+        fetchNetworkInfo();
+        return () => {
+            isMounted.current = false;
+        };
+    },[ updateNetworkInfo, fetchNetworkInfo])
     /* const openModal = (ssid) => {
         const buttonRect = event.target.getBoundingClientRect();
         setSelectedSSID(ssid);
