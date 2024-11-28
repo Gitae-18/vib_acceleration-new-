@@ -48,22 +48,26 @@ const Network = ({}) => {
         try {
             const res = await fetch(`/api/network`, { method: 'GET' });
             const data = await res.json();
-            console.log(data);
-                setNetInfo(netinfo => ({
+            if (!data || !data.wifi_info || !data.dev_info) {
+                console.error('Invalid data received:', data);
+                return;
+            }
+            setNetInfo(netinfo => ({
                 ...netinfo,
-                IP_Address:data.wifi_info.ip,
-                SubnetMask:data.wifi_info.netmask,
-                Default_Gateway:data.wifi_info.gateway,
-                SSID:data.wifi_info.mac,
-                }));
-                setDevInfo(devinfo => ({
-                    ...devinfo, 
-                    deviceId: data.dev_info.dev_id,
-                    IP:data.dev_info.ip,
-                    SubPort:data.dev_info.sub_port,
-                    PushPort:data.dev_info.push_port,
-                    ReqPort:data.dev_info.req_port,
-                }));
+                IP_Address: data.wifi_info.ip || "N/A",
+                SubnetMask: data.wifi_info.netmask || "N/A",
+                Default_Gateway: data.wifi_info.gateway || "N/A",
+                SSID: data.wifi_info.mac || "N/A",
+            }));
+    
+            setDevInfo(devinfo => ({
+                ...devinfo, 
+                deviceId: data.dev_info.dev_id || "N/A",
+                IP: data.dev_info.ip || "N/A",
+                SubPort: data.dev_info.sub_port || "N/A",
+                PushPort: data.dev_info.push_port || "N/A",
+                ReqPort: data.dev_info.req_port || "N/A",
+            }));
         } catch (error) {
             console.error('Failed to fetch network info:', error);
         }        
