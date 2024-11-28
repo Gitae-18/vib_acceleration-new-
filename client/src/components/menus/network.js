@@ -35,7 +35,7 @@ const Network = ({}) => {
     const devId = 'D000001';
     
     
-    const updateNetworkInfo = async () => {
+    const updateNetworkInfo = useCallback(async () => {
         try {
             const res = await fetch(`/api/network/update`, { method: 'POST' });
             const data = await res.json();
@@ -43,7 +43,7 @@ const Network = ({}) => {
         } catch (error) {
             console.error('Failed to update network info:', error);
         }
-    };
+    },[]);
     /* const fetchNetworkInfo = async () => {
         try {
             const res = await fetch(`/api/network`, { method: 'GET' });
