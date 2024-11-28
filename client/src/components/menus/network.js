@@ -43,7 +43,7 @@ const Network = ({}) => {
     },[ updateNetworkInfo, fetchNetworkInfo])
     const updateNetworkInfo = async () => {
         try {
-            const res = await fetch(`${apiUrl}/api/network/update`, { method: 'POST' });
+            const res = await fetch(`/api/network/update`, { method: 'POST' });
             const data = await res.json();
             console.log('Network info updated:', data);
         } catch (error) {
@@ -52,7 +52,7 @@ const Network = ({}) => {
     };
     const fetchNetworkInfo = async () => {
         try {
-            const res = await fetch(`${apiUrl}/api/network`, { method: 'GET' });
+            const res = await fetch(`/api/network`, { method: 'GET' });
             const data = await res.json();
                 setNetInfo(netinfo => ({
                 ...netinfo,
@@ -88,7 +88,7 @@ const Network = ({}) => {
     }
     const scanSsidList = useCallback(async() => {
         try {
-            const res = await fetch(`${apiUrl}/api/network/scan`, {
+            const res = await fetch(`/api/network/scan`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -138,7 +138,7 @@ const Network = ({}) => {
         console.log(network);
         console.log(password);
         try {
-            const res = await fetch(`${apiUrl}/api/network/connect`, {
+            const res = await fetch(`/api/network/connect`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
