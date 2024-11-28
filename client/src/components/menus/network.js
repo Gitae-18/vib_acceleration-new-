@@ -48,6 +48,7 @@ const Network = ({}) => {
         try {
             const res = await fetch(`/api/network`, { method: 'GET' });
             const data = await res.json();
+            console.log(data);
                 setNetInfo(netinfo => ({
                 ...netinfo,
                 IP_Address:data.wifi_info.ip,
@@ -97,7 +98,8 @@ const Network = ({}) => {
             if (!res.ok) {
                 console.error('Server responded with status:', res.status);
             } 
-                const json = await res.json();                            
+                const json = await res.json();     
+                console.log(json);                       
                 setSSIDList(json);                        
                 sessionStorage.setItem('ssids', JSON.stringify(json));                
         } catch (error) {
