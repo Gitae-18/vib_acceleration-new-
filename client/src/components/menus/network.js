@@ -130,7 +130,7 @@ const Network = ({}) => {
             } 
                 const json = await res.json();                       
                 if (json) {
-                    setSSIDList(json.ssid_list || []);
+                    setSSIDList(json.ssid_list || []); 
                 } else {
                     console.error('Invalid data received:', data);
                 }                        
@@ -342,6 +342,8 @@ const Network = ({}) => {
                                                         value={ssid || ""}
                                                         readOnly
                                                     />
+                                                </li>
+                                                <li>                                                    
                                                 </li>
                                             </ul>
                                         </td>
