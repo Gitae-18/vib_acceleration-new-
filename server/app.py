@@ -90,15 +90,20 @@ def update_network_info():
 
 @app.route('/api/network', methods=['GET'])
 def get_network_info():
-    dev_info = get_device_info()
-    wifi_info = {
-        "ip": wifi.ip,
-        "netmask": wifi.netmask,
-        "gateway": wifi.gateway,
-        "ap_mode": wifi.check_ap_mode(),
-        'mac': wifi.mac
-    }
-    return jsonify({"dev_info": dev_info, "wifi_info": wifi_info})
+    try:
+        dev_info = get_device_info()
+        wifi_info = {
+            "ip": wifi.ip,
+            "netmask": wifi.netmask,
+            "gateway": wifi.gateway,
+            "ap_mode": wifi.check_ap_mode(),
+            "mac": wifi.mac
+        }
+        return jsonify({"dev_info": dev_info, "wifi_info": wifi_info})
+    except Exception as e:
+        # 오류 발생 시 JSON 형태로 반환
+        return jsonify({"success": False, "error": str(e)}), 500
+
 
 @app.route('/api/network/connect', methods=['POST'])
 def connect_wifi():

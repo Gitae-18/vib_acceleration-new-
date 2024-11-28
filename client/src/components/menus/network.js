@@ -25,7 +25,7 @@ const Network = ({}) => {
     const [selectedSSID, setSelectedSSID] = useState('');
     const [ssid, setSsid] = useState('');
     const [password, setPassword] = useState('');
-    const [apiUrl, setApiUrl] = useState('http://192.168.10.21:5000'); // 기본 URI
+    const [apiUrl, setApiUrl] = useState('http://127.0.0.1:5000'); // 기본 URI
     const [isApMode, setIsApMode] = useState(false);
     const API_URL = isApMode
     ? process.env.REACT_APP_API_URL_AP
@@ -37,7 +37,7 @@ const Network = ({}) => {
     
     const updateNetworkInfo = async () => {
         try {
-            const res = await fetch(`/api/network/update`, { method: 'POST' });
+            const res = await fetch(`${apiUrl}/api/network/update`, { method: 'POST' });
             const data = await res.json();
             console.log('Network info updated:', data);
         } catch (error) {
@@ -46,7 +46,7 @@ const Network = ({}) => {
     };
     const fetchNetworkInfo = async () => {
         try {
-            const res = await fetch(`/api/network`, { method: 'GET' });
+            const res = await fetch(`${apiUrl}/api/network`, { method: 'GET' });
             const data = await res.json();
             console.log(data);
                 setNetInfo(netinfo => ({
@@ -90,7 +90,7 @@ const Network = ({}) => {
     }
     const scanSsidList = useCallback(async() => {
         try {
-            const res = await fetch(`/api/network/scan`, {
+            const res = await fetch(`${apiUrl}/api/network/scan`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -141,7 +141,7 @@ const Network = ({}) => {
         console.log(network);
         console.log(password);
         try {
-            const res = await fetch(`/api/network/connect`, {
+            const res = await fetch(`${apiUrl}/api/network/connect`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
