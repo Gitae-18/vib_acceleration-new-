@@ -89,7 +89,7 @@ const Network = ({}) => {
             });
 
             setDevInfo({
-                deviceId: data.dev_info.device_id || "N/A",
+                deviceId: data.dev_info.dev_id || "N/A",
                 IP: data.wifi_info.ip || "N/A",
                 SubPort: data.dev_info.sub_port || "N/A",
                 PushPort: data.dev_info.push_port || "N/A",
