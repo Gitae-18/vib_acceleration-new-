@@ -58,18 +58,18 @@ def get_device_info():
         print("Raw config data:", cfg_devinfo)
 
         string = cfg_devinfo['sub_addr']
-        print("Parsing sub_addr:", string)
+     
         parts = string.split(":")
         ip = parts[0] if len(parts) > 0 else "N/A"
         sub_port = parts[1] if len(parts) > 1 else "N/A"
 
         string = cfg_devinfo['push_addr']
-        print("Parsing push_addr:", string)
+
         parts = string.split(":")
         push_port = parts[-1] if len(parts) > 0 else "N/A"
 
         string = cfg_devinfo['req_addr']
-        print("Parsing req_addr:", string)
+
         parts = string.split(":")
         req_port = parts[-1] if len(parts) > 0 else "N/A"
 
@@ -127,7 +127,6 @@ def get_network_info():
             "push_port": dev_info_obj.push_port,
             "req_port": dev_info_obj.req_port
         }
-        print(dev_info)
         wifi_info = {
             "ip": wifi.ip,
             "netmask": wifi.netmask,
@@ -135,7 +134,6 @@ def get_network_info():
             "ap_mode": wifi.check_ap_mode(),
             "mac": wifi.mac
         }        
-        print(wifi_info)
         return jsonify({"dev_info": dev_info, "wifi_info": wifi_info})
     except ValueError as e:
         # get_device_info()에서 발생한 예외 처리
