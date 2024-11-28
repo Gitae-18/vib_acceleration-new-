@@ -66,11 +66,11 @@ def stop_ap():
     success = wifi.stop_ap_mode()
     return jsonify({"success": success})
 
-@app.route('/api/network/scan', methods=['GET'])
+""" @app.route('/api/network/scan', methods=['GET'])
 def scan_wifi():
     wifi.scan_ssid()
     ssid_list = wifi.get_ssid_list()
-    return jsonify({"ssid_list": ssid_list})
+    return jsonify({"ssid_list": ssid_list}) """
 
 @app.route('/api/network/update', methods=['POST'])
 def update_network_info():

@@ -25,7 +25,7 @@ const Network = ({}) => {
     const [selectedSSID, setSelectedSSID] = useState('');
     const [ssid, setSsid] = useState('');
     const [password, setPassword] = useState('');
-    const [apiUrl, setApiUrl] = useState('http://192.168.10.21:5001'); // 기본 URI
+    const [apiUrl, setApiUrl] = useState('http://192.168.10.21:5000'); // 기본 URI
     const [isApMode, setIsApMode] = useState(false);
     const API_URL = isApMode
     ? process.env.REACT_APP_API_URL_AP
