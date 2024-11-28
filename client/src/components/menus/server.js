@@ -5,10 +5,12 @@ import '../../style/font.css';
 import '../../style/contents.css';
 import '../../style/common.css';
 import styled from "styled-components";
+import { useSelector } from 'react-redux';
+
+
 const Server = () => {
-    const [sub_addr, setSubAddr] = useState('5555');
-    const [push_addr, setPushAddr] = useState('5557');
-    const [req_addr, setReqAddr] = useState('5559');
+    const wifiInfo = useSelector((state) => state.network.wifi_info);
+    const devInfo = useSelector((state) => state.network.dev_info);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,6 +29,7 @@ const Server = () => {
             break;
         }
     }
+    
     return(
         <body>
         <div className="wrap Network">
@@ -46,7 +49,15 @@ const Server = () => {
                                 Server IP address
                             </li>
                             <li>
-                                <input type="text" id="" className="commonInput" placeholder="192.168.0.10"/>
+                                <input type="text" id="" className="commonInput" value={devInfo.ip}/>
+                            </li>
+                        </ul>
+                        <ul className="d-flex mb35">
+                            <li className="contBoxtit">
+                                Sub Port
+                            </li>
+                            <li>
+                                <input type="text" id="" className="commonInput" value={wifiInfo.sub_port}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -54,17 +65,17 @@ const Server = () => {
                                 Push Port
                             </li>
                             <li>
-                                <input type="text" id="" className="commonInput" placeholder="5557"/>
+                                <input type="text" id="" className="commonInput" value={wifiInfo.push_port}/>
                             </li>
                         </ul>
-                        <ul className="d-flex">
+                        <ul className="d-flex mb35">
                             <li className="contBoxtit">
                                 Req Port
                             </li>
                             <li>
-                                <input type="text" id="" className="commonInput" placeholder="5559"/>
+                                <input type="text" id="" className="commonInput" value={wifiInfo.req_port}/>
                             </li>
-                        </ul>
+                        </ul>                        
                     </div>
                 </div>
             </section>

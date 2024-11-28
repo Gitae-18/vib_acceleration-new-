@@ -27,7 +27,7 @@ def button_wait():
         if button_pressed_time is not None:
             if time.time() - button_pressed_time >= 0.1:
                 wifi.start_ap_mode()
-#process = subprocess.Popen(['python3', '/home/feelink/vibnet-web/app.py'])
+            #process = subprocess.Popen(['python3', '/home/feelink/vibnet-web/app.py'])
 
         time.sleep(0.1)
 
