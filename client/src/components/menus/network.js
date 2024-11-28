@@ -129,8 +129,8 @@ const Network = ({}) => {
                 console.error('Server responded with status:', res.status);
             } 
                 const json = await res.json();                       
-                if (data && data.success) {
-                    setSSIDList(data.ssid_list || []); // ssid_list로 업데이트
+                if (json) {
+                    setSSIDList(json.ssid_list || []);
                 } else {
                     console.error('Invalid data received:', data);
                 }                        
