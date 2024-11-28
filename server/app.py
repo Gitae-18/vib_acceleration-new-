@@ -28,8 +28,8 @@ def restart_vibnet():
     start_vibnet_background()
 
 class DeviceInfo():
-    def __init__(self, dev_id, ip, sub_port, push_port, req_port) -> None:
-        self.dev_id = dev_id
+    def __init__(self, device_id, ip, sub_port, push_port, req_port) -> None:
+        self.device_id = device_id
         self.ip = ip
         self.sub_port = sub_port
         self.push_port = push_port
