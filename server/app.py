@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, send_from_directory
 from wifi import WiFi
 from vib_config import VibnetConfig
 import time
@@ -6,14 +6,22 @@ import subprocess
 
 wifi = WiFi('wlan0')
 vib_config = VibnetConfig()
-app = Flask(__name__)
-
+app = Flask(__name__, static_folder="../client/build", static_url_path="/")
 def stop_vibnet():
     subprocess.call(["pkill", "vibnet"])
 
 def start_vibnet_background():
     subprocess.Popen(["vibnet"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+# React 정적 파일 제공
+@app.route('/')
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
+
+# 404 처리: React 라우트로 연결
+@app.errorhandler(404)
+def not_found(e):
+    return send_from_directory(app.static_folder, 'index.html')
 def restart_vibnet():
     stop_vibnet()
     time.sleep(1)  # 프로세스 종료를 기다립니다.
