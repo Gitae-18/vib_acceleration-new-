@@ -100,6 +100,7 @@ def get_network_info():
             "push_port": dev_info_obj.push_port,
             "req_port": dev_info_obj.req_port
         }
+        print(dev_info)
         wifi_info = {
             "ip": wifi.ip,
             "netmask": wifi.netmask,
@@ -107,10 +108,16 @@ def get_network_info():
             "ap_mode": wifi.check_ap_mode(),
             "mac": wifi.mac
         }        
+        print(wifi_info)
         return jsonify({"dev_info": dev_info, "wifi_info": wifi_info})
-    except Exception as e:
-        # 오류 발생 시 JSON 형태로 반환
+    except ValueError as e:
+        # get_device_info()에서 발생한 예외 처리
+        print("Error in /api/network:", str(e))
         return jsonify({"success": False, "error": str(e)}), 500
+    except Exception as e:
+        # 기타 예외 처리
+        print("Unexpected error in /api/network:", str(e))
+        return jsonify({"success": False, "error": "An unexpected error occurred"}), 500
 
 
 @app.route('/api/network/connect', methods=['POST'])
