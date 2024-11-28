@@ -13,67 +13,67 @@ const Network = ({}) => {
         Mode:'',
         SSID:'',
     });
+    const [devInfo, setDevInfo] = useState({
+        deviceId: '',
+        IP:'',
+        SubPort:'',
+        PushPort:'',
+        ReqPort:'',
+    })
     const [handleAP, setHandleAP] = useState();
     const [ssidList, setSSIDList] = useState([{ssid:'none', connceted:'none'}]);
-    const [modalPosition, setModalPosition] = useState({});
-    const [showModal, setShowModal] = useState(false);
     const [selectedSSID, setSelectedSSID] = useState('');
+    const [ssid, setSsid] = useState('');
     const [password, setPassword] = useState('');
-  
-  
+    const [apiUrl, setApiUrl] = useState('http://192.168.10.21:5001'); // 기본 URI
+    const [isApMode, setIsApMode] = useState(false);
+    const API_URL = isApMode
+    ? process.env.REACT_APP_API_URL_AP
+    : process.env.REACT_APP_API_URL;
+
     const isMounted = useRef(true);
     const devId = 'D000001';
     
-    const getDefaultNetworkInfo = useCallback(async() => {
-        try {
-            const res = await fetch(`http://192.168.10.21:5001/network`, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            });
-
-            if (!res.ok) {
-                console.error('Server responded with status:', res.status);
-            } 
-                const json = await res.json();
-                setNetInfo(netinfo => ({
-                    ...netinfo, 
-                    IP_Address: json.IP_Address,
-                    SubnetMask:json.SubnetMask,
-                    Default_Gateway:json.Default_Gateway,
-                    Mode:json.Mode,
-                    SSID:json.SSID,
-                }));
-
-        } catch (error) {
-            console.error('Failed to fetch device info:', error);
-        }
-        try {
-            const res = await fetch(`http://192.168.10.21:5001/network/getapmode?devId=${devId}`, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            });
-
-            if (!res.ok) {
-                throw new Error(`Server responded with status: ${response.status}`);        
-            } 
-                const json = await res.json(); 
-                console.log(json);   
-                setHandleAP(json.ap_status);                               
-        } catch (error) {
-            console.error('Failed to fetch device info:', error);
-        }
-    },[devId])
-
-    useEffect(() => {
-        getDefaultNetworkInfo();
+    useEffect(() => {        
+        updateNetworkInfo();
+        fetchNetworkInfo();
         return () => {
             isMounted.current = false;
         };
-    },[getDefaultNetworkInfo])
-
-    
-
-    const openModal = (ssid) => {
+    },[ updateNetworkInfo, fetchNetworkInfo])
+    const updateNetworkInfo = async () => {
+        try {
+            const res = await fetch('/api/network/update', { method: 'POST' });
+            const data = await res.json();
+            console.log('Network info updated:', data);
+        } catch (error) {
+            console.error('Failed to update network info:', error);
+        }
+    };
+    const fetchNetworkInfo = async () => {
+        try {
+            const res = await fetch('/api/network', { method: 'GET' });
+            const data = await res.json();
+                setNetInfo(netinfo => ({
+                ...netinfo,
+                IP_Address:data.wifi_info.ip,
+                SubnetMask:data.wifi_info.netmask,
+                Default_Gateway:data.wifi_info.gateway,
+                SSID:data.wifi_info.mac,
+                }));
+                setDevInfo(devinfo => ({
+                    ...devinfo, 
+                    deviceId: data.dev_info.dev_id,
+                    IP:data.dev_info.ip,
+                    SubPort:data.dev_info.sub_port,
+                    PushPort:data.dev_info.push_port,
+                    ReqPort:data.dev_info.req_port,
+                }));
+        } catch (error) {
+            console.error('Failed to fetch network info:', error);
+        }        
+    };
+    /* const openModal = (ssid) => {
         const buttonRect = event.target.getBoundingClientRect();
         setSelectedSSID(ssid);
         setShowModal(true);
@@ -81,14 +81,11 @@ const Network = ({}) => {
             top: buttonRect.top + window.scrollY - 110,  // 스크롤에 따라 조정
             left: buttonRect.right + 10,
           });
-      };
-    
-      const connect = () => {
-        handleConnectWiFi(selectedSSID, password);
-        setShowModal(false);
-        setPassword('');  // 비밀번호 필드 초기화
-      };
-         
+      }; */
+      
+    const handleSsid = (e) => {
+        setSsid(e.target.value);
+    }
     const scanSsidList = useCallback(async() => {
         try {
             const res = await fetch(`http://192.168.10.21:5001/network/getssid`, {
@@ -141,7 +138,7 @@ const Network = ({}) => {
         console.log(network);
         console.log(password);
         try {
-            const res = await fetch(`http://192.168.10.21:5001/network/connection`, {
+            const res = await fetch(`/api/network/connect`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -175,34 +172,42 @@ const Network = ({}) => {
                     <div className="contBox">
                         <ul className="d-flex mb35">
                             <li className="contBoxtit">
+                                Device ID
+                            </li>
+                            <li>
+                                <input type="text" id="" className="disabledInput" value={devInfo.dev_id} disabled/>
+                            </li>
+                        </ul>
+                        <ul className="d-flex mb35">
+                            <li className="contBoxtit">
                                 IP Address
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" placeholder="192.168.0.1" disabled/>
+                                <input type="text" id="" className="disabledInput" value={devInfo.IP} disabled/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
                             <li className="contBoxtit">
-                                Sample Rate
+                                SubnetMask
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" placeholder="4,000" disabled/>
+                                <input type="text" id="" className="disabledInput" value={netInfo.SubnetMask} disabled/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
                             <li className="contBoxtit">
-                                Measurement Option
+                                Default GateWay
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" placeholder="192.168.0.1" disabled/>
+                                <input type="text" id="" className="disabledInput" value={netInfo.Default_Gateway} disabled/>                                
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
                             <li className="contBoxtit">
-                                AP Mode Status
+                                AP_Mode Status
                             </li>
                             <li className="c-red">
-                                <input type="text" id="" className="disabledInput" placeholder="Active" disabled/>
+                                <input type="text" id="" className="disabledInput" value={isApMode? 'Active' : 'Non-Active'} disabled/>                                
                             </li>
                         </ul>
                         <ul className="d-flex">
@@ -210,7 +215,7 @@ const Network = ({}) => {
                                 SSID
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" placeholder="Vib-d8:31:dd:2e:sa:31" disabled/>
+                                <input type="text" id="" className="disabledInput" value={netInfo.SSID} disabled/>
                             </li>
                         </ul>
                     </div>
@@ -277,6 +282,7 @@ const Network = ({}) => {
                                                         value={item.ssid || ""}
                                                         placeholder="SSID"
                                                         readOnly
+                                                        onChange={handleSsid}
                                                     />
                                                 </li>
                                             </ul>
@@ -287,11 +293,12 @@ const Network = ({}) => {
                                                         type="text"
                                                         id="tableInput"
                                                         className="tableInput"
-                                                        placeholder="Enter Password"
+                                                        value=""
                                                         onChange={(e) => {
                                                             const updatedList = [...ssidList];
                                                             updatedList[index].password = e.target.value;
                                                             setSSIDList(updatedList);
+                                                            setPassword(e.target.value);
                                                         }}
                                                     />
                                                 </li>
@@ -301,7 +308,7 @@ const Network = ({}) => {
                                             <button
                                                 className={`table_button ${item.connected ? 'disconnect_btn' : ''}`}
                                                 onClick={() =>
-                                                    handleWiFiAction(item.ssid, item.connected ? 'disconnect' : 'connect')
+                                                    handleConnectWiFi(item.ssid, password)
                                                 }
                                             >
                                                 {item.connected ? 'Disconnect' : 'Connect'}

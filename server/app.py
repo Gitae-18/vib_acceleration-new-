@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from wifi import WiFi
 from vib_config import VibnetConfig
 import time
@@ -51,8 +51,88 @@ def set_device_info(dev_id, ip, sub_port, push_port, req_port):
         sub_addr = prefix + sub_port,
         push_addr = prefix + push_port,
         req_addr = prefix + req_port)
+@app.route('/api/network/ap_mode', methods=['GET'])
+def get_ap_mode():
+    ap_mode = wifi.check_ap_mode()
+    return jsonify({"ap_mode": ap_mode})
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/api/network/start_ap', methods=['POST'])
+def start_ap():
+    success = wifi.start_ap_mode()
+    return jsonify({"success": success})
+
+@app.route('/api/network/stop_ap', methods=['POST'])
+def stop_ap():
+    success = wifi.stop_ap_mode()
+    return jsonify({"success": success})
+
+@app.route('/api/network/scan', methods=['GET'])
+def scan_wifi():
+    wifi.scan_ssid()
+    ssid_list = wifi.get_ssid_list()
+    return jsonify({"ssid_list": ssid_list})
+
+@app.route('/api/network/update', methods=['POST'])
+def update_network_info():
+    try:
+        wifi.update_network_info()
+        return jsonify({"success": True, "message": "Network info updated"})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+
+@app.route('/api/network', methods=['GET'])
+def get_network_info():
+    dev_info = get_device_info()
+    wifi_info = {
+        "ip": wifi.ip,
+        "netmask": wifi.netmask,
+        "gateway": wifi.gateway,
+        "ap_mode": wifi.check_ap_mode(),
+        'mac': wifi.mac
+    }
+    return jsonify({"dev_info": dev_info, "wifi_info": wifi_info})
+
+@app.route('/api/network/connect', methods=['POST'])
+def connect_wifi():
+    try:
+        # JSON 요청 데이터 파싱
+        data = request.json
+        ssid = data.get('ssid')
+        password = data.get('password')
+
+        if not ssid:
+            return jsonify({"success": False, "error": "SSID is required"}), 400
+        if not password:
+            return jsonify({"success": False, "error": "Password is required"}), 400
+
+        # AP 모드인지 확인
+        is_ap = wifi.check_ap_mode()
+        if is_ap:
+            wifi.stop_ap_mode()
+            time.sleep(3)
+            print('AP mode stopped, waiting...')
+
+        # Wi-Fi 연결 시도
+        rst = wifi.connect_to_wifi(ssid, password)
+        if rst:
+            restart_vibnet()
+            return jsonify({
+                "success": True,
+                "message": "Wi-Fi connected successfully",
+                "ap_mode": wifi.check_ap_mode()
+            })
+        else:
+            # 연결 실패 시 AP 모드 다시 시작
+            if is_ap:
+                wifi.start_ap_mode()
+            return jsonify({
+                "success": False,
+                "message": "Wi-Fi connection failed",
+                "ap_mode": wifi.check_ap_mode()
+            })
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+""" @app.route('/network', methods=['GET', 'POST'])
 def home():
     dev_info = get_device_info()
     wifi.update_network_info()
@@ -97,7 +177,7 @@ def home():
                 wifi.start_ap_mode()
 
 
-    return render_template('index.html', dev_info = dev_info, wifi = wifi)
+    return render_template('index.html', dev_info = dev_info, wifi = wifi) """
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=5000)
