@@ -35,7 +35,7 @@ class DeviceInfo():
         self.push_port = push_port
         self.req_port = req_port
 
-def get_device_info():
+""" def get_device_info():
     cfg_devinfo = vib_config.GetConfig()
     string = cfg_devinfo['sub_addr']
     parts = string.split("//")[1].split(":")
@@ -50,8 +50,36 @@ def get_device_info():
     parts = string.split(":")
     req_port = parts[-1]
 
-    return DeviceInfo(cfg_devinfo['device_id'], ip, sub_port, push_port, req_port)
+    return DeviceInfo(cfg_devinfo['device_id'], ip, sub_port, push_port, req_port) """
+def get_device_info():
+    cfg_devinfo = vib_config.GetConfig()
 
+    try:
+        print("Raw config data:", cfg_devinfo)  # 원본 데이터 출력
+
+        string = cfg_devinfo['sub_addr']
+        print("Parsing sub_addr:", string)  # sub_addr 출력
+        parts = string.split("//")[1].split(":")
+        ip = parts[0] if len(parts) > 0 else "N/A"
+        sub_port = parts[1] if len(parts) > 1 else "N/A"
+
+        string = cfg_devinfo['push_addr']
+        print("Parsing push_addr:", string)  # push_addr 출력
+        parts = string.split(":")
+        push_port = parts[-1] if len(parts) > 0 else "N/A"
+
+        string = cfg_devinfo['req_addr']
+        print("Parsing req_addr:", string)  # req_addr 출력
+        parts = string.split(":")
+        req_port = parts[-1] if len(parts) > 0 else "N/A"
+
+        return DeviceInfo(cfg_devinfo['device_id'], ip, sub_port, push_port, req_port)
+    except IndexError as e:
+        print("Error in get_device_info - IndexError:", str(e))
+        raise ValueError("Device configuration data is invalid")
+    except Exception as e:
+        print("Unexpected error in get_device_info:", str(e))
+        raise
 def set_device_info(dev_id, ip, sub_port, push_port, req_port):
     prefix = "tcp://{}:".format(ip)
     vib_config.SetConfig(device_id = dev_id, 
