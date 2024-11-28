@@ -21,7 +21,7 @@ const Network = ({}) => {
         ReqPort:'',
     })
     const [handleAP, setHandleAP] = useState();
-    const [ssidList, setSSIDList] = useState([{ssid:'none', connceted:'none'}]);
+    const [ssidList, setSSIDList] = useState([]);
     const [selectedSSID, setSelectedSSID] = useState('');
     const [ssid, setSsid] = useState('');
     const [password, setPassword] = useState('');
@@ -128,9 +128,12 @@ const Network = ({}) => {
             if (!res.ok) {
                 console.error('Server responded with status:', res.status);
             } 
-                const json = await res.json();     
-                console.log(json);                       
-                setSSIDList(json);                        
+                const json = await res.json();                       
+                if (data && data.success) {
+                    setSSIDList(data.ssid_list || []); // ssid_list로 업데이트
+                } else {
+                    console.error('Invalid data received:', data);
+                }                        
                 sessionStorage.setItem('ssids', JSON.stringify(json));                
         } catch (error) {
             console.error('Failed to fetch device info:', error);
@@ -143,7 +146,7 @@ const Network = ({}) => {
         }
     }, []);
 
-    const handleModeChange = useCallback(async () => {
+    /* const handleModeChange = useCallback(async () => {
         const newHandleAP = !handleAP; 
         setHandleAP(newHandleAP); 
     
@@ -165,7 +168,7 @@ const Network = ({}) => {
         }
     
         console.log('mode : ' + newHandleAP); 
-    }, [handleAP]);
+    }, [handleAP]); */
      
     const handleConnectWiFi = async(network) => {
         console.log(network);
@@ -286,24 +289,48 @@ const Network = ({}) => {
                             Wi-Fi Network Scan
                         </h4>
                         <table className="table_normal mt0">
-                            <colgroup>
-                                <col /> 
-                                <col style={{ width: '25%' }} />
-                                <col style={{ width: '35%' }} />
-                            </colgroup>
-                            <thead id="listTh">
-                                <tr className="mobH">
+                            <thead>
+                                <tr>
                                     <th>Wi-Fi Network Name</th>
                                     <th>Network Info</th>
                                     <th>Connect</th>
                                 </tr>
                             </thead>
-                            <tbody id="listForm">
-                                {ssidList.map((item, index) => (
+                            <tbody>
+                                {/* 입력 필드와 버튼이 있는 행 */}
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="text"
+                                            className="tableInput"
+                                            placeholder="Enter SSID"
+                                            value={selectedSSID}
+                                            onChange={(e) => setSelectedSSID(e.target.value)}
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="text"
+                                            className="tableInput"
+                                            placeholder="Enter Password"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
+                                    </td>
+                                    <td>
+                                        <button
+                                            className="table_button"
+                                            onClick={() => handleConnectWiFi(selectedSSID, password)}
+                                        >
+                                            Connect
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                {/* 서버에서 가져온 ssidList로 행 생성 */}
+                                {ssidList.map((ssid, index) => (
                                     <tr key={index}>
-                                        <td>
-                                            WIFI ({index})
-                                        </td>
+                                        <td>WIFI ({index})</td>
                                         <td>
                                             <ul className="d-flex mb15 justify-center gap20">
                                                 <li>SSID</li>
@@ -312,40 +339,11 @@ const Network = ({}) => {
                                                         type="text"
                                                         id="tableInput"
                                                         className="tableInput"
-                                                        value={item.ssid || ""}
-                                                        placeholder="SSID"
+                                                        value={ssid || ""}
                                                         readOnly
-                                                        onChange={handleSsid}
                                                     />
                                                 </li>
                                             </ul>
-                                            <ul className="d-flex justify-center gap20">
-                                                <li>PWD</li>
-                                                <li>
-                                                    <input
-                                                        type="text"
-                                                        id="tableInput"
-                                                        className="tableInput"
-                                                        value=""
-                                                        onChange={(e) => {
-                                                            const updatedList = [...ssidList];
-                                                            updatedList[index].password = e.target.value;
-                                                            setSSIDList(updatedList);
-                                                            setPassword(e.target.value);
-                                                        }}
-                                                    />
-                                                </li>
-                                            </ul>
-                                        </td>
-                                        <td>
-                                            <button
-                                                className={`table_button ${item.connected ? 'disconnect_btn' : ''}`}
-                                                onClick={() =>
-                                                    handleConnectWiFi(item.ssid, password)
-                                                }
-                                            >
-                                                {item.connected ? 'Disconnect' : 'Connect'}
-                                            </button>
                                         </td>
                                     </tr>
                                 ))}
