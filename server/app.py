@@ -92,7 +92,14 @@ def update_network_info():
 @app.route('/api/network', methods=['GET'])
 def get_network_info():
     try:
-        dev_info = get_device_info()
+        dev_info_obj = get_device_info()
+        dev_info = {
+            "dev_id": dev_info_obj.device_id,
+            "ip": dev_info_obj.ip,
+            "sub_port": dev_info_obj.sub_port,
+            "push_port": dev_info_obj.push_port,
+            "req_port": dev_info_obj.req_port
+        }
         wifi_info = {
             "ip": wifi.ip,
             "netmask": wifi.netmask,
