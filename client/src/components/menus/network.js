@@ -44,7 +44,7 @@ const Network = ({}) => {
             console.error('Failed to update network info:', error);
         }
     };
-    const fetchNetworkInfo = async () => {
+    /* const fetchNetworkInfo = async () => {
         try {
             const res = await fetch(`/api/network`, { method: 'GET' });
             const data = await res.json();
@@ -71,7 +71,33 @@ const Network = ({}) => {
         } catch (error) {
             console.error('Failed to fetch network info:', error);
         }        
-    };
+    }; */
+    const fetchNetworkInfo = useCallback(async () => {
+        try {
+            const res = await fetch(`/api/network`, { method: 'GET' });
+            const data = await res.json();
+            if (!data || !data.wifi_info || !data.dev_info) {
+                console.error('Invalid data received:', data);
+                return;
+            }
+            setNetInfo({
+                IP_Address: data.wifi_info.ip || "N/A",
+                SubnetMask: data.wifi_info.netmask || "N/A",
+                Default_Gateway: data.wifi_info.gateway || "N/A",
+                SSID: data.wifi_info.mac || "N/A",
+            });
+
+            setDevInfo({
+                deviceId: data.dev_info.dev_id || "N/A",
+                IP: data.dev_info.ip || "N/A",
+                SubPort: data.dev_info.sub_port || "N/A",
+                PushPort: data.dev_info.push_port || "N/A",
+                ReqPort: data.dev_info.req_port || "N/A",
+            });
+        } catch (error) {
+            console.error('Failed to fetch network info:', error);
+        }        
+    }, []);
     useEffect(() => {        
         updateNetworkInfo();
         fetchNetworkInfo();
