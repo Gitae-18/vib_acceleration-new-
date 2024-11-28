@@ -88,7 +88,7 @@ const Network = ({}) => {
             });
 
             setDevInfo({
-                deviceId: data.dev_info.dev_id || "N/A",
+                deviceId: data.dev_info.device_id || "N/A",
                 IP: data.dev_info.ip || "N/A",
                 SubPort: data.dev_info.sub_port || "N/A",
                 PushPort: data.dev_info.push_port || "N/A",
@@ -211,7 +211,7 @@ const Network = ({}) => {
                                 Device ID
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" value={devInfo.dev_id} disabled/>
+                                <input type="text" id="" className="disabledInput" value={devInfo.deviceId} disabled/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
