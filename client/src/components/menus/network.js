@@ -135,17 +135,17 @@ const Network = ({}) => {
                 } else {
                     console.error('Invalid data received:', data);
                 }                        
-                sessionStorage.setItem('ssids', JSON.stringify(json));                
+                //sessionStorage.setItem('ssids', JSON.stringify(json));                
         } catch (error) {
             console.error('Failed to fetch device info:', error);
         }
     },[]);
-    useEffect(() => {
+    /* useEffect(() => {
         const savedSSIDs = sessionStorage.getItem('ssids');
         if (savedSSIDs) {
             setSSIDList(JSON.parse(savedSSIDs));
         }
-    }, []);
+    }, []); */
 
     /* const handleModeChange = useCallback(async () => {
         const newHandleAP = !handleAP; 
