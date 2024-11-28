@@ -343,10 +343,11 @@ const Network = ({}) => {
                                                         value={ssid || ""}
                                                         readOnly
                                                     />
-                                                </li>
-                                                <li>                                                    
-                                                </li>
+                                                </li>                                                
                                             </ul>
+                                        </td>
+                                        <td>
+                                            <li></li>
                                         </td>
                                     </tr>
                                 ))}
