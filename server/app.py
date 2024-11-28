@@ -37,7 +37,7 @@ class DeviceInfo():
 
 def get_device_info():
     cfg_devinfo = vib_config.GetConfig()
-
+    print(cfg_devinfo)
     string = cfg_devinfo['sub_addr']
     parts = string.split("//")[1].split(":")
     ip = parts[0]
