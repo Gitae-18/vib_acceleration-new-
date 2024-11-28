@@ -38,6 +38,7 @@ class DeviceInfo():
 def get_device_info():
     cfg_devinfo = vib_config.GetConfig()
     print(cfg_devinfo)
+    print(wifi.ip)
     string = cfg_devinfo['sub_addr']
     parts = string.split("//")[1].split(":")
     ip = parts[0]
@@ -98,8 +99,7 @@ def get_network_info():
             "gateway": wifi.gateway,
             "ap_mode": wifi.check_ap_mode(),
             "mac": wifi.mac
-        }
-        print(wifi_info)
+        }        
         return jsonify({"dev_info": dev_info, "wifi_info": wifi_info})
     except Exception as e:
         # 오류 발생 시 JSON 형태로 반환
