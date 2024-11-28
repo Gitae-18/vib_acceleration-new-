@@ -132,6 +132,29 @@ def connect_wifi():
             })
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
+@app.route('/api/network/scan', methods=['GET'])
+def scan_wifi():
+    try:
+        # Wi-Fi 스캔 실행
+        wifi.scan_ssid()
+
+        # 검색된 SSID 목록 가져오기
+        ssid_list = wifi.get_ssid_list()
+
+        print("검색된 WiFi SSID 목록:", ssid_list)
+
+        # 검색된 SSID 목록을 JSON으로 반환
+        return jsonify({
+            "success": True,
+            "ssid_list": ssid_list
+        })
+    except Exception as e:
+        # 오류 발생 시 처리
+        print("Wi-Fi 스캔 중 오류 발생:", str(e))
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
 """ @app.route('/network', methods=['GET', 'POST'])
 def home():
     dev_info = get_device_info()
