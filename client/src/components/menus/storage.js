@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, {useEffect, useState, useCa }from "react";
+import React, {useEffect, useState, useCallback }from "react";
 import Menu from "../menu";
 import '../../style/font.css';
 import '../../style/contents.css';
@@ -8,12 +8,37 @@ import styled from "styled-components";
 import DeleteModal from "../modals/deletemodals";
 const Storage = () => {
     const [deleteModal, setDeleteModal] = useState(false);
+    const [storage, setStorage] = useState({
+        total : '',
+        used : '',
+        free : '',
+
+    })
     const openDeleteModal = () => {
         setDeleteModal(true);
     }
     const closeDeleteModal = () => {
         setDeleteModal(false);
     }
+    const getUsableStorage = useCallback(async () =>  {
+        try {
+            const res = await fetch(`/api/network`, { method: 'GET' });
+            const data = await res.json();
+            setStorage(storage => ({
+                ...storage,
+                total: data.total,
+                used: data.used,
+                free: data.free,
+            }));
+        }
+        catch(error) {
+            console.error('Failed to fetch storage info:', error);    
+        }
+    },[])
+
+    useEffect(() => {
+        getUsableStorage();
+    },[getUsableStorage])
     return(
         <body>
         <div className="wrap Trigger">
@@ -43,18 +68,18 @@ const Storage = () => {
                                     <div className="color-box available"></div>
                                     <div className="text">사용 가능&nbsp; :</div>
                                     <div className="value">284,000,000,000 바이트</div>
-                                    <div className="value">2.84 GB</div>
+                                    <div className="value">{storage.free}GB</div>
                                 </div>
                                 <div className="item">
                                     <div className="color-box used"></div>
                                     <div className="text">사 &nbsp;용 &nbsp;중 &nbsp; :</div>
                                     <div className="value">116,000,000,000 바이트</div>
-                                    <div className="value">1.16 GB</div>
+                                    <div className="value">{storage.used} GB</div>
                                 </div>
                                 <div className="item">
                                     <div className="text" style={{marginLeft:'36px'}}>총  &nbsp;용  &nbsp;량 &nbsp; :</div>
                                     <div className="value">400,000,000,000 바이트</div>
-                                    <div className="value">4.00 GB</div>
+                                    <div className="value">{storage.total} GB</div>
                                 </div>
                                 <div className="d-flex justify-between">
                                     <div></div>

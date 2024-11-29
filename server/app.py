@@ -3,6 +3,7 @@ from wifi import WiFi
 from vib_config import VibnetConfig
 import time
 import subprocess
+import shutil
 
 wifi = WiFi('wlan0')
 vib_config = VibnetConfig()
@@ -81,6 +82,19 @@ def get_device_info():
     except Exception as e:
         print("Unexpected error in get_device_info:", str(e))
         raise
+def get_storage(path="/"):    
+    try:
+        total, used, free = shutil.disk_usage(path)
+        return {
+            "total": total // (1024**3),
+            "used": used // (1024**3),
+            "free": free // (1024**3)
+        }
+    except FileNotFoundError:
+        return {"error": f"Path '{path}' not found"}
+    except PermissionError:
+        return {"error": f"Permission denied for path '{path}'"}
+
 def set_device_info(dev_id, ip, sub_port, push_port, req_port):
     prefix = "tcp://{}:".format(ip)
     vib_config.SetConfig(device_id = dev_id, 
@@ -208,6 +222,10 @@ def scan_wifi():
             "success": False,
             "error": str(e)
         }), 500
+@app.route('/api/storage', methods=['GET'])
+def storage_info():
+    storage = get_storage()
+    return jsonify(storage) 
 """ @app.route('/network', methods=['GET', 'POST'])
 def home():
     dev_info = get_device_info()
