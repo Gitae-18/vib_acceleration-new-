@@ -58,29 +58,29 @@ const Storage = () => {
                             <li className="progress">
                                 <h4>STORAGE</h4>
                                 <div id="progress-container">
-                                    <progress id="progress-bar" value="75" max="100"></progress>
+                                    <progress id="progress-bar" value={(Number(storage.used) / Number(storage.total)) * 100} max="100"></progress>
                                 </div>
                                 <div className="progress-info">
-                                    <span>1.16 GB</span> ㅣ 4.00 GB
+                                    <span>{Number(storage.used).toFixed(2)} GB</span> ㅣ {Number(storage.total).toFixed(2)} GB
                                 </div>
                             </li>
                             <li className="progress-txt">
                                 <div className="item">
                                     <div className="color-box available"></div>
                                     <div className="text">사용 가능&nbsp; :</div>
-                                    <div className="value">284,000,000,000 바이트</div>
-                                    <div className="value">{storage.free}GB</div>
+                                    <div className="value">{storage.free* 1_073_741_82} 바이트</div>
+                                    <div className="value">{Number(storage.free).toFixed(2)}GB</div>
                                 </div>
                                 <div className="item">
                                     <div className="color-box used"></div>
                                     <div className="text">사 &nbsp;용 &nbsp;중 &nbsp; :</div>
-                                    <div className="value">116,000,000,000 바이트</div>
-                                    <div className="value">{storage.used} GB</div>
+                                    <div className="value">{storage.used* 1_073_741_82} 바이트</div>
+                                    <div className="value">{Number(storage.used).toFixed(2)} GB</div>
                                 </div>
                                 <div className="item">
                                     <div className="text" style={{marginLeft:'36px'}}>총  &nbsp;용  &nbsp;량 &nbsp; :</div>
-                                    <div className="value">400,000,000,000 바이트</div>
-                                    <div className="value">{storage.total} GB</div>
+                                    <div className="value">{storage.total* 1_073_741_824}</div>
+                                    <div className="value">{Number(storage.total).toFixed(2)} GB</div>
                                 </div>
                                 <div className="d-flex justify-between">
                                     <div></div>
