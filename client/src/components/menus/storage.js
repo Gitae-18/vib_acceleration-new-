@@ -22,8 +22,9 @@ const Storage = () => {
     }
     const getUsableStorage = useCallback(async () =>  {
         try {
-            const res = await fetch(`/api/network`, { method: 'GET' });
+            const res = await fetch(`/api/storage`, { method: 'GET' });
             const data = await res.json();
+            console.log(data);
             setStorage(storage => ({
                 ...storage,
                 total: data.total,
