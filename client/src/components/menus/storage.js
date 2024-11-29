@@ -68,18 +68,18 @@ const Storage = () => {
                                 <div className="item">
                                     <div className="color-box available"></div>
                                     <div className="text">사용 가능&nbsp; :</div>
-                                    <div className="value">{(storage.free* 1_073_741_82).toLocaleString} BYTE</div>
+                                    <div className="value">{(storage.free* 1_073_741_82).toLocaleString()} BYTE</div>
                                     <div className="value">{Number(storage.free).toFixed(2)}GB</div>
                                 </div>
                                 <div className="item">
                                     <div className="color-box used"></div>
                                     <div className="text">사 &nbsp;용 &nbsp;중 &nbsp; :</div>
-                                    <div className="value">{(storage.used* 1_073_741_82).toLocaleString} BYTE</div>
+                                    <div className="value">{(storage.used* 1_073_741_82).toLocaleString()} BYTE</div>
                                     <div className="value">{Number(storage.used).toFixed(2)} GB</div>
                                 </div>
                                 <div className="item">
                                     <div className="text" style={{marginLeft:'36px'}}>총  &nbsp;용  &nbsp;량 &nbsp; :</div>
-                                    <div className="value">{(storage.total* 1_073_741_824).toLocaleString}BYTE</div>
+                                    <div className="value">{(storage.total* 1_073_741_824).toLocaleString()}BYTE</div>
                                     <div className="value">{Number(storage.total).toFixed(2)} GB</div>
                                 </div>
                                 <div className="d-flex justify-between">
