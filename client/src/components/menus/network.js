@@ -199,7 +199,8 @@ const Network = ({}) => {
             const response = await fetch(`/api/reload`, {
                 method:'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({                    
+                body: JSON.stringify({   
+                    param: 'edit_devinfo',                 
                     id: devInfo.deviceId,
                     ip: devInfo.IP,
                     push_port: devInfo.PushPort,

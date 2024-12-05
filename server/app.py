@@ -231,14 +231,18 @@ def storage_info():
 @app.route('/api/reload', methods=['POST'])
 def reload_device():
     data = request.json
-    dev_id = data.get('id'),
-    server_ip = data.get('ip'),
-    sub_port = data.get('sub_port')
-    push_port = data.get('push_port')
-    req_port = data.get('req_port')
-    
-    set_device_info(dev_id, server_ip, sub_port, push_port, req_port)
-    restart_vibnet()
+    param  = data.get('param')
+    if param == 'edit_devinfo':    
+        dev_id = data.get('id'),
+        server_ip = data.get('ip'),
+        sub_port = data.get('sub_port')
+        push_port = data.get('push_port')
+        req_port = data.get('req_port')
+
+        set_device_info(dev_id, server_ip, sub_port, push_port, req_port)
+        restart_vibnet()
+        return jsonify({'status':'success', 'message':'Device info updated successfully'}), 200
+
     return jsonify({"status":"error", "message":"Invalid parameter"}), 400
 
 """ @app.route('/network', methods=['GET', 'POST'])
