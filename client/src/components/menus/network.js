@@ -193,6 +193,26 @@ const Network = ({}) => {
             console.error('Failed to fetch device info:', error);
         }
     } 
+    const handleReload = async(e) => {
+        e.preventDefault();
+
+        try{
+            const response = await fetch(`/api/reload`, {
+                method:'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({                    
+                    id: devInfo.deviceId,
+                    ip: devInfo.IP,
+                    push_port: devInfo.PushPort,
+                    sub_port: devInfo.SubPort,
+                    req_port: devInfo.ReqPort,
+                }),
+            })
+        }
+        catch(error) {
+            console.error('Invalid Port Number')
+        }
+    } 
     return(
         <body>
         <div className="wrap Network">
@@ -205,8 +225,12 @@ const Network = ({}) => {
                     <div className="cont_Tit mb23">
                         <img src="images/Network_icon.png"/>
                         <h2>Network Information</h2>
+                        <div className="reload">
+                            <button onClick={handleReload}>Reload</button>    
+                        </div>      
                     </div>
-                    <div className="contBox">
+                    
+                    <div className="contBox">                                      
                         <ul className="d-flex mb35">
                             <li className="contBoxtit">
                                 Device ID
@@ -221,6 +245,30 @@ const Network = ({}) => {
                             </li>
                             <li>
                                 <input type="text" id="" className="disabledInput" value={devInfo.IP} disabled/>
+                            </li>
+                        </ul>
+                        <ul className="d-flex mb35">
+                            <li className="contBoxtit">
+                                Sub Port
+                            </li>
+                            <li>
+                                <input type="text" id="" className="disabledInput" value={devInfo.SubPort} disabled/>
+                            </li>
+                        </ul>
+                        <ul className="d-flex mb35">
+                            <li className="contBoxtit">
+                                Push Port
+                            </li>
+                            <li>
+                                <input type="text" id="" className="disabledInput" value={devInfo.PushPort} disabled/>
+                            </li>
+                        </ul>
+                        <ul className="d-flex mb35">
+                            <li className="contBoxtit">
+                                Req Port
+                            </li>
+                            <li>
+                                <input type="text" id="" className="disabledInput" value={devInfo.ReqPort} disabled/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">

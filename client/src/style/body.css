@@ -267,3 +267,19 @@
       position:relative;
       left: 18%;
      }
+     .reload {
+      display:inline;
+      position:relative;
+      top:5px;
+      padding: 2px;
+     }
+
+     .reload button{
+      background-color:#8f8f8f;
+      color:white;
+      width:45px;
+      height:25px;
+      font-size:11px;
+      border-radius: 2px;    
+     }
+     

@@ -222,10 +222,25 @@ def scan_wifi():
             "success": False,
             "error": str(e)
         }), 500
+    
 @app.route('/api/storage', methods=['GET'])
 def storage_info():
     storage = get_storage()
     return jsonify(storage) 
+
+@app.route('/api/reload', methods=['POST'])
+def reload_device():
+    data = request.json
+    dev_id = data.get('id'),
+    server_ip = data.get('ip'),
+    sub_port = data.get('sub_port')
+    push_port = data.get('push_port')
+    req_port = data.get('req_port')
+    
+    set_device_info(dev_id, server_ip, sub_port, push_port, req_port)
+    restart_vibnet()
+    return jsonify({"status":"error", "message":"Invalid parameter"}), 400
+
 """ @app.route('/network', methods=['GET', 'POST'])
 def home():
     dev_info = get_device_info()
