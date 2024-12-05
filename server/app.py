@@ -62,6 +62,14 @@ def get_device_info():
     except Exception as e:
         print("Unexpected error in get_device_info:", str(e))
         raise
+
+def set_device_info(dev_id, ip, sub_port, push_port, req_port):
+    prefix = "tcp://{}:".format(ip)
+    vib_config.SetConfig(device_id = dev_id, 
+        sub_addr = prefix + sub_port,
+        push_addr = prefix + push_port,
+        req_addr = prefix + req_port)
+    
 def get_storage(path="/"):    
     try:
         total, used, free = shutil.disk_usage(path)
@@ -74,13 +82,7 @@ def get_storage(path="/"):
         return {"error": f"Path '{path}' not found"}
     except PermissionError:
         return {"error": f"Permission denied for path '{path}'"}
-
-def set_device_info(dev_id, ip, sub_port, push_port, req_port):
-    prefix = "tcp://{}:".format(ip)
-    vib_config.SetConfig(device_id = dev_id, 
-        sub_addr = prefix + sub_port,
-        push_addr = prefix + push_port,
-        req_addr = prefix + req_port)
+    
 @app.route('/api/network/ap_mode', methods=['GET'])
 def get_ap_mode():
     ap_mode = wifi.check_ap_mode()
