@@ -195,7 +195,6 @@ const Network = ({}) => {
     } 
     const handleReload = async(e) => {
         e.preventDefault();
-
         try{
             const response = await fetch(`/api/reload`, {
                 method:'POST',
@@ -208,6 +207,10 @@ const Network = ({}) => {
                     req_port: devInfo.ReqPort,
                 }),
             })
+            if(response.ok) {
+                const result = await response.json();
+                console.log('response server:', result);                
+            }
         }
         catch(error) {
             console.error('Invalid Port Number')
