@@ -36,22 +36,7 @@ class DeviceInfo():
         self.push_port = push_port
         self.req_port = req_port
 
-""" def get_device_info():
-    cfg_devinfo = vib_config.GetConfig()
-    string = cfg_devinfo['sub_addr']
-    parts = string.split("//")[1].split(":")
-    ip = parts[0]
-    sub_port = parts[1]
 
-    string = cfg_devinfo['push_addr']
-    parts = string.split(":")
-    push_port = parts[-1]
-
-    string = cfg_devinfo['req_addr']
-    parts = string.split(":")
-    req_port = parts[-1]
-
-    return DeviceInfo(cfg_devinfo['device_id'], ip, sub_port, push_port, req_port) """
 def get_device_info():
     cfg_devinfo = vib_config.GetConfig()
 
@@ -59,18 +44,13 @@ def get_device_info():
         print("Raw config data:", cfg_devinfo)
 
         string = cfg_devinfo['sub_addr']
-     
-        parts = string.split(":")
+        parts = string.split("//")[1].split(":") 
         ip = parts[0] if len(parts) > 0 else "N/A"
         sub_port = parts[1] if len(parts) > 1 else "N/A"
-
         string = cfg_devinfo['push_addr']
-
         parts = string.split(":")
         push_port = parts[-1] if len(parts) > 0 else "N/A"
-
         string = cfg_devinfo['req_addr']
-
         parts = string.split(":")
         req_port = parts[-1] if len(parts) > 0 else "N/A"
 
