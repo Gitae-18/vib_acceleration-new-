@@ -193,8 +193,7 @@ const Network = ({}) => {
             console.error('Failed to fetch device info:', error);
         }
     } 
-    const handleReload = async(e) => {
-        e.preventDefault();
+    const handleReload = async() => {
         try{
             const response = await fetch(`/api/reload`, {
                 method:'POST',
