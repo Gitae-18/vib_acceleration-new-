@@ -40,28 +40,20 @@ class DeviceInfo():
 def get_device_info():
     cfg_devinfo = vib_config.GetConfig()
 
-    try:
-        print("Raw config data:", cfg_devinfo)
+    string = cfg_devinfo['sub_addr']
+    parts = string.split("//")[1].split(":")
+    ip = parts[0]
+    sub_port = parts[1]
 
-        string = cfg_devinfo['sub_addr']
-        parts = string.split("//")[1].split(":") 
-        ip = parts[0] if len(parts) > 0 else "N/A"
-        sub_port = parts[1] if len(parts) > 1 else "N/A"
-        string = cfg_devinfo['push_addr']
-        parts = string.split(":")
-        push_port = parts[-1] if len(parts) > 0 else "N/A"
-        string = cfg_devinfo['req_addr']
-        parts = string.split(":")
-        req_port = parts[-1] if len(parts) > 0 else "N/A"
+    string = cfg_devinfo['push_addr']
+    parts = string.split(":")
+    push_port = parts[-1]
 
-        return DeviceInfo(cfg_devinfo['device_id'], ip, sub_port, push_port, req_port)
+    string = cfg_devinfo['req_addr']
+    parts = string.split(":")
+    req_port = parts[-1]
 
-    except IndexError as e:
-        print("Error in get_device_info - IndexError:", str(e))
-        raise ValueError("Device configuration data is invalid")
-    except Exception as e:
-        print("Unexpected error in get_device_info:", str(e))
-        raise
+    return DeviceInfo(cfg_devinfo['device_id'], ip, sub_port, push_port, req_port)
 
 def set_device_info(dev_id, ip, sub_port, push_port, req_port):
     prefix = "tcp://{}:".format(ip)
