@@ -55,7 +55,7 @@ class VibnetConfig:
         config[section][_KEY_SUB_ADDR] = _SUB_ADDR
         config[section][_KEY_PUSH_ADDR] = _PUSH_ADDR
         config[section][_KEY_REQ_ADDR] = _REQ_ADDR
-
+        
         self._Write(config)
 
     def GetConfig(self):

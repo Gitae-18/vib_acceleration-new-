@@ -49,11 +49,11 @@ def get_device_info():
     def parse_address(address):
         """Parse the address and extract IP and port."""
         # Ensure the address starts with 'tcp://'
-        normalized_address = normalize_address(address)
+        #normalized_address = normalize_address(address)
 
         # Split and validate the format
         try:
-            parts = normalized_address.split("//")[1].split(":")
+            parts = address.split(":")
             ip = parts[0]
             port = parts[1]
         except (IndexError, ValueError):
