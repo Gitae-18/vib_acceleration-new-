@@ -47,18 +47,19 @@ def get_device_info():
     print(f"Config Data: {cfg_devinfo}")
 
     def parse_address(address):
-        try:
-            if address.startswith("tcp://"):
-                address = address.split("tcp://")[1]
+        """Parse the address and extract IP and port."""
+        if address.startswith("tcp://"):
+            address = address.split("tcp://")[1]
 
-            # IP와 포트 분리
-            parts = address.split(":")
-            ip = parts[0]
-            port = parts[1]
-        except (IndexError, ValueError):
-            raise ValueError(f"Invalid address format: {address}")
+        parts = address.split(":")
+        if len(parts) != 2:
+            raise ValueError(f"Invalid address format: {address}. Port is missing.")
+
+        ip = parts[0]
+        port = parts[1]
 
         return ip, port
+
     try:
         ip, sub_port = parse_address(cfg_devinfo['sub_addr'])
         _, push_port = parse_address(cfg_devinfo['push_addr'])
@@ -74,7 +75,6 @@ def set_device_info(dev_id, ip, sub_port, push_port, req_port):
     if not all([dev_id, ip, sub_port, push_port, req_port]):
         raise ValueError("All fields must be non-empty!")
 
-    # 중복 접두사 방지
     prefix = f"tcp://{ip}:" if not ip.startswith("tcp://") else f"{ip}:"
     
     config_data = {
