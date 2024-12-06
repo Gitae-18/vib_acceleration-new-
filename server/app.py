@@ -55,6 +55,7 @@ def get_device_info():
 
     return DeviceInfo(cfg_devinfo['device_id'], ip, sub_port, push_port, req_port)
 
+
 def set_device_info(dev_id, ip, sub_port, push_port, req_port):
     prefix = "tcp://{}:".format(ip)
     vib_config.SetConfig(device_id = dev_id, 
@@ -108,6 +109,7 @@ def update_network_info():
 def get_network_info():
     try:
         dev_info_obj = get_device_info()
+        print(dev_info_obj)
         dev_info = {
             "dev_id": dev_info_obj.device_id,
             "ip": dev_info_obj.ip,
