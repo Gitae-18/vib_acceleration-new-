@@ -227,7 +227,7 @@ def reload_device():
             req_port = data.get('req_port')
 
             # 필드 검증
-            if not all([dev_id, ip, push_port, sub_port, req_port]):
+            if not all([dev_id, ip, sub_port, push_port, req_port]):
                 return jsonify({"status": "error", "message": "Missing fields"}), 400
 
             # 장치 정보 업데이트 로직
