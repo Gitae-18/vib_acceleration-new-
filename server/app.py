@@ -39,7 +39,7 @@ class DeviceInfo():
 
 def get_device_info():
     cfg_devinfo = vib_config.GetConfig()
-
+    print(cfg_devinfo)
     string = cfg_devinfo['sub_addr']
     parts = string.split("//")[1].split(":")
     ip = parts[0]
@@ -108,7 +108,7 @@ def update_network_info():
 @app.route('/api/network', methods=['GET'])
 def get_network_info():  
         dev_info_obj = get_device_info()
-        print(dev_info_obj)
+        #print(dev_info_obj)
         dev_info = {
             "dev_id": dev_info_obj.device_id,
             "ip": dev_info_obj.ip,
