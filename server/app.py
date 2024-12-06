@@ -75,11 +75,21 @@ def get_device_info():
 
 def set_device_info(dev_id, ip, sub_port, push_port, req_port):
     prefix = "tcp://{}:".format(ip)
-    vib_config.SetConfig(device_id = dev_id, 
-        sub_addr = prefix + sub_port,
-        push_addr = prefix + push_port,
-        req_addr = prefix + req_port)
-    print(f"vib_config: {vib_config}")
+    config_data = {
+        "device_id": dev_id,
+        "sub_addr": prefix + sub_port,
+        "push_addr": prefix + push_port,
+        "req_addr": prefix + req_port
+    }
+
+    # config_data를 출력
+    print("Setting device info with the following configuration:")
+    for key, value in config_data.items():
+        print(f"{key}: {value}")
+
+    # SetConfig 호출
+    vib_config.SetConfig(**config_data)
+    
 
 def get_storage(path="/"):    
     try:
