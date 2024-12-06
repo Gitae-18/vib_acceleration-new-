@@ -36,6 +36,11 @@ class DeviceInfo():
         self.push_port = push_port
         self.req_port = req_port
 
+def normalize_address(addr):
+    """Ensures the address starts with 'tcp://'. Adds it if missing."""
+    if not addr.startswith("tcp://"):
+        return f"tcp://{addr}"
+    return addr
 
 def get_device_info():
     cfg_devinfo = vib_config.GetConfig()
