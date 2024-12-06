@@ -44,19 +44,31 @@ def normalize_address(addr):
 
 def get_device_info():
     cfg_devinfo = vib_config.GetConfig()
-    print(cfg_devinfo)
-    string = cfg_devinfo['sub_addr']
-    parts = string.split("//")[1].split(":")
-    ip = parts[0]
-    sub_port = parts[1]
+    print(f"Config Data: {cfg_devinfo}")
 
-    string = cfg_devinfo['push_addr']
-    parts = string.split(":")
-    push_port = parts[-1]
+    def parse_address(address):
+        """Parse the address and extract IP and port."""
+        # Ensure the address starts with 'tcp://'
+        normalized_address = normalize_address(address)
 
-    string = cfg_devinfo['req_addr']
-    parts = string.split(":")
-    req_port = parts[-1]
+        # Split and validate the format
+        try:
+            parts = normalized_address.split("//")[1].split(":")
+            ip = parts[0]
+            port = parts[1]
+        except (IndexError, ValueError):
+            raise ValueError(f"Invalid address format: {address}")
+
+        return ip, port
+
+    # Extract information with error handling
+    try:
+        ip, sub_port = parse_address(cfg_devinfo['sub_addr'])
+        _, push_port = parse_address(cfg_devinfo['push_addr'])
+        _, req_port = parse_address(cfg_devinfo['req_addr'])
+    except ValueError as e:
+        print(f"[Error] {e}")
+        raise
 
     return DeviceInfo(cfg_devinfo['device_id'], ip, sub_port, push_port, req_port)
 
