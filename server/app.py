@@ -36,8 +36,7 @@ class DeviceInfo():
         self.push_port = push_port
         self.req_port = req_port
 
-def normalize_address(addr):
-    """Ensures the address starts with 'tcp://'. Adds it if missing."""
+def normalize_address(addr):    
     if not addr.startswith("tcp://"):
         return f"tcp://{addr}"
     return addr
@@ -47,7 +46,7 @@ def get_device_info():
     print(f"Config Data: {cfg_devinfo}")
 
     def parse_address(address):
-        """Parse the address and extract IP and port."""
+        print(f"now address : {address}")        
         if address.startswith("tcp://"):
             address = address.split("tcp://")[1]
 
