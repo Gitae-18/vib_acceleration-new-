@@ -80,7 +80,7 @@ def set_device_info(dev_id, ip, sub_port, push_port, req_port):
         push_addr = prefix + push_port,
         req_addr = prefix + req_port)
     print(f"vib_config: {vib_config}")
-    
+
 def get_storage(path="/"):    
     try:
         total, used, free = shutil.disk_usage(path)
@@ -292,4 +292,4 @@ def home():
     return render_template('index.html', dev_info = dev_info, wifi = wifi) """
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, port=5000)
+    app.run(host='0.0.0.0', debug=True, port=80)
