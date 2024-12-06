@@ -79,6 +79,7 @@ def set_device_info(dev_id, ip, sub_port, push_port, req_port):
         sub_addr = prefix + sub_port,
         push_addr = prefix + push_port,
         req_addr = prefix + req_port)
+    print(f"vib_config: {vib_config}")
     
 def get_storage(path="/"):    
     try:
