@@ -71,25 +71,19 @@ def get_device_info():
 
 
 def set_device_info(dev_id, ip, sub_port, push_port, req_port):
-    def ensure_tcp_prefix(addr):
-        """Ensure the address starts with 'tcp://'."""
-        return addr if addr.startswith("tcp://") else f"tcp://{addr}"
+    if not all([dev_id, ip, sub_port, push_port, req_port]):
+        raise ValueError("All fields must be non-empty!")
 
-    sub_addr = ensure_tcp_prefix(f"{ip}:{sub_port}")
-    push_addr = ensure_tcp_prefix(f"{ip}:{push_port}")
-    req_addr = ensure_tcp_prefix(f"{ip}:{req_port}")
-
+    # 중복 접두사 방지
+    prefix = f"tcp://{ip}:" if not ip.startswith("tcp://") else f"{ip}:"
+    
     config_data = {
-        "device_id": dev_id,
-        "sub_addr": sub_addr,
-        "push_addr": push_addr,
-        "req_addr": req_addr,
+        'device_id': dev_id,
+        'sub_addr': prefix + sub_port,
+        'push_addr': prefix + push_port,
+        'req_addr': prefix + req_port,
     }
-
-    print("Setting device info with the following configuration:")
-    for key, value in config_data.items():
-        print(f"{key}: {value}")
-
+    print(f"Setting Config Data: {config_data}")
     vib_config.SetConfig(**config_data)
     
 
