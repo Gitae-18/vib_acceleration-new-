@@ -87,6 +87,7 @@ const Network = ({}) => {
                 Default_Gateway: data.wifi_info.gateway || "N/A",
                 SSID: data.wifi_info.mac || "N/A",
             });
+            setIsApMode(data.wifi_info.ap_mode ? true : false);
 
             setDevInfo({
                 deviceId: data.dev_info.dev_id || "N/A",
