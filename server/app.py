@@ -73,8 +73,10 @@ def get_device_info():
 def set_device_info(dev_id, ip, sub_port, push_port, req_port):
     if not all([dev_id, ip, sub_port, push_port, req_port]):
         raise ValueError("All fields must be non-empty!")
+    
+    ip = ip.replace("tcp://", "")
 
-    prefix = f"tcp://{ip}:" if not ip.startswith("tcp://") else f"{ip}:"
+    prefix = f"{ip}:"
     
     config_data = {
         'device_id': dev_id,
