@@ -6,7 +6,7 @@ import '../../style/contents.css';
 import '../../style/common.css';
 import styled from "styled-components";
 import { useDispatch } from 'react-redux';
-import { setWifiInfo, setDevInfo } from './store';
+import { setWifiInfo, setDevInfo } from '../../store/store';
 const Network = ({}) => {
     const [netInfo, setNetInfo] = useState({
         IP_Address:'',
