@@ -296,7 +296,7 @@ const Network = ({}) => {
                                 AP_Mode Status
                             </li>
                             <li className="c-red">
-                                <input type="text" id="" className="disabledInput" value={isApMode? 'Active' : 'Non-Active'} disabled/>                                
+                                <input type="text" id="" className="disabledInput" value={isApMode? 'Active' : 'Non-Active'}   style={{ color: isApMode ? 'red' : 'black' }}disabled/>                                
                             </li>
                         </ul>
                         <ul className="d-flex">
