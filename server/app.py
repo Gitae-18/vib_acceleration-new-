@@ -8,6 +8,7 @@ import shutil
 wifi = WiFi('wlan0')
 vib_config = VibnetConfig()
 app = Flask(__name__, static_folder="../client/build", static_url_path="/")
+latest_device_info = {}
 def stop_vibnet():
     subprocess.call(["pkill", "vibnet"])
 
@@ -132,9 +133,10 @@ def update_network_info():
 
 @app.route('/api/network', methods=['GET'])
 def get_network_info():  
+        global latest_device_info
         dev_info_obj = get_device_info()
         #print(dev_info_obj)
-        dev_info = {
+        latest_device_info = {  
             "dev_id": dev_info_obj.device_id,
             "ip": dev_info_obj.ip,
             "sub_port": dev_info_obj.sub_port,
@@ -148,7 +150,7 @@ def get_network_info():
             "ap_mode": wifi.check_ap_mode(),
             "mac": wifi.mac
         }        
-        return jsonify({"dev_info": dev_info, "wifi_info": wifi_info})
+        return jsonify({"dev_info": latest_device_info, "wifi_info": wifi_info})
 
 @app.route('/api/network/connect', methods=['POST'])
 def connect_wifi():
@@ -221,6 +223,7 @@ def storage_info():
 
 @app.route('/api/reload', methods=['POST'])
 def reload_device():
+    global latest_device_info
     try:
         # 요청 데이터 받기
         data = request.json
@@ -240,6 +243,13 @@ def reload_device():
 
             # 장치 정보 업데이트 로직
             set_device_info(dev_id, ip, push_port, sub_port, req_port)
+            latest_device_info = {
+                "dev_id": dev_id,
+                "ip": ip,
+                "sub_port": sub_port,
+                "push_port": push_port,
+                "req_port": req_port
+            }
             restart_vibnet()
 
             return jsonify({"status": "success", "message": "Device info updated!"}), 200
