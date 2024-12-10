@@ -5,6 +5,8 @@ import '../../style/font.css';
 import '../../style/contents.css';
 import '../../style/common.css';
 import styled from "styled-components";
+import { useDispatch } from 'react-redux';
+import { setWifiInfo, setDevInfo } from './store';
 const Network = ({}) => {
     const [netInfo, setNetInfo] = useState({
         IP_Address:'',
@@ -34,6 +36,7 @@ const Network = ({}) => {
     const isMounted = useRef(true);
     const devId = 'D000001';
     
+    const dispatch = useDispatch();
     
     const updateNetworkInfo = useCallback(async () => {
         try {
@@ -96,6 +99,21 @@ const Network = ({}) => {
                 PushPort: data.dev_info.push_port || "N/A",
                 ReqPort: data.dev_info.req_port || "N/A",
             });
+            dispatch(setWifiInfo({
+                ip: data.wifi_info.ip || "N/A",
+                netmask: data.wifi_info.netmask || "N/A",
+                gateway: data.wifi_info.gateway || "N/A",
+                mac: data.wifi_info.mac || "N/A",
+                ap_mode: !!data.wifi_info.ap_mode,
+            }));
+
+            dispatch(setDevInfo({
+                dev_id: data.dev_info.dev_id || "N/A",
+                ip: data.dev_info.ip || "N/A",
+                sub_port: data.dev_info.sub_port || "N/A",
+                push_port: data.dev_info.push_port || "N/A",
+                req_port: data.dev_info.req_port || "N/A",
+            }));
         } catch (error) {
             console.error('Failed to fetch network info:', error);
         }        
@@ -296,7 +314,7 @@ const Network = ({}) => {
                                 AP_Mode Status
                             </li>
                             <li className="c-red">
-                                <input type="text" id="" className="disabledInput" value={isApMode? 'Active' : 'Non-Active'}   style={{ color: isApMode ? 'red' : 'black' }}disabled/>                                
+                                <input type="text" id="" className="disabledInput" value={isApMode? 'Active' : 'Non-Active'}  disabled/>                                
                             </li>
                         </ul>
                         <ul className="d-flex">
