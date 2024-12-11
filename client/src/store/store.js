@@ -1,4 +1,4 @@
-import { configureStore, createSlice} from '@reduxjs/toolkit';
+import { configureStore, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     wifi_info: {
@@ -22,10 +22,16 @@ const networkSlice = createSlice({
     initialState,
     reducers: {
         setWifiInfo(state, action) {
-            state.wifi_info = action.payload;
+            return {
+                ...state,
+                wifi_info: action.payload,
+            };
         },
         setDevInfo(state, action) {
-            state.dev_info = action.payload;
+            return {
+                ...state,
+                dev_info: action.payload,
+            };
         },
     },
 });
