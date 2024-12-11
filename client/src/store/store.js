@@ -22,21 +22,15 @@ const networkSlice = createSlice({
     initialState,
     reducers: {
         setWifiInfo(state, action) {
-            return {
-                ...state,
-                wifi_info: action.payload,
-            };
+            state.wifi_info = action.payload;
         },
-        setDevInfo(state, action) {
-            return {
-                ...state,
-                dev_info: action.payload,
-            };
+        setDeviceInfo(state, action) {
+            state.dev_info = action.payload;
         },
     },
 });
 
-export const { setWifiInfo, setDevInfo } = networkSlice.actions;
+export const { setWifiInfo, setDeviceInfo } = networkSlice.actions;
 export const store = configureStore({
     reducer: {
         network: networkSlice.reducer,
