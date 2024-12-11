@@ -41,7 +41,6 @@ const Network = ({}) => {
     : process.env.REACT_APP_API_URL;
 
     const isMounted = useRef(true);
-    const devId = 'D000001';
     
     const dispatch = useDispatch();
     
@@ -287,7 +286,7 @@ const Network = ({}) => {
                                 Device ID
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" value={inputDeviceInfo.deviceId || devInfo.deviceId} onChange={handleInputChange}/>
+                                <input type="text" id="" name="deviceId" className="disabledInput" value={inputDeviceInfo.deviceId || devInfo.deviceId} onChange={handleInputChange}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -295,7 +294,7 @@ const Network = ({}) => {
                                 IP Address
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" value={inputDeviceInfo.IP || devInfo.IP} onChange={handleInputChange}/>
+                                <input type="text" id="" name="IP" className="disabledInput" value={inputDeviceInfo.IP || devInfo.IP} onChange={handleInputChange}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -303,7 +302,7 @@ const Network = ({}) => {
                                 Sub Port
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" value={inputDeviceInfo.SubPort || devInfo.SubPort} onChange={handleInputChange}/>
+                                <input type="text" id="" name="SubPort" className="disabledInput" value={inputDeviceInfo.SubPort || devInfo.SubPort} onChange={handleInputChange}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -311,7 +310,7 @@ const Network = ({}) => {
                                 Push Port
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" value={inputDeviceInfo.PushPort || devInfo.PushPort} onChange={handleInputChange}/>
+                                <input type="text" id="" name="PushPort" className="disabledInput" value={inputDeviceInfo.PushPort || devInfo.PushPort} onChange={handleInputChange}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -319,7 +318,7 @@ const Network = ({}) => {
                                 Req Port
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" value={inputDeviceInfo.ReqPort || devInfo.ReqPort} onChange={handleInputChange}/>
+                                <input type="text" id="" name="ReqPort" className="disabledInput" value={inputDeviceInfo.ReqPort || devInfo.ReqPort} onChange={handleInputChange}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
