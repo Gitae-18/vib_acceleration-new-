@@ -58,7 +58,7 @@ const Server = () => {
                                 Sub Port
                             </li>
                             <li>
-                                <input type="text" id="" className="commonInput" value={wifiInfo.sub_port}/>
+                                <input type="text" id="" className="commonInput" value={devInfo.sub_port}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -66,7 +66,7 @@ const Server = () => {
                                 Push Port
                             </li>
                             <li>
-                                <input type="text" id="" className="commonInput" value={wifiInfo.push_port}/>
+                                <input type="text" id="" className="commonInput" value={devInfo.push_port}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -74,7 +74,7 @@ const Server = () => {
                                 Req Port
                             </li>
                             <li>
-                                <input type="text" id="" className="commonInput" value={wifiInfo.req_port}/>
+                                <input type="text" id="" className="commonInput" value={devInfo.req_port}/>
                             </li>
                         </ul>                        
                     </div>
