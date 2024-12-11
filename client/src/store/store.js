@@ -1,5 +1,5 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
-
+import thunk from 'redux-thunk';
 const initialState = {
     wifi_info: {
         ip: "N/A",
@@ -41,5 +41,6 @@ export const store = configureStore({
     reducer: {
         network: networkSlice.reducer,
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
 export default store;
