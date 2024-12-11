@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 const Server = () => {
     const wifiInfo = useSelector((state) => state.network.wifi_info);
     const devInfo = useSelector((state) => state.network.dev_info);
-
+    console.log(devInfo);
     const handleChange = (e) => {
         const { name, value } = e.target;
     
