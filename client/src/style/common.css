@@ -318,11 +318,14 @@ form {
     font-family: Arial, sans-serif;
 }
 
-.contBox ul li {
+*:disabled {
 	background-color: #585858;
-	color: white;
+	color: #BFBFBF;
 }  
-
+ul li input {
+	background-color: #585858;
+	color: #BFBFBF;
+}
 /* header */
 #header {
     width: 100%;
