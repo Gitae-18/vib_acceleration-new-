@@ -29,6 +29,7 @@ const Network = ({}) => {
         PushPort:'',
         ReqPort:'',
     })
+    const [isEditing, setIsEditing] = useState(false);
     const [handleAP, setHandleAP] = useState();
     const [ssidList, setSSIDList] = useState([]);
     const [selectedSSID, setSelectedSSID] = useState('');
@@ -52,35 +53,7 @@ const Network = ({}) => {
         } catch (error) {
             console.error('Failed to update network info:', error);
         }
-    },[]);
-    /* const fetchNetworkInfo = async () => {
-        try {
-            const res = await fetch(`/api/network`, { method: 'GET' });
-            const data = await res.json();
-            if (!data || !data.wifi_info || !data.dev_info) {
-                console.error('Invalid data received:', data);
-                return;
-            }
-            setNetInfo(netinfo => ({
-                ...netinfo,
-                IP_Address: data.wifi_info.ip || "N/A",
-                SubnetMask: data.wifi_info.netmask || "N/A",
-                Default_Gateway: data.wifi_info.gateway || "N/A",
-                SSID: data.wifi_info.mac || "N/A",
-            }));
-    
-            setDevInfo(devinfo => ({
-                ...devinfo, 
-                deviceId: data.dev_info.dev_id || "N/A",
-                IP: data.dev_info.ip || "N/A",
-                SubPort: data.dev_info.sub_port || "N/A",
-                PushPort: data.dev_info.push_port || "N/A",
-                ReqPort: data.dev_info.req_port || "N/A",
-            }));
-        } catch (error) {
-            console.error('Failed to fetch network info:', error);
-        }        
-    }; */
+    },[]);    
     const fetchNetworkInfo = useCallback(async () => {
         try {
             const res = await fetch(`/api/network`, { method: 'GET' });
@@ -98,17 +71,19 @@ const Network = ({}) => {
             });
             setIsApMode(data.wifi_info.ap_mode ? true : false);
 
-            setDevInfo({
-                deviceId: data.dev_info.dev_id || "N/A",
-                IP: data.dev_info.ip || "N/A",
-                SubPort: data.dev_info.sub_port || "N/A",
-                PushPort: data.dev_info.push_port || "N/A",
-                ReqPort: data.dev_info.req_port || "N/A",
-            });                        
+            if (!isEditing) {
+                setDevInfo({
+                    deviceId: data.dev_info.dev_id || "N/A",
+                    IP: data.dev_info.ip || "N/A",
+                    SubPort: data.dev_info.sub_port || "N/A",
+                    PushPort: data.dev_info.push_port || "N/A",
+                    ReqPort: data.dev_info.req_port || "N/A",
+                });
+            }                        
         } catch (error) {
             console.error('Failed to fetch network info:', error);
         }        
-    }, []);
+    }, [isEditing]);
     useEffect(() => {
         if (netInfo || devInfo) {
             if (netInfo) {
@@ -210,6 +185,7 @@ const Network = ({}) => {
             ...prevState,
             [name]: value,
         }))
+        setIsEditing(true);
     }
     const handleConnectWiFi = async(network) => {
         console.log(network);

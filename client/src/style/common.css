@@ -318,9 +318,9 @@ form {
     font-family: Arial, sans-serif;
 }
 
-*:disabled {
+.contBox ul li {
 	background-color: #585858;
-	color: #BFBFBF;
+	color: white;
 }  
 
 /* header */
