@@ -98,43 +98,34 @@ const Network = ({}) => {
                 SubPort: data.dev_info.sub_port || "N/A",
                 PushPort: data.dev_info.push_port || "N/A",
                 ReqPort: data.dev_info.req_port || "N/A",
-            });
-            dispatch(setWifiInfo({
-                ip: data.wifi_info.ip || "N/A",
-                netmask: data.wifi_info.netmask || "N/A",
-                gateway: data.wifi_info.gateway || "N/A",
-                mac: data.wifi_info.mac || "N/A",
-                ap_mode: data.wifi_info.ap_mode,
-            }));
-            
-            dispatch(setDevInfo({
-                dev_id: data.dev_info.dev_id || "N/A",
-                ip: data.dev_info.ip || "N/A",
-                sub_port: data.dev_info.sub_port || "N/A",
-                push_port: data.dev_info.push_port || "N/A",
-                req_port: data.dev_info.req_port || "N/A",
-            }));
-            console.log('Dispatching setWifiInfo:', {
-                ip: data.wifi_info.ip || "N/A",
-                netmask: data.wifi_info.netmask || "N/A",
-                gateway: data.wifi_info.gateway || "N/A",
-                mac: data.wifi_info.mac || "N/A",
-                ap_mode: data.wifi_info.ap_mode,
-            });
-            
-            console.log('Dispatching setDevInfo:', {
-                dev_id: data.dev_info.dev_id || "N/A",
-                ip: data.dev_info.ip || "N/A",
-                sub_port: data.dev_info.sub_port || "N/A",
-                push_port: data.dev_info.push_port || "N/A",
-                req_port: data.dev_info.req_port || "N/A",
-            });
-
+            });                        
         } catch (error) {
             console.error('Failed to fetch network info:', error);
         }        
     }, []);
+    useEffect(() => {
+        if (netInfo || devInfo) {
+            if (netInfo) {
+                dispatch(setWifiInfo({
+                    ip: netInfo.IP_Address,
+                    netmask: netInfo.SubnetMask,
+                    gateway: netInfo.Default_Gateway,
+                    mac: netInfo.SSID,
+                    ap_mode: false, // netInfo에 ap_mode가 없으므로 false로 기본값 설정
+                }));
+            }
     
+            if (devInfo) {
+                dispatch(setDevInfo({
+                    dev_id: devInfo.deviceId,
+                    ip: devInfo.IP,
+                    sub_port: devInfo.SubPort,
+                    push_port: devInfo.PushPort,
+                    req_port: devInfo.ReqPort,
+                }));
+            }
+        }
+    }, [netInfo, devInfo, dispatch]);
     useEffect(() => {        
         updateNetworkInfo();
         fetchNetworkInfo();
