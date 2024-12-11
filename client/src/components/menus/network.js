@@ -22,6 +22,13 @@ const Network = ({}) => {
         PushPort:'',
         ReqPort:'',
     })
+    const [inputDeviceInfo, setInputDeviceInfo] = useState({
+        deviceId: '',
+        IP:'',
+        SubPort:'',
+        PushPort:'',
+        ReqPort:'',
+    })
     const [handleAP, setHandleAP] = useState();
     const [ssidList, setSSIDList] = useState([]);
     const [selectedSSID, setSelectedSSID] = useState('');
@@ -198,7 +205,13 @@ const Network = ({}) => {
     
         console.log('mode : ' + newHandleAP); 
     }, [handleAP]); */
-     
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setInputDeviceInfo((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }))
+    }
     const handleConnectWiFi = async(network) => {
         console.log(network);
         console.log(password);
@@ -223,27 +236,34 @@ const Network = ({}) => {
     } 
     const handleReload = async() => {
         try{
+
+            const requestData = {
+                id: inputDeviceInfo.deviceId || devInfo.deviceId,
+                ip: inputDeviceInfo.IP || devInfo.IP,
+                push_port: inputDeviceInfo.PushPort || devInfo.PushPort,
+                sub_port: inputDeviceInfo.SubPort || devInfo.SubPort,
+                req_port: inputDeviceInfo.ReqPort || devInfo.ReqPort,                
+            }
             const response = await fetch(`/api/reload`, {
                 method:'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({   
                     param: 'edit_devinfo',                 
-                    id: devInfo.deviceId,
-                    ip: devInfo.IP,
-                    push_port: devInfo.PushPort,
-                    sub_port: devInfo.SubPort,
-                    req_port: devInfo.ReqPort,
+                    ...requestData,
                 }),
             })
             if(response.ok) {
                 const result = await response.json();
                 console.log('response server:', result);                
+            } else {
+                console.error('Failed to reload device info');
             }
         }
         catch(error) {
             console.error('Invalid Port Number')
         }
     } 
+
     return(
         <body>
         <div className="wrap Network">
@@ -267,7 +287,7 @@ const Network = ({}) => {
                                 Device ID
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" value={devInfo.deviceId} disabled/>
+                                <input type="text" id="" className="disabledInput" value={inputDeviceInfo.deviceId || devInfo.deviceId} onChange={handleInputChange}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -275,7 +295,7 @@ const Network = ({}) => {
                                 IP Address
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" value={devInfo.IP} disabled/>
+                                <input type="text" id="" className="disabledInput" value={inputDeviceInfo.IP || devInfo.IP} onChange={handleInputChange}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -283,7 +303,7 @@ const Network = ({}) => {
                                 Sub Port
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" value={devInfo.SubPort} disabled/>
+                                <input type="text" id="" className="disabledInput" value={inputDeviceInfo.SubPort || devInfo.SubPort} onChange={handleInputChange}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -291,7 +311,7 @@ const Network = ({}) => {
                                 Push Port
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" value={devInfo.PushPort} disabled/>
+                                <input type="text" id="" className="disabledInput" value={inputDeviceInfo.PushPort || devInfo.PushPort} onChange={handleInputChange}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -299,7 +319,7 @@ const Network = ({}) => {
                                 Req Port
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" value={devInfo.ReqPort} disabled/>
+                                <input type="text" id="" className="disabledInput" value={inputDeviceInfo.ReqPort || devInfo.ReqPort} onChange={handleInputChange}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
