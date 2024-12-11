@@ -114,7 +114,21 @@ const Network = ({}) => {
                 push_port: data.dev_info.push_port || "N/A",
                 req_port: data.dev_info.req_port || "N/A",
             }));
+            console.log('Dispatching setWifiInfo:', {
+                ip: data.wifi_info.ip || "N/A",
+                netmask: data.wifi_info.netmask || "N/A",
+                gateway: data.wifi_info.gateway || "N/A",
+                mac: data.wifi_info.mac || "N/A",
+                ap_mode: data.wifi_info.ap_mode,
+            });
             
+            console.log('Dispatching setDevInfo:', {
+                dev_id: data.dev_info.dev_id || "N/A",
+                ip: data.dev_info.ip || "N/A",
+                sub_port: data.dev_info.sub_port || "N/A",
+                push_port: data.dev_info.push_port || "N/A",
+                req_port: data.dev_info.req_port || "N/A",
+            });
 
         } catch (error) {
             console.error('Failed to fetch network info:', error);
