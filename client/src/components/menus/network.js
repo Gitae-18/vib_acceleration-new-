@@ -115,15 +115,7 @@ const Network = ({}) => {
             isMounted.current = false;
         };
     },[ updateNetworkInfo, fetchNetworkInfo])
-    /* const openModal = (ssid) => {
-        const buttonRect = event.target.getBoundingClientRect();
-        setSelectedSSID(ssid);
-        setShowModal(true);
-        setModalPosition({
-            top: buttonRect.top + window.scrollY - 110,  // 스크롤에 따라 조정
-            left: buttonRect.right + 10,
-          });
-      }; */
+
       
     const handleSsid = (e) => {
         setSsid(e.target.value);
@@ -149,36 +141,7 @@ const Network = ({}) => {
             console.error('Failed to fetch device info:', error);
         }
     },[]);
-    /* useEffect(() => {
-        const savedSSIDs = sessionStorage.getItem('ssids');
-        if (savedSSIDs) {
-            setSSIDList(JSON.parse(savedSSIDs));
-        }
-    }, []); */
-
-    /* const handleModeChange = useCallback(async () => {
-        const newHandleAP = !handleAP; 
-        setHandleAP(newHandleAP); 
-    
-        try {
-            const res = await fetch('http://192.168.10.21:5001/network/setapmode', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    ap_mode: newHandleAP, 
-                    id: devId
-                })
-            });
-            if (!res.ok) {
-                console.error('Server responded with status:', res.status);
-            }
-            const json = await res.json();
-        } catch (error) {
-            console.error('Failed to fetch AP Mode:', error);
-        }
-    
-        console.log('mode : ' + newHandleAP); 
-    }, [handleAP]); */
+   
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setInputDeviceInfo((prevState) => ({
@@ -250,10 +213,7 @@ const Network = ({}) => {
                 <div className="contIn">
                     <div className="cont_Tit mb23">
                         <img src="images/Network_icon.png"/>
-                        <h2>Network Information</h2>
-                        <div className="reload">
-                            <button onClick={handleReload}>Reload</button>    
-                        </div>      
+                        <h2>Network Information</h2>     
                     </div>
                     
                     <div className="contBox">                                      
@@ -372,7 +332,6 @@ const Network = ({}) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* 입력 필드와 버튼이 있는 행 */}
                                 <tr>
                                     <td>
                                         <input
@@ -402,7 +361,6 @@ const Network = ({}) => {
                                     </td>
                                 </tr>
 
-                                {/* 서버에서 가져온 ssidList로 행 생성 */}
                                 {ssidList.map((ssid, index) => (
                                     <tr key={index}>
                                         <td>WIFI ({index})</td>
@@ -431,7 +389,7 @@ const Network = ({}) => {
                 </div>
             </section>
             <div className="common_button d-flex">
-                <button className="save_btn">Save</button>
+                <button className="save_btn" onClick={handleReload}>Save</button>
                 <button className="cancel_btn">Cancel</button>
             </div>
             </main>
@@ -460,3 +418,35 @@ margin-top: 20px;
 margin-bottom: 20px; 
 margin-left: 100px;
 `
+
+
+ /* useEffect(() => {
+        const savedSSIDs = sessionStorage.getItem('ssids');
+        if (savedSSIDs) {
+            setSSIDList(JSON.parse(savedSSIDs));
+        }
+    }, []); */
+
+    /* const handleModeChange = useCallback(async () => {
+        const newHandleAP = !handleAP; 
+        setHandleAP(newHandleAP); 
+    
+        try {
+            const res = await fetch('http://192.168.10.21:5001/network/setapmode', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ap_mode: newHandleAP, 
+                    id: devId
+                })
+            });
+            if (!res.ok) {
+                console.error('Server responded with status:', res.status);
+            }
+            const json = await res.json();
+        } catch (error) {
+            console.error('Failed to fetch AP Mode:', error);
+        }
+    
+        console.log('mode : ' + newHandleAP); 
+    }, [handleAP]); */
