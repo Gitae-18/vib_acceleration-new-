@@ -7,6 +7,7 @@ import '../../style/common.css';
 import styled from "styled-components";
 import { useDispatch } from 'react-redux';
 import { setWifiInfo, setDeviceInfo } from '../../store/store';
+import { FaWifi } from "react-icons/fa";
 const Network = ({}) => {
     const [netInfo, setNetInfo] = useState({
         IP_Address:'',
@@ -379,7 +380,7 @@ const Network = ({}) => {
                                             </ul>
                                         </td>
                                         <td>
-                                            <li></li>
+                                            <li><FaWifi style={{ color: 'white' }}/></li>
                                         </td>
                                     </tr>
                                 ))}
