@@ -5,6 +5,7 @@ import '../../style/font.css';
 import '../../style/contents.css';
 import '../../style/common.css';
 import styled from "styled-components";
+import MaintenanceModal from "./MaintenanceModal";
 const Triggers = () => {
     const [timetrigger, setTimeTrigger] = useState(false);
         const [starttime, setStartTime] = useState(false);
@@ -16,7 +17,7 @@ const Triggers = () => {
         const [xaxis, setXaxis] = useState(false);
         const [yaxis, setYaxis] = useState(false);
         const [zaxis, setZaxis] = useState(false);
-
+    const [showModal, setShowModal] = useState(true);
     const handleTimeTrigger = () => {
         setTimeTrigger(!timetrigger);
     }
@@ -325,7 +326,8 @@ const Triggers = () => {
                 <button className="save_btn">Save</button>
                 <button className="cancel_btn">Cancel</button>
             </div>
-        </main>      
+        </main>    
+        {showModal && <MaintenanceModal isOpen={showModal} />} 
         </div>  
         </body>
      )

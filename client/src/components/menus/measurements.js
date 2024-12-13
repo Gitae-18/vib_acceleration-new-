@@ -1,11 +1,13 @@
 /* eslint-disable */
-import React, {useEffect, useState, useCa }from "react";
+import React, {useEffect, useState, useCallback }from "react";
 import Menu from "../menu";
 import styled from "styled-components";
 import '../../style/font.css';
 import '../../style/contents.css';
 import '../../style/common.css';
+import MaintenanceModal from "./MaintenanceModal";
 const Measurements = () => {
+    const [showModal, setShowModal] = useState(true);
     return (
         <body>
         <div className="wrap Measurements">
@@ -134,6 +136,7 @@ const Measurements = () => {
                     <button className="cancel_btn">Cancel</button>
                 </div>
             </main>
+            {showModal && <MaintenanceModal isOpen={showModal} />}
         </div>
         </body>
     );

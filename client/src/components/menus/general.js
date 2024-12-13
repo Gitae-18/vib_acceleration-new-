@@ -10,6 +10,7 @@ import moment from "moment";
 import '../../style/font.css';
 import '../../style/contents.css';
 import '../../style/common.css';
+import MaintenanceModal from "./MaintenanceModal";
 const General = () => {
     const [devInfo, setDevInfo] = useState("Select Device ID");
     const [devId, setDevID] = useState(0);
@@ -18,6 +19,7 @@ const General = () => {
     const [dateTime, setDateTime] = useState(moment(new Date(), "YYYY-MM-dd hh:mm:ss").format());
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [showModal, setShowModal] = useState(true);
     const deviceRef = useRef(null);
 
     const fetchDevInfo = useCallback(async () => {
@@ -118,6 +120,7 @@ const General = () => {
                 <button className="cancel_btn">Cancel</button>
             </div>
         </main>
+        {showModal && <MaintenanceModal isOpen={showModal} />}
         </div>
         </body>
     );

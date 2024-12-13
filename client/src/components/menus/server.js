@@ -13,6 +13,7 @@ const Server = () => {
     const devInfo = useSelector((state) => state.network.dev_info);
     console.log(devInfo);
     console.log(wifiInfo);
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
     

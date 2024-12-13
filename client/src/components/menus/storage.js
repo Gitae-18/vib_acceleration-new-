@@ -6,8 +6,10 @@ import '../../style/contents.css';
 import '../../style/common.css';
 import styled from "styled-components";
 import DeleteModal from "../modals/deletemodals";
+import MaintenanceModal from "./MaintenanceModal";
 const Storage = () => {
     const [deleteModal, setDeleteModal] = useState(false);
+    const [showModal, setShowModal] = useState(true);
     const [storage, setStorage] = useState({
         total : '',
         used : '',
@@ -149,6 +151,7 @@ const Storage = () => {
                     </div>
             )}
         </main>
+        {showModal && <MaintenanceModal isOpen={showModal} />}
         </div>
         </body>
      )
