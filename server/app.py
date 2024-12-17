@@ -242,7 +242,7 @@ def reload_device():
                 return jsonify({"status": "error", "message": "Missing fields"}), 400
 
             # 장치 정보 업데이트 로직
-            set_device_info(dev_id, ip, push_port, sub_port, req_port)
+            set_device_info(dev_id, ip, sub_port, push_port, req_port)
             latest_device_info = {
                 "dev_id": dev_id,
                 "ip": ip,
