@@ -14,7 +14,8 @@ export default function Router() {
     return(
         <BrowserRouter>
             <Routes>
-              <Route path="/" element={<General/>}/>
+              <Route path="/" element={<Network/>}/>
+              <Route path="/general" element={<General/>}/>
               <Route path="/measurement" element={<Measurements/>}/>
               <Route path="/network" element={<Network/>}/>
               <Route path="/server" element={<Server/>}/>

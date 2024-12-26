@@ -18,7 +18,7 @@ const Menu = () => {
                 <nav className="gnb topmenu">
                     <ul>
                         <li className="General" id="general" >
-                            <span onClick={() =>handleMenu('')}>General</span>
+                            <span onClick={() =>handleMenu('general')}>General</span>
                         </li>
                         <li className="Measurements" id="measurement">
                             <span onClick={() => handleMenu("measurement")}>Measurements</span>
