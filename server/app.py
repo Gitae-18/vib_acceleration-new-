@@ -209,20 +209,21 @@ def set_network_ip():
         subnet = request.json.get('set_subnet')
         gateway = request.json.get('set_gateway')
 
+        
+        if not all([ip, subnet, gateway]):
+            return jsonify({"error": "Missing configuration parameters"}), 400
+        
         # WiFi 인터페이스 이름 가져오기
         interface = wifi.get_wifi_interface()
         if not interface:
-            return jsonify({"error": "No WiFi interface found"}), 400
-
+            return jsonify({"error": "No WiFi interface found"}), 400   
+        
         # 수동 IP 설정
-        if ip and subnet and gateway:
-            success = wifi.setting_manual_ip(interface, ip, subnet, gateway)
-            if success:
-                return jsonify({"message": "IP configuration updated successfully"}), 200
-            else:
-                return jsonify({"error": "Failed to update IP configuration"}), 500
-        else:
-            return jsonify({"error": "Missing configuration parameters"}), 400
+        success = wifi.setting_manual_ip(interface, ip, subnet, gateway)
+        if not success:
+            return jsonify({"error": "Failed to update IP configuration"}), 500
+
+        return jsonify({"message": "IP configuration updated successfully"}), 200
 
     except Exception as e:
         print(f"Error during IP change: {e}")
