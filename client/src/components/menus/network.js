@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { useDispatch } from 'react-redux';
 import { setWifiInfo, setDeviceInfo } from '../../store/store';
 import { FaWifi } from "react-icons/fa";
+import SetIpModal from "../SetIpModal";
 const Network = ({}) => {
     const [netInfo, setNetInfo] = useState({
         IP_Address:'',
@@ -31,13 +32,10 @@ const Network = ({}) => {
         ReqPort:'',
     })
     const [isEditing, setIsEditing] = useState(false);
-    const [handleAP, setHandleAP] = useState();
-    const [ssidList, setSSIDList] = useState([]);
-    const [selectedSSID, setSelectedSSID] = useState('');
-    const [ssid, setSsid] = useState('');
-    const [password, setPassword] = useState('');
+    const [ipModal, setIpModal] = useState(false);
     const [apiUrl, setApiUrl] = useState('http://127.0.0.1:5000'); // 기본 URI
     const [isApMode, setIsApMode] = useState(false);
+    
     const API_URL = isApMode
     ? process.env.REACT_APP_API_URL_AP
     : process.env.REACT_APP_API_URL;
@@ -107,7 +105,9 @@ const Network = ({}) => {
         };
     },[ updateNetworkInfo, fetchNetworkInfo])
 
-      
+    const onEditIp = () => {
+
+    }
    /*  const handleSsid = (e) => {
         setSsid(e.target.value);
     }
@@ -141,10 +141,17 @@ const Network = ({}) => {
                             <li className="contBoxtit">
                                 IP
                             </li>
-                            <li>
+                            <li>                                
                                 <input type="text" id="" className="disabledInput" value={netInfo.IP_Address} disabled/>
+                            </li>                                                        
+                        </ul>                     
+                        <ul className="d-flex mb23">
+                            <li>                                
                             </li>
-                        </ul>                                                        
+                            <li>
+                                <button onClick={() => setIpModal(true)}>Edit IP</button>                            
+                            </li>
+                        </ul>                                   
                         <ul className="d-flex mb35">
                             <li className="contBoxtit">
                                 SubnetMask
@@ -169,13 +176,17 @@ const Network = ({}) => {
                                 <input type="text" id="" className="disabledInput" value={isApMode? 'Active' : 'Non-Active'}  disabled/>                                
                             </li>
                         </ul>
-                        <ul className="d-flex">                            
+                        <ul className="d-flex">
+                            <li className="contBoxtit">
+                                SSID
+                            </li>
                             <li>
                                 <input type="text" id="" className="disabledInput" value={"vib-" + netInfo.SSID} disabled/>
                             </li>
                         </ul>
                     </div>
                 </div>
+                {ipModal && <SetIpModal isOpen={ipModal} onClose={() => setIpModal(false)}/> }
             </section>                        
             {/* <div className="common_button d-flex">
                 <button className="save_btn">Save</button>

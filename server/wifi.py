@@ -317,6 +317,27 @@ class WiFi():
 
         self.update_network_info()
 
+    def get_wifi_interface():       
+        try:
+            result = os.popen("ifconfig").read()
+            for line in result.splitlines():
+                if "wlan" in line or "wlp" in line:
+                    return line.split(":")[0]  
+            return None  
+        except Exception as e:
+            print(f"Error finding WiFi interface: {e}")
+            return None 
+        
+    def setting_manual_ip(interface, ip, subnet, gateway):
+        try:            
+            os.system(f"nmcli con mod {interface} ipv4.addresses {ip}/{subnet}")
+            os.system(f"nmcli con mod {interface} ipv4.gateway {gateway}")
+            os.system(f"nmcli con mod {interface} ipv4.method manual")
+            os.system(f"nmcli con up {interface}")  # 설정 적용
+            print("IP configuration updated successfully.")
+        except Exception as e:
+            print(f"Failed to set manual IP: {e}")
+            
     def set_manual_ip(self):
         ssid = self.get_current_ssid()
         if ssid == None:

@@ -4,6 +4,7 @@ from vib_config import VibnetConfig
 import time
 import subprocess
 import shutil
+import os
 
 wifi = WiFi('wlan0')
 vib_config = VibnetConfig()
@@ -198,6 +199,34 @@ def setup_network():
         # 예외 처리
         print(f"Error during network setup: {e}")
         return jsonify({"error": "An error occurred while setting up the network"}), 500
+
+@app.route('/api/network/ip_change', methods=['POST'])
+def setup_network():
+    try:
+        # 클라이언트 요청에서 매개변수 추출
+        ip = request.json.get('set_ip')
+        subnet = request.json.get('set_subnet')
+        gateway = request.json.get('set_gateway')
+
+        # WiFi 인터페이스 이름 가져오기
+        interface = wifi.get_wifi_interface()
+        if not interface:
+            return jsonify({"error": "No WiFi interface found"}), 400
+
+        # 수동 IP 설정
+        if ip and subnet and gateway:
+            success = wifi.setting_manual_ip(interface, ip, subnet, gateway)
+            if success:
+                return jsonify({"message": "IP configuration updated successfully"}), 200
+            else:
+                return jsonify({"error": "Failed to update IP configuration"}), 500
+        else:
+            return jsonify({"error": "Missing configuration parameters"}), 400
+
+    except Exception as e:
+        print(f"Error during IP change: {e}")
+        return jsonify({"error": "An unexpected error occurred"}), 500
+
 @app.route('/api/network/connect', methods=['POST'])
 def connect_wifi():
     try:
