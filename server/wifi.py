@@ -23,20 +23,20 @@ def hal_init():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(GPIO_LED_SETUP, GPIO.OUT)
 
-def get_wifi_interface():       
-        try:
-            result = os.popen("ifconfig").read()
-            print("ifconfig output:", result)  # ifconfig 결과를 출력하여 확인
-            for line in result.splitlines():
-                if "wlan" in line or "wlp" in line:
-                    interface = line.split(":")[0]
-                    print("Detected WiFi Interface:", interface)  # 감지된 인터페이스 이름 출력
-                    return interface
-            print("No WiFi interface found.")
-            return None  
-        except Exception as e:
-            print(f"Error finding WiFi interface: {e}")
-            return None
+def get_wifi_connection_name():
+    try:
+        result = os.popen("nmcli con show").read()  # nmcli 명령어 실행
+        print("nmcli con show output:", result)  # 결과 출력
+        for line in result.splitlines():
+            if "wifi" in line:  # WiFi 타입의 연결만 선택
+                connection_name = line.split()[0]  # 첫 번째 열에서 연결 이름 추출
+                print("Detected Connection Name:", connection_name)
+                return connection_name
+        print("No WiFi connection found.")
+        return None
+    except Exception as e:
+        print(f"Error finding WiFi connection name: {e}")
+        return None
         
 class WiFiConfig():
     def __init__(self):
@@ -334,12 +334,12 @@ class WiFi():
 
     
         
-    def setting_manual_ip(self,interface, ip, subnet, gateway):
+    def setting_manual_ip(self,connection_name, ip, subnet, gateway):
         try:
-            os.system(f"sudo nmcli con mod {interface} ipv4.addresses {ip}/{subnet}")
-            os.system(f"sudo nmcli con mod {interface} ipv4.gateway {gateway}")
-            os.system(f"sudo nmcli con mod {interface} ipv4.method manual")
-            os.system(f"sudo nmcli con up {interface}")
+            os.system(f"sudo nmcli con mod {connection_name} ipv4.addresses {ip}/{subnet}")
+            os.system(f"sudo nmcli con mod {connection_name} ipv4.gateway {gateway}")
+            os.system(f"sudo nmcli con mod {connection_name} ipv4.method manual")
+            os.system(f"sudo nmcli con up {connection_name}")
             print("IP configuration updated successfully.")
             return True
         except Exception as e:

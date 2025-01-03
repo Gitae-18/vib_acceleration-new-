@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, jsonify, send_from_directory
 from wifi import WiFi
-from wifi import get_wifi_interface
+from wifi import get_wifi_connection_name
 from vib_config import VibnetConfig
 import time
 import subprocess
@@ -205,28 +205,22 @@ def setup_network():
 @app.route('/api/network/ip_change', methods=['POST'])
 def set_network_ip():
     try:
-        # 클라이언트 요청에서 매개변수 추출
+        # 클라이언트 요청 데이터 추출
         ip = request.json.get('set_ip')
         subnet = request.json.get('set_subnet')
         gateway = request.json.get('set_gateway')
 
-        
-        if not all([ip, subnet, gateway]):
-            return jsonify({"error": "Missing configuration parameters"}), 400
-        
-        print(f"Calling wifi.get_wifi_interface() without arguments...")
-        interface = get_wifi_interface()
-        print(f"Detected interface: {interface}")
-        if not interface:
-            return jsonify({"error": "No WiFi interface found"}), 400   
-        
-        # 수동 IP 설정
-        success = wifi.setting_manual_ip(interface, ip, subnet, gateway)
+        # Connection Name 감지
+        connection_name = get_wifi_connection_name()
+        if not connection_name:
+            return jsonify({"error": "No WiFi connection found"}), 400
+
+        # IP 설정 시도
+        success = wifi.setting_manual_ip(connection_name, ip, subnet, gateway)
         if not success:
             return jsonify({"error": "Failed to update IP configuration"}), 500
 
         return jsonify({"message": "IP configuration updated successfully"}), 200
-
     except Exception as e:
         print(f"Error during IP change: {e}")
         return jsonify({"error": "An unexpected error occurred"}), 500
