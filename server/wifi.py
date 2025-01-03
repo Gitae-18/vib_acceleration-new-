@@ -320,24 +320,31 @@ class WiFi():
     def get_wifi_interface():       
         try:
             result = os.popen("ifconfig").read()
+            print("ifconfig output:", result)  # ifconfig 결과를 출력하여 확인
             for line in result.splitlines():
                 if "wlan" in line or "wlp" in line:
-                    return line.split(":")[0]  
+                    interface = line.split(":")[0]
+                    print("Detected WiFi Interface:", interface)  # 감지된 인터페이스 이름 출력
+                    return interface
+            print("No WiFi interface found.")
             return None  
         except Exception as e:
             print(f"Error finding WiFi interface: {e}")
-            return None 
+            return None
         
     def setting_manual_ip(interface, ip, subnet, gateway):
-        try:            
-            os.system(f"nmcli con mod {interface} ipv4.addresses {ip}/{subnet}")
-            os.system(f"nmcli con mod {interface} ipv4.gateway {gateway}")
-            os.system(f"nmcli con mod {interface} ipv4.method manual")
-            os.system(f"nmcli con up {interface}")  # 설정 적용
+        try:
+            os.system(f"sudo nmcli con mod {interface} ipv4.addresses {ip}/{subnet}")
+            os.system(f"sudo nmcli con mod {interface} ipv4.gateway {gateway}")
+            os.system(f"sudo nmcli con mod {interface} ipv4.method manual")
+            os.system(f"sudo nmcli con up {interface}")
             print("IP configuration updated successfully.")
+            return True
         except Exception as e:
             print(f"Failed to set manual IP: {e}")
-            
+            return False
+
+
     def set_manual_ip(self):
         ssid = self.get_current_ssid()
         if ssid == None:
