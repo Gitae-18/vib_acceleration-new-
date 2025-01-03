@@ -16,7 +16,7 @@ def stop_vibnet():
 def start_vibnet_background():
     subprocess.Popen(["vibnet"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-# React 정적 파일 제공
+
 @app.route('/')
 def serve():
     return send_from_directory(app.static_folder, 'index.html')
@@ -156,14 +156,15 @@ def get_network_info():
 @app.route('/api/network/check_ap',methods=['GET'])
 def check_ap():
     try:
-        # AP 모드 상태 가져오기
+        
         is_ap = wifi.check_ap_mode()
-        # JSON 응답으로 반환
+        
         return jsonify({"is_ap": is_ap}), 200
     except Exception as e:
         # 에러 발생 시 로그 출력 및 에러 응답
         print(f"Error checking AP mode: {e}")
         return jsonify({"error": "Failed to check AP mode"}), 500
+    
 @app.route('/api/network/setup', methods=['GET'])
 def setup_network():
     try:
@@ -201,7 +202,7 @@ def setup_network():
         return jsonify({"error": "An error occurred while setting up the network"}), 500
 
 @app.route('/api/network/ip_change', methods=['POST'])
-def setup_network():
+def set_network_ip():
     try:
         # 클라이언트 요청에서 매개변수 추출
         ip = request.json.get('set_ip')
