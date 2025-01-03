@@ -27,23 +27,44 @@ const Server = () => {
         ReqPort:'',
     })    
     const [isEditing, setIsEditing] = useState(false);
-    /* const handleChange = (e) => {
-        const { name, value } = e.target;
-    
-        switch (name) {
-          case 'sub_addr':
-            setSubAddr(value);
-            break;
-          case 'push_addr':
-            setPushAddr(value);
-            break;
-          case 'req_addr':
-            setReqAddr(value);
-            break;
-          default:
-            break;
-        }
-    } */
+    const fetchNetworkInfo = useCallback(async () => {
+            try {
+                const res = await fetch(`/api/network`, { method: 'GET' });
+                const data = await res.json();
+                if (!data || !data.wifi_info || !data.dev_info) {
+                    console.error('Invalid data received:', data);
+                    return;
+                }
+                        
+                if (!isEditing) {
+                    setDevInfo({
+                        deviceId: data.dev_info.dev_id || "N/A",
+                        IP: data.dev_info.ip || "N/A",
+                        SubPort: data.dev_info.sub_port || "N/A",
+                        PushPort: data.dev_info.push_port || "N/A",
+                        ReqPort: data.dev_info.req_port || "N/A",
+                    });
+                }                        
+            } catch (error) {
+                console.error('Failed to fetch network info:', error);
+            }        
+        }, [isEditing]);
+        const updateNetworkInfo = useCallback(async () => {
+                try {
+                    const res = await fetch(`/api/network/update`, { method: 'POST' });
+                    const data = await res.json();
+                    console.log('Network info updated:', data);
+                } catch (error) {
+                    console.error('Failed to update network info:', error);
+                }
+            },[]); 
+        useEffect(() => {        
+            updateNetworkInfo();
+            fetchNetworkInfo();
+            return () => {
+                isMounted.current = false;
+            };
+        },[ updateNetworkInfo, fetchNetworkInfo])
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setInputDeviceInfo((prevState) => ({

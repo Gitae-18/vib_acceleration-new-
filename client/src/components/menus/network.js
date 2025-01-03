@@ -71,16 +71,7 @@ const Network = ({}) => {
                 SSID: data.wifi_info.mac || "N/A",
             });
             setIsApMode(data.wifi_info.ap_mode ? true : false);
-
-            if (!isEditing) {
-                setDevInfo({
-                    deviceId: data.dev_info.dev_id || "N/A",
-                    IP: data.dev_info.ip || "N/A",
-                    SubPort: data.dev_info.sub_port || "N/A",
-                    PushPort: data.dev_info.push_port || "N/A",
-                    ReqPort: data.dev_info.req_port || "N/A",
-                });
-            }                        
+                    
         } catch (error) {
             console.error('Failed to fetch network info:', error);
         }        
@@ -117,7 +108,7 @@ const Network = ({}) => {
     },[ updateNetworkInfo, fetchNetworkInfo])
 
       
-    const handleSsid = (e) => {
+   /*  const handleSsid = (e) => {
         setSsid(e.target.value);
     }
     
@@ -129,10 +120,8 @@ const Network = ({}) => {
             [name]: value,
         }))
         setIsEditing(true);
-    }
-     
-    
-
+    } */
+         
     return(
         <body>
         <div className="wrap Network">

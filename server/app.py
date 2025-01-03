@@ -152,8 +152,52 @@ def get_network_info():
         }        
         return jsonify({"dev_info": latest_device_info, "wifi_info": wifi_info})
 
+@app.route('/api/network/check_ap',methods=['GET'])
+def check_ap():
+    try:
+        # AP 모드 상태 가져오기
+        is_ap = wifi.check_ap_mode()
+        # JSON 응답으로 반환
+        return jsonify({"is_ap": is_ap}), 200
+    except Exception as e:
+        # 에러 발생 시 로그 출력 및 에러 응답
+        print(f"Error checking AP mode: {e}")
+        return jsonify({"error": "Failed to check AP mode"}), 500
 @app.route('/api/network/setup', methods=['GET'])
+def setup_network():
+    try:
+        # 'param' 값을 가져옵니다.
+        param = request.args.get('param')
+        
+        if param == 'set_network':
+            # 'method' 값을 가져옵니다.
+            method = request.args.get('method')
 
+            if method == 'manual':
+                # 'manual' 설정인 경우 추가 매개변수를 가져옵니다.
+                set_ip = request.args.get('set_ip')
+                set_subnet = request.args.get('set_subnet')
+                set_gateway = request.args.get('set_gateway')
+
+                # 필요한 값이 모두 전달되었는지 확인
+                if not all([set_ip, set_subnet, set_gateway]):
+                    return jsonify({"error": "Missing manual network configuration parameters"}), 400
+
+                # WiFi 설정 함수 호출 (가정)
+                wifi.set_wificonfig(method, set_ip, set_subnet, set_gateway)
+            else:  # method == 'auto'
+                # 자동 설정
+                wifi.set_wificonfig(method)
+
+            # 성공적으로 처리된 경우 응답
+            return jsonify({"message": "Network setup successful"}), 200
+        else:
+            # 잘못된 param 값 처리
+            return jsonify({"error": "Invalid parameter"}), 400
+    except Exception as e:
+        # 예외 처리
+        print(f"Error during network setup: {e}")
+        return jsonify({"error": "An error occurred while setting up the network"}), 500
 @app.route('/api/network/connect', methods=['POST'])
 def connect_wifi():
     try:
