@@ -152,6 +152,8 @@ def get_network_info():
         }        
         return jsonify({"dev_info": latest_device_info, "wifi_info": wifi_info})
 
+@app.route('/api/network/setup', methods=['GET'])
+
 @app.route('/api/network/connect', methods=['POST'])
 def connect_wifi():
     try:

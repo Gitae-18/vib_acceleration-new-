@@ -63,7 +63,7 @@ const Network = ({}) => {
                 console.error('Invalid data received:', data);
                 return;
             }
-            console.log(data);
+
             setNetInfo({
                 IP_Address: data.wifi_info.ip || "N/A",
                 SubnetMask: data.wifi_info.netmask || "N/A",
@@ -95,8 +95,7 @@ const Network = ({}) => {
                     mac: netInfo.SSID,
                     ap_mode: false, // netInfo에 ap_mode가 없으므로 false로 기본값 설정
                 }));
-            }
-    
+            }    
             if (devInfo) {
                 dispatch(setDeviceInfo({
                     dev_id: devInfo.deviceId,
@@ -121,27 +120,7 @@ const Network = ({}) => {
     const handleSsid = (e) => {
         setSsid(e.target.value);
     }
-    const scanSsidList = useCallback(async() => {
-        try {
-            const res = await fetch(`/api/network/scan`, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            });
-
-            if (!res.ok) {
-                console.error('Server responded with status:', res.status);
-            } 
-                const json = await res.json();                       
-                if (json) {
-                    setSSIDList(json.ssid_list || []); 
-                } else {
-                    console.error('Invalid data received:', data);
-                }                        
-                //sessionStorage.setItem('ssids', JSON.stringify(json));                
-        } catch (error) {
-            console.error('Failed to fetch device info:', error);
-        }
-    },[]);
+    
    
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -151,57 +130,8 @@ const Network = ({}) => {
         }))
         setIsEditing(true);
     }
-    const handleConnectWiFi = async(network) => {
-        console.log(network);
-        console.log(password);
-        try {
-            const res = await fetch(`/api/network/connect`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    ssid: network,
-                    password: password, 
-                    action: network.connected ? 'disconnect' : 'connect'
-                }),
-            });
-
-            if (!res.ok) {
-                console.error('Server responded with status:', res.status);
-            } 
-                const json = await res.json();                                                  
-        } catch (error) {
-            console.error('Failed to fetch device info:', error);
-        }
-    } 
-    const handleReload = async() => {
-        try{
-
-            const requestData = {
-                id: inputDeviceInfo.deviceId || devInfo.deviceId,
-                ip: inputDeviceInfo.IP || devInfo.IP,
-                push_port: inputDeviceInfo.PushPort || devInfo.PushPort,
-                sub_port: inputDeviceInfo.SubPort || devInfo.SubPort,
-                req_port: inputDeviceInfo.ReqPort || devInfo.ReqPort,                
-            }
-            const response = await fetch(`/api/reload`, {
-                method:'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({   
-                    param: 'edit_devinfo',                 
-                    ...requestData,
-                }),
-            })
-            if(response.ok) {
-                const result = await response.json();
-                console.log('response server:', result);                
-            } else {
-                console.error('Failed to reload device info');
-            }
-        }
-        catch(error) {
-            console.error('Invalid Port Number')
-        }
-    } 
+     
+    
 
     return(
         <body>
@@ -217,47 +147,15 @@ const Network = ({}) => {
                         <h2>Network Information</h2>     
                     </div>
                     
-                    <div className="contBox">                                      
+                    <div className="contBox">      
                         <ul className="d-flex mb35">
                             <li className="contBoxtit">
-                                Device ID
+                                IP
                             </li>
                             <li>
-                                <input type="text" id="" name="deviceId" className="disabledInput" value={inputDeviceInfo.deviceId || devInfo.deviceId} onChange={handleInputChange}/>
+                                <input type="text" id="" className="disabledInput" value={netInfo.IP_Address} disabled/>
                             </li>
-                        </ul>
-                        <ul className="d-flex mb35">
-                            <li className="contBoxtit">
-                                IP Address
-                            </li>
-                            <li>
-                                <input type="text" id="" name="IP" className="disabledInput" value={inputDeviceInfo.IP || devInfo.IP} onChange={handleInputChange}/>
-                            </li>
-                        </ul>
-                        <ul className="d-flex mb35">
-                            <li className="contBoxtit">
-                                Sub Port
-                            </li>
-                            <li>
-                                <input type="text" id="" name="SubPort" className="disabledInput" value={inputDeviceInfo.SubPort || devInfo.SubPort} onChange={handleInputChange}/>
-                            </li>
-                        </ul>
-                        <ul className="d-flex mb35">
-                            <li className="contBoxtit">
-                                Push Port
-                            </li>
-                            <li>
-                                <input type="text" id="" name="PushPort" className="disabledInput" value={inputDeviceInfo.PushPort || devInfo.PushPort} onChange={handleInputChange}/>
-                            </li>
-                        </ul>
-                        <ul className="d-flex mb35">
-                            <li className="contBoxtit">
-                                Req Port
-                            </li>
-                            <li>
-                                <input type="text" id="" name="ReqPort" className="disabledInput" value={inputDeviceInfo.ReqPort || devInfo.ReqPort} onChange={handleInputChange}/>
-                            </li>
-                        </ul>
+                        </ul>                                                        
                         <ul className="d-flex mb35">
                             <li className="contBoxtit">
                                 SubnetMask
@@ -287,112 +185,16 @@ const Network = ({}) => {
                                 SSID
                             </li>
                             <li>
-                                <input type="text" id="" className="disabledInput" value={netInfo.SSID} disabled/>
+                                <input type="text" id="" className="disabledInput" value={"vib-" + netInfo.SSID} disabled/>
                             </li>
                         </ul>
                     </div>
                 </div>
-            </section>
-            <section className="mt50">
-                <div className="contIn">
-                    <div className="cont_Tit mb23">
-                        <img src="images/setup_icon.png"/>
-                        <h2>SETUP Mode </h2>
-                    </div>
-                    <div className="contBox">
-                        <ul className="d-flex">
-                            <li className="contBoxtit">
-                                Temperature Sensor USE or NOT
-                            </li>
-                            <li>
-                                <button className="default_button">SETUP Mode Stop</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            <section className="mt50">
-                <div className="contIn">
-                    <div className="d-flex justify-between">
-                        <div className="cont_Tit mb23">
-                            <img src="images/wifi_icon.png"/>
-                            <h2>Wi-Fi Network</h2>
-                        </div>
-                        <button className="default_button Rescan_btn" onClick={scanSsidList}>Rescan</button>
-                    </div>
-                    <div className="contBox">
-                        <h4 className="tableTit mb25">
-                            Wi-Fi Network Scan
-                        </h4>
-                        <table className="table_normal mt0">
-                            <thead>
-                                <tr>
-                                    <th>Wi-Fi Network Name</th>
-                                    <th>Network Info</th>
-                                    <th>Connect</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            className="tableInput"
-                                            placeholder="Enter SSID"
-                                            value={selectedSSID}
-                                            onChange={(e) => setSelectedSSID(e.target.value)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            className="tableInput"
-                                            placeholder="Enter Password"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <button
-                                            className="table_button"
-                                            onClick={() => handleConnectWiFi(selectedSSID, password)}
-                                        >
-                                            Connect
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                {ssidList.map((ssid, index) => (
-                                    <tr key={index}>
-                                        <td>WIFI ({index})</td>
-                                        <td>
-                                            <ul className="d-flex mb15 justify-center gap20">
-                                                <li>SSID</li>
-                                                <li>
-                                                    <input
-                                                        type="text"
-                                                        id="tableInput"
-                                                        className="tableInput"
-                                                        value={ssid || ""}
-                                                        readOnly
-                                                    />
-                                                </li>                                                
-                                            </ul>
-                                        </td>
-                                        <td>
-                                            <li><FaWifi style={{ color: 'white' }}/></li>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            <div className="common_button d-flex">
-                <button className="save_btn" onClick={handleReload}>Save</button>
+            </section>                        
+            {/* <div className="common_button d-flex">
+                <button className="save_btn">Save</button>
                 <button className="cancel_btn">Cancel</button>
-            </div>
+            </div> */}
             </main>
         </div>
         </body>

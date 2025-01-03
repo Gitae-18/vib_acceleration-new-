@@ -17,24 +17,25 @@ const Menu = () => {
                 </h1>
                 <nav className="gnb topmenu">
                     <ul>
-                        <li className="General" id="general" >
-                            <span onClick={() =>handleMenu('general')}>General</span>
-                        </li>
-                        <li className="Measurements" id="measurement">
+                        
+                        {/* <li className="Measurements" id="measurement">
                             <span onClick={() => handleMenu("measurement")}>Measurements</span>
-                        </li>
+                        </li> */}
                         <li className="Network" id="network" >
                             <span onClick={() => handleMenu("network")}>Network</span>
+                        </li>
+                        <li className="WiFi" id="wifi" >
+                            <span onClick={() =>handleMenu('general')}>WiFi</span>
                         </li>
                         <li className="Server" id="server">
                             <span onClick={() => handleMenu("server")}>Server</span>
                         </li>
-                        <li className="Triggers" id="trigger">
+                        {/* <li className="Triggers" id="trigger">
                             <span onClick={() => handleMenu("trigger")}>Triggers</span>
                         </li>
                         <li className="Storage" id="storage">
                             <span onClick={() => handleMenu("storage")}>Storage</span>
-                        </li>
+                        </li> */}
                     </ul>
                 </nav>                
             </div>

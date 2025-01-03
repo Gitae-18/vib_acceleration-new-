@@ -376,12 +376,12 @@ ul li input {
 	font-weight: 500;
 }
 
-#header .topmenu ul .General.active span,
-#header .topmenu ul .General span:hover,
-#header .topmenu ul .General span:focus {
-	background: url("/public/images/header/head_General_w.svg") no-repeat !important;
+#header .topmenu ul .WiFi.active span,
+#header .topmenu ul .WiFi span:hover,
+#header .topmenu ul .WiFi span:focus {
+	background: url("/public/images/header/wifi_icon.png") no-repeat !important;
 	color: #f2f2f2;
-	position: relative;
+	position: relative;	
 }
 
 #header .topmenu ul .Measurements.active span,
@@ -438,8 +438,9 @@ ul li input {
 	border-radius: 5px;
 }
 
-#header .topmenu ul li.General span {
-	background: url("/public/images/header/head_General.svg") no-repeat;
+
+#header .topmenu ul li span {
+	background: url("/public/images/header/wifi_icon.png") no-repeat;
 }
 
 #header .topmenu ul li.Measurements span {

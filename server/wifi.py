@@ -1,10 +1,90 @@
 import subprocess
+import RPi.GPIO as GPIO
+import re
+import configparser
+import os.path
 
-#set_static_ip('192.168.10.7', '255.255.255.0', '192.168.10.1')
-#set_dhcp()
+#CONFIG_FILE = 'vib_wifi.conf'
+CONFIG_FILE = '/etc/vib_wifi.conf'
+CONFIG_ENCODING = 'utf-8'
+SECTION = 'WiFi_IP'
+KEY_METHOD = "method"
+KEY_IP = "ip"
+KEY_SUBNET = "subnet"
+KEY_GATEWAY = "gateway"
+
+GPIO_LED_SETUP = 16
+
+LED_OFF = 0
+LED_ON = 1
+
+def hal_init():
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(GPIO_LED_SETUP, GPIO.OUT)
+
+class WiFiConfig():
+    def __init__(self):
+        super().__init__()
+        self.config = configparser.ConfigParser()
+        if os.path.isfile(CONFIG_FILE) == False:
+            # 설정파일 만들기
+            self.config[SECTION] = {}
+            self.config[SECTION][KEY_METHOD] = "auto"
+            self._write()
+
+        self._read()
+
+    def _read(self):
+        self.config.read(CONFIG_FILE, encoding=CONFIG_ENCODING) 
+
+    def _write(self):
+        with open(CONFIG_FILE, 'w', encoding=CONFIG_ENCODING) as configfile:
+            self.config.write(configfile)
+
+    @property
+    def method(self):
+        section = self.config[SECTION]
+        return section.get(KEY_METHOD, '')
+
+    @method.setter
+    def method(self, value: str):
+        self.config[SECTION][KEY_METHOD] = value
+
+    @property
+    def ip(self):
+        section = self.config[SECTION]
+        return section.get(KEY_IP, '')
+
+    @ip.setter
+    def ip(self, value: str):
+        self.config[SECTION][KEY_IP] = value
+
+    @property
+    def subnet(self):
+        section = self.config[SECTION]
+        return section.get(KEY_SUBNET, '')
+
+    @subnet.setter
+    def subnet(self, value: str):
+        self.config[SECTION][KEY_SUBNET] = value
+
+    @property
+    def gateway(self):
+        section = self.config[SECTION]
+        return section.get(KEY_GATEWAY, '')
+
+    @gateway.setter
+    def gateway(self, value: str):
+        self.config[SECTION][KEY_GATEWAY] = value
+
+    def save(self):
+        self._write()
 
 class WiFi():
-    def __init__(self, interface) -> None:
+    def __init__(self, interface='wlan0') -> None:
+        hal_init()
+        self.wifi_config = WiFiConfig()
         self.ap_mode = self.check_ap_mode()
         self.mac = '00:00:00:00:00:00'
         self.ip = '172.0.0.1'
@@ -207,7 +287,88 @@ class WiFi():
 
         self.ap_mode = self.check_ap_mode()
         return True
+    def get_current_ssid(self):
+        try:
+            # 'iwgetid -r' 명령어를 실행하고 출력값을 읽어옵니다.
+            result = subprocess.run(['iwgetid', '-r'], capture_output=True, text=True, check=True)
+            ssid = result.stdout.strip()  # 출력값에서 공백을 제거합니다.
+            return ssid
+        except subprocess.CalledProcessError as e:
+#print(f"Error occurred: {e}")
+            return None
 
+    def set_wificonfig(self, method: str, ip: str = None, subnet: str = None, gateway: str = None):
+        print(method, ip, subnet, gateway)
+
+        if method == 'manual':
+            self.wifi_config.method = method
+            if self.wifi_config.method != method or self.wifi_config.ip != ip or self.wifi_config.subnet != subnet or self.wifi_config.gateway != gateway:
+                self.wifi_config.method = method
+                self.wifi_config.ip = ip
+                self.wifi_config.subnet = subnet
+                self.wifi_config.gateway = gateway
+                self.wifi_config.save()
+#self.set_manual_ip()
+        else: #auto
+            if self.wifi_config.method != method:
+                self.wifi_config.method = method
+                self.wifi_config.save()
+#self.set_auto_ip()
+
+        self.update_network_info()
+
+    def set_manual_ip(self):
+        ssid = self.get_current_ssid()
+        if ssid == None:
+            return
+
+        ip_address = self.wifi_config.ip
+        subnet_mask = self.wifi_config.subnet
+        gateway = self.wifi_config.gateway
+        try:
+            subprocess.run(['nmcli', 'connection', 'modify', ssid, 'ipv4.method', 'manual', 'ipv4.addresses', ip_address, 'ipv4.gateway', gateway, 'ipv4.dns', "8.8.8.8"], check=True)
+
+            subprocess.run(['nmcli', 'connection', 'down', ssid], check=True)
+            subprocess.run(['nmcli', 'connection', 'up', ssid], check=True)
+        except Exception as e:
+            print(f"Error occurred: {e}")
+
+    def set_auto_ip(self):
+        ssid = self.get_current_ssid()
+        if ssid == None:
+            return
+
+        try:
+            subprocess.run(['nmcli', 'connection', 'down', ssid], check=True)
+            subprocess.run(['nmcli', 'connection', 'up', ssid], check=True)
+        except Exception as e:
+            print(f"Error occurred: {e}")
+
+
+    def check_ip_config(self, ssid):
+        try:
+            # IP 설정 방식 확인
+            result = subprocess.run(['nmcli', 'connection', 'show', ssid], 
+                                  capture_output=True, 
+                                  text=True, 
+                                  check=True)
+            
+            # IPv4 설정 정보 추출
+            ip_config = {}
+            for line in result.stdout.split('\n'):
+                if 'ipv4.method' in line:
+                    ip_config['method'] = line.split(':')[1].strip()
+                elif 'ipv4.addresses' in line:
+                    ip_config['address'] = line.split(':')[1].strip()
+                elif 'ipv4.gateway' in line:
+                    ip_config['gateway'] = line.split(':')[1].strip()
+                elif 'ipv4.dns' in line:
+                    ip_config['dns'] = line.split(':')[1].strip()
+            
+            return (ip_config.get('method', 'unknown'), ip_config)
+        except subprocess.CalledProcessError as e:
+            print(f"Error checking {connection_name}: {e}")
+            return (ssid, 'error', {})
 if __name__ == '__main__':
     wifi = WiFi('wlan0')
 

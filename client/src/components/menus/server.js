@@ -1,20 +1,33 @@
 /* eslint-disable */
-import React, {useEffect, useState, useCa }from "react";
+import React, {useEffect, useState, useCallback }from "react";
 import Menu from "../menu";
 import '../../style/font.css';
 import '../../style/contents.css';
 import '../../style/common.css';
 import styled from "styled-components";
 import { useSelector } from 'react-redux';
-
+import { FaWifi } from "react-icons/fa";
+import { setWifiInfo, setDeviceInfo } from '../../store/store';
 
 const Server = () => {
     const wifiInfo = useSelector((state) => state.network.wifi_info);
-    const devInfo = useSelector((state) => state.network.dev_info);
-    console.log(devInfo);
-    console.log(wifiInfo);
-    
-    const handleChange = (e) => {
+    //const devInfo = useSelector((state) => state.network.dev_info);
+    const [devInfo, setDevInfo] = useState({
+            deviceId: '',
+            IP:'',
+            SubPort:'',
+            PushPort:'',
+            ReqPort:'',
+        })
+    const [inputDeviceInfo, setInputDeviceInfo] = useState({
+        deviceId: '',
+        IP:'',
+        SubPort:'',
+        PushPort:'',
+        ReqPort:'',
+    })    
+    const [isEditing, setIsEditing] = useState(false);
+    /* const handleChange = (e) => {
         const { name, value } = e.target;
     
         switch (name) {
@@ -30,8 +43,44 @@ const Server = () => {
           default:
             break;
         }
+    } */
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setInputDeviceInfo((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }))
+        setIsEditing(true);
     }
-    
+    const handleReload = async() => {
+        try{
+
+            const requestData = {
+                id: inputDeviceInfo.deviceId || devInfo.deviceId,
+                ip: inputDeviceInfo.IP || devInfo.IP,
+                push_port: inputDeviceInfo.PushPort || devInfo.PushPort,
+                sub_port: inputDeviceInfo.SubPort || devInfo.SubPort,
+                req_port: inputDeviceInfo.ReqPort || devInfo.ReqPort,                
+            }
+            const response = await fetch(`/api/reload`, {
+                method:'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({   
+                    param: 'edit_devinfo',                 
+                    ...requestData,
+                }),
+            })
+            if(response.ok) {
+                const result = await response.json();
+                console.log('response server:', result);                
+            } else {
+                console.error('Failed to reload device info');
+            }
+        }
+        catch(error) {
+            console.error('Invalid Port Number')
+        }
+    } 
     return(
         <body>
         <div className="wrap Network">
@@ -46,12 +95,20 @@ const Server = () => {
                         <h2>SERVER CONNECT INFORMATION</h2>
                     </div>
                     <div className="contBox">
-                        <ul className="d-flex mb35">
+                    <ul className="d-flex mb35">
                             <li className="contBoxtit">
-                                Server IP address
+                                Device ID
                             </li>
                             <li>
-                                <input type="text" id="" className="commonInput" value={devInfo.ip}/>
+                                <input type="text" id="" name="deviceId" className="disabledInput" value={inputDeviceInfo.deviceId || devInfo.deviceId} onChange={handleInputChange}/>
+                            </li>
+                        </ul>
+                        <ul className="d-flex mb35">
+                            <li className="contBoxtit">
+                                IP Address
+                            </li>
+                            <li>
+                                <input type="text" id="" name="IP" className="disabledInput" value={inputDeviceInfo.IP || devInfo.IP} onChange={handleInputChange}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -59,7 +116,7 @@ const Server = () => {
                                 Sub Port
                             </li>
                             <li>
-                                <input type="text" id="" className="commonInput" value={devInfo.sub_port}/>
+                                <input type="text" id="" name="SubPort" className="disabledInput" value={inputDeviceInfo.SubPort || devInfo.SubPort} onChange={handleInputChange}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -67,7 +124,7 @@ const Server = () => {
                                 Push Port
                             </li>
                             <li>
-                                <input type="text" id="" className="commonInput" value={devInfo.push_port}/>
+                                <input type="text" id="" name="PushPort" className="disabledInput" value={inputDeviceInfo.PushPort || devInfo.PushPort} onChange={handleInputChange}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
@@ -75,14 +132,14 @@ const Server = () => {
                                 Req Port
                             </li>
                             <li>
-                                <input type="text" id="" className="commonInput" value={devInfo.req_port}/>
+                                <input type="text" id="" name="ReqPort" className="disabledInput" value={inputDeviceInfo.ReqPort || devInfo.ReqPort} onChange={handleInputChange}/>
                             </li>
                         </ul>                        
                     </div>
                 </div>
             </section>
             <div className="common_button d-flex">
-                <button className="save_btn">Save</button>
+                <button className="save_btn" onClick={handleReload}>Save</button>
                 <button className="cancel_btn">Cancel</button>
             </div>
             </main>

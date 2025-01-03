@@ -11,18 +11,23 @@ import '../../style/font.css';
 import '../../style/contents.css';
 import '../../style/common.css';
 import MaintenanceModal from "./MaintenanceModal";
-const General = () => {
-    const [devInfo, setDevInfo] = useState("Select Device ID");
-    const [devId, setDevID] = useState(0);
-    const [datenow, setDateNow] = useState('0000-00-00');
-    const [nowtime, setNowTime] = useState('00:00');
-    const [dateTime, setDateTime] = useState(moment(new Date(), "YYYY-MM-dd hh:mm:ss").format());
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [showModal, setShowModal] = useState(true);
-    const deviceRef = useRef(null);
+import axios from 'axios'
+const General = () => {        
+    const [selectedSSID, setSelectedSSID] = useState('');
+    //const [ssid, setSsid] = useState('');
+    const [ssidList, setSSIDList] = useState([]);
+    const [password, setPassword] = useState('');
+    const [isApMode, setIsApMode] = useState(false);    
+    const [method, setMethod] = useState('auto');
+    const [ipAddress, setIpAddress] = useState('');
+    const [subnetMask, setSubnetMask] = useState('');
+    const [gateway, setGateway] = useState('');
+    const isMounted = useRef(true);
+    const API_URL = isApMode
+    ? process.env.REACT_APP_API_URL_AP
+    : process.env.REACT_APP_API_URL;
 
-    const fetchDevInfo = useCallback(async () => {
+    /* const fetchDevInfo = useCallback(async () => {
         try {
             const res = await fetch(`http://192.168.10.14:3000/dev_information?devId=${devId}`, {
                 method: 'GET'
@@ -41,39 +46,83 @@ const General = () => {
         } catch (error) {
             console.error('Failed to fetch device info:', error);
         }
-    }, [devId]);
+    }, [devId]); */
 
-    const setLocalDatenTime = async() => {
-        // 로컬 날짜 및 시간 설정 로직 추가
-    };
+    const scanSsidList = useCallback(async() => {
+        try {
+            const res = await fetch(`/api/network/scan`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            });
 
-    useEffect(() => {
-        // fetchDevInfo();
-    }, [/* fetchDevInfo */]);
+            if (!res.ok) {
+                console.error('Server responded with status:', res.status);
+            } 
+                const json = await res.json();                       
+                if (json) {
+                    setSSIDList(json.ssid_list || []); 
+                } else {
+                    console.error('Invalid data received:', data);
+                }                        
+                //sessionStorage.setItem('ssids', JSON.stringify(json));                
+        } catch (error) {
+            console.error('Failed to fetch device info:', error);
+        }
+    },[]);
+    /* const handleSsid = (e) => {
+        setSsid(e.target.value);
+    } */
+    const handleConnectWiFi = async(network) => {
+        console.log(network);
+        console.log(password);
+        try {
+            const res = await fetch(`/api/network/connect`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ssid: network,
+                    password: password, 
+                    action: network.connected ? 'disconnect' : 'connect'
+                }),
+            });
 
-    const handleDevInfo = (e) => {
-        const value = e.target.value;
-        switch(value) {
-            case 'NO1' :
-                setDevInfo('SENSOR NO 01 TEST');
-                setDevID('dev00001');
-                break;
-            case 'NO2' :
-                setDevInfo('SENSOR NO 02 TEST');
-                setDevID('dev00002');
-                break;
-            case 'NO3' :
-                setDevInfo('SENSOR NO 03 TEST');
-                setDevID('dev00003');
-                break;
-            default:
-                break;
+            if (!res.ok) {
+                console.error('Server responded with status:', res.status);
+            } 
+                const json = await res.json();                                                  
+        } catch (error) {
+            console.error('Failed to fetch device info:', error);
         }
     }
+    const handleSubmit = async () => {
+        try {
+            const params = {
+                param: 'set_network',
+                method,
+            };
 
+            // Include manual settings only if method is 'manual'
+            if (method === 'manual') {
+                params.set_ip = ipAddress;
+                params.set_subnet = subnetMask;
+                params.set_gateway = gateway;
+            }
+
+            const response = await axios.get('/api/network/setup', { params });
+
+            if (response.status === 200) {
+                alert('Network setup successful!');
+            } else {
+                alert('Network setup failed!');
+            }
+        } catch (error) {
+            console.error('Error during network setup:', error);
+            alert('An error occurred while setting up the network.');
+        }
+    };
     return (
         <body>
-        <div className="wrap general">
+        <div className="wrap WiFi">
             <div>
                 <Menu />
             </div>
@@ -81,46 +130,142 @@ const General = () => {
             <section>
                 <div className="contIn">
                     <div className="cont_Tit mb23">
-                        <img src="images/device_icon.png"/>
-                        <h2>DEVICE INFORMATION</h2>
+                        <img src="images/setup_icon.png"/>
+                        <h2>WIFI SETUP </h2>
                     </div>
-                    <div className="contBox">
+                    <div className="contBox"> 
                         <ul className="d-flex mb35">
                             <li className="contBoxtit">
-                                DEVICE ID
+                                SetUp IP By Auto   
+                                <input type="radio" name="ip-setting" value="auto" style={{marginLeft:'40px'}} checked={method === 'auto'}
+                                onChange={(e) => setMethod(e.target.value)}/>                                                                                                                                
+                            </li>                                                          
+                        </ul>
+                        <ul className="d-flex mb35">
+                            <li className="contBoxtit">
+                                SetUp IP By  Manual
+                                <input type="radio" name="ip-setting" value="manual" style={{marginLeft:'20px'}}  checked={method === 'manual'}
+                                onChange={(e) => setMethod(e.target.value)}/>
+                            </li>                                                                              
+                        </ul>
+                        <ul className="d-flex mb35">
+                            <li>
+                                <label htmlFor="ip-address">Config IP</label>                                
                             </li>
                             <li>
-                                <div className="select-container">
-                                    <div className="select-box">
-                                        <span className="selected">VS_FEELINK_01</span>
-                                        <span className="arrow"></span>
-                                    </div>
-                                    <div className="options">
-                                        <div className="option" data-value="option1">option1</div>
-                                        <div className="option" data-value="option2">option2</div>
-                                        <div className="option" data-value="option3">option3</div>
-                                    </div>
-                                </div>
+                                <input type="text" id="ip-address" name="ip-address" className="disabledInput" placeholder="IP" value={ipAddress}  onChange={(e) => setIpAddress(e.target.value)}
+                        disabled={method !== 'manual'}/>
                             </li>
                         </ul>
-                        <ul class="flex-start">
-                            <li class="contBoxtit">
-                                DEVICE NOTES
+                        <ul className="d-flex mb35">
+                            <li>
+                                <label htmlFor="subnet-mask">Config Subnet Mask</label>                                
                             </li>
                             <li>
-                                <textarea placeholder="">SENSOR NO 01 TEST</textarea>
+                                <input type="text" id="subnet-mask" name="subnet-mask" className="disabledInput" placeholder="SUBNET MASK" value={subnetMask}
+                                onChange={(e) => setSubnetMask(e.target.value)}
+                                disabled={method !== 'manual'}/>
+                            </li>
+                        </ul>
+                        <ul className="d-flex mb35">
+                            <li>
+                                <label htmlFor="gateway">Config Gateway</label>                                
+                            </li>                            
+                            <li>
+                                <input type="text" id="gateway" name="gateway" className="disabledInput" placeholder="Gateway" value={gateway}
+                                onChange={(e) => setGateway(e.target.value)}
+                                disabled={method !== 'manual'}/>
                             </li>
                         </ul>
                     </div>
                 </div>
             </section>
+            <section className="mt50">
+                <div className="contIn">
+                    <div className="d-flex justify-between">
+                        <div className="cont_Tit mb23">
+                            <img src="images/wifi_icon.png"/>
+                            <h2>Wi-Fi Network</h2>
+                        </div>
+                        <button className="default_button Rescan_btn" onClick={scanSsidList}>Rescan</button>
+                    </div>
+                    <div className="contBox">
+                        <h4 className="tableTit mb25">
+                            Wi-Fi Network Scan
+                        </h4>
+                        <table className="table_normal mt0">
+                            <thead>
+                                <tr>
+                                    <th>Wi-Fi Network Name</th>
+                                    <th>Network Info</th>
+                                    <th>Connect</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="text"
+                                            className="tableInput"
+                                            placeholder="Enter SSID"
+                                            value={selectedSSID}
+                                            onChange={(e) => setSelectedSSID(e.target.value)}
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="text"
+                                            className="tableInput"
+                                            placeholder="Enter Password"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
+                                    </td>
+                                    <td>
+                                        <button
+                                            className="table_button"
+                                            onClick={() => handleConnectWiFi(selectedSSID, password)}
+                                        >
+                                            Connect
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                {ssidList.map((ssid, index) => (
+                                    <tr key={index}>
+                                        <td>WIFI ({index})</td>
+                                        <td>
+                                            <ul className="d-flex mb15 justify-center gap20">
+                                                <li>SSID</li>
+                                                <li onClick={() => setSelectedSSID(ssid)} // 클릭 이벤트로 SSID 값을 설정
+                                                style={{ cursor: 'pointer', color: 'blue' }}>
+                                                    {/* <input
+                                                        type="text"
+                                                        id="tableInput"
+                                                        className="tableInput"
+                                                        value={ssid || ""}
+                                                        readOnly
+                                                    /> */}
+                                                    {ssid}
+                                                </li>                                                
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <li><FaWifi style={{ color: 'white' }}/></li>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
             
             <div className="common_button d-flex">
-                <button className="save_btn">Save</button>
+                <button className="save_btn" onClick={handleSubmit}>Save</button>
                 <button className="cancel_btn">Cancel</button>
             </div>
-        </main>
-        {showModal && <MaintenanceModal isOpen={showModal} />}
+        </main>        
         </div>
         </body>
     );
