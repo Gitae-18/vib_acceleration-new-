@@ -253,15 +253,15 @@ const General = () => {
                                             <ul className="d-flex mb15 justify-center gap20">
                                                 <li>SSID</li>
                                                 <li onClick={() => setSelectedSSID(ssid)} // 클릭 이벤트로 SSID 값을 설정
-                                                style={{ cursor: 'pointer', color: 'blue' }}>
-                                                    {/* <input
+                                                style={{ cursor: 'pointer', textDecoration:'underline' }}>
+                                                    <input
                                                         type="text"
                                                         id="tableInput"
                                                         className="tableInput"
                                                         value={ssid || ""}
                                                         readOnly
-                                                    /> */}
-                                                    {ssid}
+                                                    />
+                                                    
                                                 </li>                                                
                                             </ul>
                                         </td>
