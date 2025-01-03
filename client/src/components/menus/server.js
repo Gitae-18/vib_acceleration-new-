@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, {useEffect, useState, useCallback }from "react";
+import React, {useEffect, useState, useCallback, useRef }from "react";
 import Menu from "../menu";
 import '../../style/font.css';
 import '../../style/contents.css';
@@ -27,6 +27,7 @@ const Server = () => {
         ReqPort:'',
     })    
     const [isEditing, setIsEditing] = useState(false);
+    const isMounted = useRef(true);
     const fetchNetworkInfo = useCallback(async () => {
             try {
                 const res = await fetch(`/api/network`, { method: 'GET' });
@@ -102,6 +103,7 @@ const Server = () => {
             console.error('Invalid Port Number')
         }
     } 
+    console.log(devInfo)
     return(
         <body>
         <div className="wrap Network">
