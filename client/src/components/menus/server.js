@@ -6,7 +6,6 @@ import '../../style/contents.css';
 import '../../style/common.css';
 import styled from "styled-components";
 import { useSelector } from 'react-redux';
-import { FaWifi } from "react-icons/fa";
 import { setWifiInfo, setDeviceInfo } from '../../store/store';
 
 const Server = () => {

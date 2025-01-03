@@ -12,6 +12,8 @@ import '../../style/contents.css';
 import '../../style/common.css';
 import MaintenanceModal from "./MaintenanceModal";
 import axios from 'axios'
+import { FaWifi } from "react-icons/fa";
+
 const General = () => {        
     const [selectedSSID, setSelectedSSID] = useState('');
     //const [ssid, setSsid] = useState('');
@@ -264,7 +266,7 @@ const General = () => {
                                             </ul>
                                         </td>
                                         <td>
-                                            <li><FaWifi style={{ color: 'white' }}/></li>
+                                            <li style={{textDecoration:'none'}}><FaWifi style={{ color: 'white' }}/></li>
                                         </td>
                                     </tr>
                                 ))}
