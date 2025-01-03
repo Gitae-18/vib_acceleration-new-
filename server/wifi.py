@@ -334,7 +334,7 @@ class WiFi():
 
     
         
-    def setting_manual_ip(interface, ip, subnet, gateway):
+    def setting_manual_ip(self,interface, ip, subnet, gateway):
         try:
             os.system(f"sudo nmcli con mod {interface} ipv4.addresses {ip}/{subnet}")
             os.system(f"sudo nmcli con mod {interface} ipv4.gateway {gateway}")
