@@ -169,10 +169,7 @@ const Network = ({}) => {
                                 <input type="text" id="" className="disabledInput" value={isApMode? 'Active' : 'Non-Active'}  disabled/>                                
                             </li>
                         </ul>
-                        <ul className="d-flex">
-                            <li className="contBoxtit">
-                                SSID
-                            </li>
+                        <ul className="d-flex">                            
                             <li>
                                 <input type="text" id="" className="disabledInput" value={"vib-" + netInfo.SSID} disabled/>
                             </li>
