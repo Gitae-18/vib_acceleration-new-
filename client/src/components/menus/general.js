@@ -47,7 +47,20 @@ const General = () => {
             console.error('Failed to fetch device info:', error);
         }
     }, [devId]); */
-
+    useEffect(() => {
+        async function fetchApMode() {
+          try {
+            const response = await axios.get('http://192.168.0.12/api/network/check_ap');
+            console.log(response.data.is_ap)
+            setIsApMode(response.data.is_ap);
+          } catch (error) {
+            console.error('Error fetching AP mode:', error);
+          }
+        }
+    
+        fetchApMode();
+      }, []);
+    
     const scanSsidList = useCallback(async() => {
         try {
             const res = await fetch(`/api/network/scan`, {
