@@ -23,6 +23,21 @@ def hal_init():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(GPIO_LED_SETUP, GPIO.OUT)
 
+def get_wifi_interface():       
+        try:
+            result = os.popen("ifconfig").read()
+            print("ifconfig output:", result)  # ifconfig 결과를 출력하여 확인
+            for line in result.splitlines():
+                if "wlan" in line or "wlp" in line:
+                    interface = line.split(":")[0]
+                    print("Detected WiFi Interface:", interface)  # 감지된 인터페이스 이름 출력
+                    return interface
+            print("No WiFi interface found.")
+            return None  
+        except Exception as e:
+            print(f"Error finding WiFi interface: {e}")
+            return None
+        
 class WiFiConfig():
     def __init__(self):
         super().__init__()
@@ -317,20 +332,7 @@ class WiFi():
 
         self.update_network_info()
 
-    def get_wifi_interface():       
-        try:
-            result = os.popen("ifconfig").read()
-            print("ifconfig output:", result)  # ifconfig 결과를 출력하여 확인
-            for line in result.splitlines():
-                if "wlan" in line or "wlp" in line:
-                    interface = line.split(":")[0]
-                    print("Detected WiFi Interface:", interface)  # 감지된 인터페이스 이름 출력
-                    return interface
-            print("No WiFi interface found.")
-            return None  
-        except Exception as e:
-            print(f"Error finding WiFi interface: {e}")
-            return None
+    
         
     def setting_manual_ip(interface, ip, subnet, gateway):
         try:

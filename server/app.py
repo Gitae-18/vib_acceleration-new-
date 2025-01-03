@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, jsonify, send_from_directory
 from wifi import WiFi
+from wifi import get_wifi_interface
 from vib_config import VibnetConfig
 import time
 import subprocess
@@ -213,8 +214,9 @@ def set_network_ip():
         if not all([ip, subnet, gateway]):
             return jsonify({"error": "Missing configuration parameters"}), 400
         
-        # WiFi 인터페이스 이름 가져오기
-        interface = wifi.get_wifi_interface()
+        print(f"Calling wifi.get_wifi_interface() without arguments...")
+        interface = get_wifi_interface()
+        print(f"Detected interface: {interface}")
         if not interface:
             return jsonify({"error": "No WiFi interface found"}), 400   
         
