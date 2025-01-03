@@ -151,14 +151,14 @@ const General = () => {
                             <li className="contBoxtit">
                                 SetUp IP By Auto   
                                 <input type="radio" name="ip-setting" value="auto" style={{marginLeft:'40px'}} checked={method === 'auto'}
-                                onChange={(e) => setMethod(e.target.value)}/>                                                                                                                                
+                                onChange={(e) => setMethod(e.target.value)} disabled={!isApMode}/>                                                                                                                                
                             </li>                                                          
                         </ul>
                         <ul className="d-flex mb35">
                             <li className="contBoxtit">
                                 SetUp IP By  Manual
                                 <input type="radio" name="ip-setting" value="manual" style={{marginLeft:'20px'}}  checked={method === 'manual'}
-                                onChange={(e) => setMethod(e.target.value)}/>
+                                onChange={(e) => setMethod(e.target.value)} disabled={!isApMode}/>
                             </li>                                                                              
                         </ul>
                         <ul className="d-flex mb35">
@@ -167,7 +167,7 @@ const General = () => {
                             </li>
                             <li>
                                 <input type="text" id="ip-address" name="ip-address" className="disabledInput" placeholder="IP" value={ipAddress}  onChange={(e) => setIpAddress(e.target.value)}
-                        disabled={method !== 'manual'}/>
+                            disabled={method !== 'manual'}/>
                             </li>
                         </ul>
                         <ul className="d-flex mb35">
