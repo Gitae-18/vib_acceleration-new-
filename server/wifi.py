@@ -167,13 +167,14 @@ class WiFi():
             except subprocess.CalledProcessError as e:
                 print("Error:", e.stderr)
 
-    def connect_to_wifi(self, ssid, password):
+    def connect_to_wifi(self, ssid, password, method):
         try:
             # nmcli 명령 실행하여 WiFi에 연결
             subprocess.run(["nmcli", "-w", "30",  "device", "wifi", "connect", ssid, "password", password], check=True)
             print(f"Connection WiFi {ssid}")
             self.update_network_info()
-            if self.wifi_config.method == 'manual':
+            print(f'method : {method}')
+            if method == 'manual':
                 self.set_manual_ip()
             else: #auto
                 self.set_auto_ip()
@@ -361,10 +362,10 @@ class WiFi():
         subnet_mask = self.wifi_config.subnet
         gateway = self.wifi_config.gateway
         try:
-            subprocess.run(['nmcli', 'connection', 'modify', f'"{ssid}"', 'ipv4.method', 'manual', 'ipv4.addresses', ip_address, 'ipv4.gateway', gateway, 'ipv4.dns', "8.8.8.8"], check=True)
+            subprocess.run(['nmcli', 'connection', 'modify', ssid, 'ipv4.method', 'manual', 'ipv4.addresses', ip_address, 'ipv4.gateway', gateway, 'ipv4.dns', "8.8.8.8"], check=True)
 
-            subprocess.run(['nmcli', 'connection', 'down', f'"{ssid}"'], check=True)
-            subprocess.run(['nmcli', 'connection', 'up', f'"{ssid}"'], check=True)
+            subprocess.run(['nmcli', 'connection', 'down', ssid], check=True)
+            subprocess.run(['nmcli', 'connection', 'up', ssid], check=True)
             subprocess.run(['nmcli', 'connection', 'save', ssid], check=True)
 
             print(f"Manual IP configuration saved for SSID: {ssid}")
@@ -377,8 +378,8 @@ class WiFi():
             return
 
         try:
-            subprocess.run(['nmcli', 'connection', 'down', f'"{ssid}"'], check=True)
-            subprocess.run(['nmcli', 'connection', 'up', f'"{ssid}"'], check=True)
+            subprocess.run(['nmcli', 'connection', 'down', ssid], check=True)
+            subprocess.run(['nmcli', 'connection', 'up', ssid], check=True)
             subprocess.run(['nmcli', 'connection', 'save', ssid], check=True)
 
             print(f"Manual IP configuration saved for SSID: {ssid}")
