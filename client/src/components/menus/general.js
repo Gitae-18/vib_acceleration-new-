@@ -163,7 +163,7 @@ const General = () => {
                                                 <li className="ssid-item wifi-setup-container">
                                                     <section className="wifi-setup visible">
                                                         <div className="contIn">                                                            
-                                                            <div className="contBox" style={{padding:'20px 50px !important', border:'none'}}>
+                                                            <div style={{padding:'20px 50px !important', border:'none', overflowY:'auto', whiteSpace:'nowrap'}}>
                                                                 <div className="selected-ssid">
                                                                     <p>
                                                                         Selected SSID: <strong>{selectedSSID || "None"}</strong>
@@ -264,7 +264,7 @@ const General = () => {
                                                                 </ul>
                                                                 <button
                                                                     className="default_button connect-btn"
-                                                                    style={{ margin: "0 auto", position:'relative', right:'20px' }}
+                                                                    style={{ margin: "0 auto", marginRight:'20px'}}
                                                                     onClick={() => handleConnectWiFi(selectedSSID, password)}
                                                                 >
                                                                     Connect
