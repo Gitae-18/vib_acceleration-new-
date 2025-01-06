@@ -166,42 +166,7 @@ def check_ap():
         print(f"Error checking AP mode: {e}")
         return jsonify({"error": "Failed to check AP mode"}), 500
     
-@app.route('/api/network/setup', methods=['GET'])
-def setup_network():
-    try:
-        # 'param' 값을 가져옵니다.
-        param = request.args.get('param')
-        
-        if param == 'set_network':
-            # 'method' 값을 가져옵니다.
-            method = request.args.get('method')
 
-            if method == 'manual':
-                # 'manual' 설정인 경우 추가 매개변수를 가져옵니다.
-                set_ip = request.args.get('set_ip')
-                set_subnet = request.args.get('set_subnet')
-                set_gateway = request.args.get('set_gateway')
-                
-                print(f"Received manual config: IP={set_ip}, Subnet={set_subnet}, Gateway={set_gateway}")
-                # 필요한 값이 모두 전달되었는지 확인
-                if not all([set_ip, set_subnet, set_gateway]):
-                    return jsonify({"error": "Missing manual network configuration parameters"}), 400
-
-                # WiFi 설정 함수 호출 (가정)
-                wifi.set_wificonfig(method, set_ip, set_subnet, set_gateway)
-            else:  # method == 'auto'
-                # 자동 설정
-                wifi.set_wificonfig(method)
-
-            # 성공적으로 처리된 경우 응답
-            return jsonify({"message": "Network setup successful"}), 200
-        else:
-            # 잘못된 param 값 처리
-            return jsonify({"error": "Invalid parameter"}), 400
-    except Exception as e:
-        # 예외 처리
-        print(f"Error during network setup: {e}")
-        return jsonify({"error": "An error occurred while setting up the network"}), 500
 
 @app.route('/api/network/ip_change', methods=['POST'])
 def set_network_ip():
@@ -233,11 +198,18 @@ def connect_wifi():
         data = request.json
         ssid = data.get('ssid')
         password = data.get('password')
+        method = data.get('method')  # 'manual' 또는 'auto'
+        set_ip = data.get('set_ip')
+        set_subnet = data.get('set_subnet')
+        set_gateway = data.get('set_gateway')
 
+        # SSID와 Password 필수 확인
         if not ssid:
             return jsonify({"success": False, "error": "SSID is required"}), 400
         if not password:
             return jsonify({"success": False, "error": "Password is required"}), 400
+        if not method:
+            return jsonify({"success": False, "error": "Method (manual/auto) is required"}), 400
 
         # AP 모드인지 확인
         is_ap = wifi.check_ap_mode()
@@ -245,6 +217,16 @@ def connect_wifi():
             wifi.stop_ap_mode()
             time.sleep(3)
             print('AP mode stopped, waiting...')
+
+        # 네트워크 설정 적용
+        if method == 'manual':
+            if not all([set_ip, set_subnet, set_gateway]):
+                return jsonify({"error": "Missing manual network configuration parameters"}), 400
+            wifi.set_wificonfig(method, set_ip, set_subnet, set_gateway)
+        elif method == 'auto':
+            wifi.set_wificonfig(method)
+        else:
+            return jsonify({"error": "Invalid method"}), 400
 
         # Wi-Fi 연결 시도
         rst = wifi.connect_to_wifi(ssid, password)
@@ -266,6 +248,7 @@ def connect_wifi():
             })
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
+    
 @app.route('/api/network/scan', methods=['GET'])
 def scan_wifi():
     try:

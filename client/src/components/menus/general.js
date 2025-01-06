@@ -84,32 +84,44 @@ const General = () => {
             console.error('Failed to fetch device info:', error);
         }
     },[]);
-    /* const handleSsid = (e) => {
-        setSsid(e.target.value);
-    } */
-    const handleConnectWiFi = async(network) => {
-        console.log(network);
-        console.log(password);
+
+    const handleConnectWiFi = async (network) => {
         try {
+            const body = {
+                ssid: network,
+                password: password,
+                method: method,  // manual 또는 auto
+            };
+    
+            if (method === 'manual') {
+                if (!ipAddress || !subnetMask || !gateway) {
+                    alert("Please enter valid IP, Subnet Mask, and Gateway.");
+                    return;
+                }
+                body.set_ip = ipAddress;
+                body.set_subnet = subnetMask;
+                body.set_gateway = gateway;
+            }
+    
             const res = await fetch(`/api/network/connect`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    ssid: network,
-                    password: password, 
-                    action: network.connected ? 'disconnect' : 'connect'
-                }),
+                body: JSON.stringify(body),
             });
-
+    
             if (!res.ok) {
                 console.error('Server responded with status:', res.status);
-            } 
-                const json = await res.json();                                                  
+            } else {
+                alert('Wi-Fi connecting');
+            }
+    
+            const json = await res.json();
+            console.log(json);
         } catch (error) {
-            console.error('Failed to fetch device info:', error);
+            console.error('Failed to connect Wi-Fi:', error);
         }
-    }
-    const handleSubmit = async () => {
+    };
+    /* const handleSubmit = async () => {
         try {
             const params = {
                 param: 'set_network',
@@ -137,7 +149,7 @@ const General = () => {
             console.error('Error during network setup:', error);
             alert('An error occurred while setting up the network.');
         }
-    };
+    }; */
     return (
         <body>
         <div className="wrap WiFi">
@@ -279,10 +291,10 @@ const General = () => {
                 </div>
             </section>
             
-            <div className="common_button d-flex">
+            {/* <div className="common_button d-flex">
                 <button className="save_btn" onClick={handleSubmit}>Save</button>
                 <button className="cancel_btn">Cancel</button>
-            </div>
+            </div> */}
         </main>        
         </div>
         </body>
