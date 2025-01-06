@@ -22,7 +22,7 @@ def start_vibnet_background():
 def serve():
     return send_from_directory(app.static_folder, 'index.html')
 
-# 404 처리: React 라우트로 연결
+
 @app.errorhandler(404)
 def not_found(e):
     return send_from_directory(app.static_folder, 'index.html')
