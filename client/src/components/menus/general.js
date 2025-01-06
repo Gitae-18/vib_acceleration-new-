@@ -143,7 +143,7 @@ const General = () => {
                                     Rescan
                                 </button>
                             </div>
-                            <div className="contBox" style={{padding:'10px 20px !important'}}>
+                            <div className="contBox">
                                 <h4 className="tableTit mb25">Wi-Fi Network Scan</h4>
                                 <ul className="ssid-list">
                                     {ssidList.map((ssid, index) => (
@@ -162,12 +162,8 @@ const General = () => {
                                             {selectedIndex === index && isSetupVisible && (
                                                 <li className="ssid-item wifi-setup-container">
                                                     <section className="wifi-setup visible">
-                                                        <div className="contIn">
-                                                            <div className="cont_Tit mb23">
-                                                                <img src="images/setup_icon.png" />
-                                                                <h2>WiFi Setup for {selectedSSID}</h2>
-                                                            </div>
-                                                            <div className="contBox">
+                                                        <div className="contIn">                                                            
+                                                            <div className="contBox" style={{padding:'10px 20px !important', border:'none'}}>
                                                                 <div className="selected-ssid">
                                                                     <p>
                                                                         Selected SSID: <strong>{selectedSSID || "None"}</strong>
