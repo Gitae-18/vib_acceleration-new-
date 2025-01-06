@@ -135,7 +135,7 @@ const General = () => {
                     <section className="mt50">
                         <div className="contIn">
                             <div className="d-flex justify-between">
-                                <div className="cont_Tit mb23">
+                                <div className="cont_Tit mb23" style={{gap:'15px !important'}}>
                                     <img src="images/wifi_icon.png" />
                                     <h2>Wi-Fi Network</h2>
                                 </div>
@@ -143,7 +143,7 @@ const General = () => {
                                     Rescan
                                 </button>
                             </div>
-                            <div className="contBox">
+                            <div className="contBox" style={{padding:'10px 20px !important'}}>
                                 <h4 className="tableTit mb25">Wi-Fi Network Scan</h4>
                                 <ul className="ssid-list">
                                     {ssidList.map((ssid, index) => (
