@@ -296,6 +296,7 @@ const General = () => {
                                 </ul>
                                 <button
                                     className="default_button connect-btn"
+                                    style={{margin:'0 auto'}}
                                     onClick={() => handleConnectWiFi(selectedSSID, password)}
                                 >
                                     Connect
