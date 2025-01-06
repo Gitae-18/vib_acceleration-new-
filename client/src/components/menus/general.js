@@ -179,7 +179,7 @@ const General = () => {
                                             className="ssid-item"
                                             onClick={() => {
                                                 setSelectedSSID(ssid);
-                                                setIsSetupVisible(true); // WIFI SETUP 섹션 표시
+                                                setIsSetupVisible(true); 
                                             }}
                                         >
                                             {ssid}
@@ -197,6 +197,9 @@ const General = () => {
                                 <img src="images/setup_icon.png" />
                                 <h2>WIFI SETUP</h2>
                             </div>
+                            <div className="selected-ssid">
+                                <p>Selected SSID: <strong>{selectedSSID || "None"}</strong></p>
+                            </div>
                             <div className="contBox">
                                 <ul className="d-flex mb35">
                                     <li className="contBoxtit">
@@ -208,7 +211,7 @@ const General = () => {
                                             onChange={(e) => setMethod(e.target.value)}
                                             disabled={isApMode}
                                         />
-                                        SetUp IP By Auto                                        
+                                        <span style={{marginLeft:'15px'}}>SetUp IP By Auto</span>
                                     </li>
                                 </ul>
                                 <ul className="d-flex mb35">
@@ -221,7 +224,7 @@ const General = () => {
                                             onChange={(e) => setMethod(e.target.value)}
                                             disabled={isApMode}
                                         />
-                                        SetUp IP By Manual                                        
+                                        <span style={{marginLeft:'15px'}}>SetUp IP By Manual</span>                                        
                                     </li>
                                 </ul>
                                 <ul className="d-flex mb35">
