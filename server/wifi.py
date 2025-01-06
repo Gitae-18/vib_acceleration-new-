@@ -339,31 +339,42 @@ class WiFi():
         self.update_network_info()
 
     
-        
+    def subnet_to_cidr(self, subnet_mask):
+    
+        return sum(bin(int(octet)).count('1') for octet in subnet_mask.split('.'))
+    
     def setting_manual_ip(self, connection_name, ip, subnet, gateway):
         try:
-            # IP 주소 설정
+            # 서브넷 마스크를 CIDR로 변환
+            cidr = self.subnet_to_cidr(subnet)
+
+            # IP 주소 설정 (CIDR 형식)
             subprocess.run(
-                ["sudo", "nmcli", "con", "mod", connection_name, "ipv4.addresses", f"{ip}/{subnet}"],
+                ["sudo", "nmcli", "con", "mod", connection_name, "ipv4.addresses", f"{ip}/{cidr}"],
                 check=True
             )
+
             # 게이트웨이 설정
             subprocess.run(
                 ["sudo", "nmcli", "con", "mod", connection_name, "ipv4.gateway", gateway],
                 check=True
             )
+
             # 수동 IP 모드 활성화
             subprocess.run(
                 ["sudo", "nmcli", "con", "mod", connection_name, "ipv4.method", "manual"],
                 check=True
             )
+
             # 네트워크 연결 활성화
             subprocess.run(
                 ["sudo", "nmcli", "con", "up", connection_name],
                 check=True
             )
+
             print("IP configuration updated successfully.")
             return True
+
         except subprocess.CalledProcessError as e:
             print(f"Failed to set manual IP: {e}")
             return False
