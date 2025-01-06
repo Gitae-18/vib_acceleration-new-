@@ -5,7 +5,7 @@
 }
 
 .wifi-setup.visible {
-    max-height: 500px; /* WIFI SETUP 섹션의 최대 높이 */
+    max-height: 960px; /* WIFI SETUP 섹션의 최대 높이 */
 }
 .ssid-list {
     list-style: none;
