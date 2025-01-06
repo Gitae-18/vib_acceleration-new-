@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from flask import Flask, request, render_template, jsonify, send_from_directory
 from wifi import WiFi
 from wifi import get_wifi_connection_name
