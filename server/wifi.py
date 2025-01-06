@@ -173,6 +173,11 @@ class WiFi():
             subprocess.run(["nmcli", "-w", "30",  "device", "wifi", "connect", ssid, "password", password], check=True)
             print(f"Connection WiFi {ssid}")
             self.update_network_info()
+            if self.wifi_config.method == 'manual':
+                self.set_manual_ip()
+            else: #auto
+                self.set_auto_ip()
+
             self.connection_wifi = True
         except subprocess.CalledProcessError as e:
             print(f"Error: {e}")
