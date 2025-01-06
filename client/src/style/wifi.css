@@ -1,0 +1,28 @@
+.wifi-setup {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.wifi-setup.visible {
+    max-height: 500px; /* WIFI SETUP 섹션의 최대 높이 */
+}
+.ssid-list {
+    list-style: none;
+    padding: 0;
+}
+
+.ssid-item {
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.ssid-item:hover {
+    background-color: #555;
+}
