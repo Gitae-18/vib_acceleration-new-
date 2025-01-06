@@ -229,7 +229,7 @@ def connect_wifi():
             return jsonify({"error": "Invalid method"}), 400
 
         # Wi-Fi 연결 시도
-        rst = wifi.connect_to_wifi(ssid, password)
+        rst = wifi.connect_to_wifi(ssid, password, method)
         if rst:
             restart_vibnet()
             return jsonify({
