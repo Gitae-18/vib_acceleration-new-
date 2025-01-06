@@ -133,9 +133,11 @@ const Network = ({}) => {
                 <div className="contIn">
                     <div className="cont_Tit mb23">
                         <img src="images/Network_icon.png"/>
-                        <h2>Network Information</h2>     
+                        <h2>Network Information</h2>  
+                        <EditButtonWrapper>
+                            <EditButton onClick={() => setIpModal(true)}>Edit IP</EditButton>
+                        </EditButtonWrapper>                           
                     </div>
-                    
                     <div className="contBox">      
                         <ul className="d-flex mb35">
                             <li className="contBoxtit">
@@ -144,14 +146,7 @@ const Network = ({}) => {
                             <li>                                
                                 <input type="text" id="" className="disabledInput" value={netInfo.IP_Address} disabled/>
                             </li>                                                        
-                        </ul>                     
-                        <ul className="d-flex mb23">
-                            <li>                                
-                            </li>
-                            <li>
-                                <button onClick={() => setIpModal(true)}>Edit IP</button>                            
-                            </li>
-                        </ul>                                   
+                        </ul>                                                       
                         <ul className="d-flex mb35">
                             <li className="contBoxtit">
                                 SubnetMask
@@ -219,7 +214,27 @@ margin-bottom: 20px;
 margin-left: 100px;
 `
 
+const EditButtonWrapper = styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+`;
 
+const EditButton = styled.button`    
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right:1px;
+    margin-top:10px;
+    background-color: #6662FD;
+    width:162px;
+    display: block;    
+    padding: 12px 0;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 14px;
+`;
  /* useEffect(() => {
         const savedSSIDs = sessionStorage.getItem('ssids');
         if (savedSSIDs) {

@@ -10,13 +10,14 @@ import moment from "moment";
 import '../../style/font.css';
 import '../../style/contents.css';
 import '../../style/common.css';
+import '../../style/wifi.css';
 import MaintenanceModal from "./MaintenanceModal";
 import axios from 'axios'
 import { FaWifi } from "react-icons/fa";
 
 const General = () => {        
     const [selectedSSID, setSelectedSSID] = useState('');
-    //const [ssid, setSsid] = useState('');
+    const [isSetupVisible, setIsSetupVisible] = useState(false);
     const [ssidList, setSSIDList] = useState([]);
     const [password, setPassword] = useState('');
     const [isApMode, setIsApMode] = useState(false);    
@@ -152,190 +153,218 @@ const General = () => {
     }; */
     return (
         <body>
-        <div className="wrap WiFi">
-            <div>
-                <Menu />
-            </div>
-            <main className="mainArea">
-            <section>
-                <div className="contIn">
-                    <div className="cont_Tit mb23">
-                        <img src="images/setup_icon.png"/>
-                        <h2>WIFI SETUP </h2>
-                    </div>
-                    <div className="contBox"> 
-                        <ul className="d-flex mb35">
-                            <li className="contBoxtit">
-                                SetUp IP By Auto   
-                                <input type="radio" name="ip-setting" value="auto" style={{marginLeft:'40px'}} checked={method === 'auto'}
-                                onChange={(e) => setMethod(e.target.value)} disabled={isApMode}/>                                                                                                                                
-                            </li>                                                          
-                        </ul>
-                        <ul className="d-flex mb35">
-                            <li className="contBoxtit">
-                                SetUp IP By  Manual
-                                <input type="radio" name="ip-setting" value="manual" style={{marginLeft:'20px'}}  checked={method === 'manual'}
-                                onChange={(e) => setMethod(e.target.value)} disabled={isApMode}/>
-                            </li>                                                                              
-                        </ul>
-                        <ul className="d-flex mb35">
-                            <li>
-                                <label htmlFor="ip-address">Config IP</label>                                
-                            </li>
-                            <li>
-                                <input type="text" id="ip-address" name="ip-address" className="disabledInput" placeholder="IP" value={ipAddress}  onChange={(e) => setIpAddress(e.target.value)}
-                            disabled={method !== 'manual'}/>
-                            </li>
-                        </ul>
-                        <ul className="d-flex mb35">
-                            <li>
-                                <label htmlFor="subnet-mask">Config Subnet Mask</label>                                
-                            </li>
-                            <li>
-                                <input type="text" id="subnet-mask" name="subnet-mask" className="disabledInput" placeholder="SUBNET MASK" value={subnetMask}
-                                onChange={(e) => setSubnetMask(e.target.value)}
-                                disabled={method !== 'manual'}/>
-                            </li>
-                        </ul>
-                        <ul className="d-flex mb35">
-                            <li>
-                                <label htmlFor="gateway">Config Gateway</label>                                
-                            </li>                            
-                            <li>
-                                <input type="text" id="gateway" name="gateway" className="disabledInput" placeholder="Gateway" value={gateway}
-                                onChange={(e) => setGateway(e.target.value)}
-                                disabled={method !== 'manual'}/>
-                            </li>
-                        </ul>
-                    </div>
+            <div className="wrap WiFi">
+                <div>
+                    <Menu />
                 </div>
-            </section>
-            <section className="mt50">
-                <div className="contIn">
-                    <div className="d-flex justify-between">
-                        <div className="cont_Tit mb23">
-                            <img src="images/wifi_icon.png"/>
-                            <h2>Wi-Fi Network</h2>
+                <main className="mainArea">
+                    {/* Wi-Fi Network Section */}
+                    <section className="mt50">
+                        <div className="contIn">
+                            <div className="d-flex justify-between">
+                                <div className="cont_Tit mb23">
+                                    <img src="images/wifi_icon.png" />
+                                    <h2>Wi-Fi Network</h2>
+                                </div>
+                                <button className="default_button Rescan_btn" onClick={scanSsidList}>
+                                    Rescan
+                                </button>
+                            </div>
+                            <div className="contBox">
+                                <h4 className="tableTit mb25">Wi-Fi Network Scan</h4>
+                                <ul className="ssid-list">
+                                    {ssidList.map((ssid, index) => (
+                                        <li
+                                            key={index}
+                                            className="ssid-item"
+                                            onClick={() => {
+                                                setSelectedSSID(ssid);
+                                                setIsSetupVisible(true); // WIFI SETUP 섹션 표시
+                                            }}
+                                        >
+                                            {ssid}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
-                        <button className="default_button Rescan_btn" onClick={scanSsidList}>Rescan</button>
-                    </div>
-                    <div className="contBox">
-                        <h4 className="tableTit mb25">
-                            Wi-Fi Network Scan
-                        </h4>
-                        <table className="table_normal mt0">
-                            <thead>
-                                <tr>
-                                    <th>Wi-Fi Network Name</th>
-                                    <th>Network Info</th>
-                                    <th>Connect</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
+                    </section>
+
+                    {/* Wi-Fi Setup Section */}
+                    <section className={`wifi-setup ${isSetupVisible ? "visible" : ""}`}>
+                        <div className="contIn">
+                            <div className="cont_Tit mb23">
+                                <img src="images/setup_icon.png" />
+                                <h2>WIFI SETUP</h2>
+                            </div>
+                            <div className="contBox">
+                                <ul className="d-flex mb35">
+                                    <li className="contBoxtit">
                                         <input
-                                            type="text"
-                                            className="tableInput"
-                                            placeholder="Enter SSID"
-                                            value={selectedSSID}
-                                            onChange={(e) => setSelectedSSID(e.target.value)}
+                                            type="radio"
+                                            name="ip-setting"
+                                            value="auto"                                            
+                                            checked={method === "auto"}
+                                            onChange={(e) => setMethod(e.target.value)}
+                                            disabled={isApMode}
                                         />
-                                    </td>
-                                    <td>
+                                        SetUp IP By Auto                                        
+                                    </li>
+                                </ul>
+                                <ul className="d-flex mb35">
+                                    <li className="contBoxtit">
+                                        <input
+                                            type="radio"
+                                            name="ip-setting"
+                                            value="manual"                                            
+                                            checked={method === "manual"}
+                                            onChange={(e) => setMethod(e.target.value)}
+                                            disabled={isApMode}
+                                        />
+                                        SetUp IP By Manual                                        
+                                    </li>
+                                </ul>
+                                <ul className="d-flex mb35">
+                                    <li>
+                                        <label htmlFor="ip-address">Config IP</label>
+                                    </li>
+                                    <li>
                                         <input
                                             type="text"
-                                            className="tableInput"
+                                            id="ip-address"
+                                            name="ip-address"
+                                            className="disabledInput"
+                                            placeholder="IP"
+                                            value={ipAddress}
+                                            onChange={(e) => setIpAddress(e.target.value)}
+                                            disabled={method !== "manual"}
+                                        />
+                                    </li>
+                                </ul>
+                                <ul className="d-flex mb35">
+                                    <li>
+                                        <label htmlFor="subnet-mask">Config Subnet Mask</label>
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="text"
+                                            id="subnet-mask"
+                                            name="subnet-mask"
+                                            className="disabledInput"
+                                            placeholder="SUBNET MASK"
+                                            value={subnetMask}
+                                            onChange={(e) => setSubnetMask(e.target.value)}
+                                            disabled={method !== "manual"}
+                                        />
+                                    </li>
+                                </ul>
+                                <ul className="d-flex mb35">
+                                    <li>
+                                        <label htmlFor="gateway">Config Gateway</label>
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="text"
+                                            id="gateway"
+                                            name="gateway"
+                                            className="disabledInput"
+                                            placeholder="Gateway"
+                                            value={gateway}
+                                            onChange={(e) => setGateway(e.target.value)}
+                                            disabled={method !== "manual"}
+                                        />
+                                    </li>
+                                </ul>
+                                <ul className="d-flex mb35">
+                                    <li>
+                                        <label htmlFor="password">Wi-Fi Password</label>
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="password"
+                                            id="password"
+                                            name="password"
+                                            className="disabledInput"
                                             placeholder="Enter Password"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
-                                    </td>
-                                    <td>
-                                        <button
-                                            className="table_button"
-                                            onClick={() => handleConnectWiFi(selectedSSID, password)}
-                                        >
-                                            Connect
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                {ssidList.map((ssid, index) => (
-                                    <tr key={index}>
-                                        <td>WIFI ({index})</td>
-                                        <td>
-                                            <ul className="d-flex mb15 justify-center gap20">
-                                                <li>SSID</li>
-                                                <li onClick={() => setSelectedSSID(ssid)} // 클릭 이벤트로 SSID 값을 설정
-                                                style={{ cursor: 'pointer', textDecoration:'underline' }}>
-                                                    <input
-                                                        type="text"
-                                                        id="tableInput"
-                                                        className="tableInput"
-                                                        value={ssid || ""}
-                                                        readOnly
-                                                    />
-                                                    
-                                                </li>                                                
-                                            </ul>
-                                        </td>
-                                        <td>
-                                            <li style={{textDecoration:'none'}}><FaWifi style={{ color: 'white' }}/></li>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            
-            {/* <div className="common_button d-flex">
-                <button className="save_btn" onClick={handleSubmit}>Save</button>
-                <button className="cancel_btn">Cancel</button>
-            </div> */}
-        </main>        
-        </div>
+                                    </li>
+                                </ul>
+                                <button
+                                    className="default_button connect-btn"
+                                    onClick={() => handleConnectWiFi(selectedSSID, password)}
+                                >
+                                    Connect
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
         </body>
     );
 };
 
 export default General;
 
-const CustomButton = styled.button`
-    border: 1px solid #000;
-    width: 300px;
-    height: 30px;
-    border-radius: 8px;
-    flex-grow: 1;
-    margin: 0 auto;
-    margin-top: 25px;
-    background-color: #c8c8c8;
-    box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+const Container = styled.div`
+    margin: 20px;
 `;
 
-const CustomSelect = styled.select`
-    border: 1px solid #bbb;
-    width: 300px;
-    border-radius: 2%;
-    flex-grow: 1;
-    margin-bottom: 20px;
-    margin-right: 20px;
+const Section = styled.section`
+    margin-top: 50px;
 `;
 
-const CustomLine = styled.div`
-    border-top: 2px solid #ccc;
-    width: calc(95%);
+const TitleWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 23px;
+`;
+
+const TitleIcon = styled.img`
+    margin-right: 10px;
+`;
+
+const Title = styled.h2`
+    margin: 0;
+`;
+
+const NetworkList = styled.div`
     margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 100px;
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    li {
+        margin-bottom: 10px;
+        cursor: pointer;
+        color: #00f;
+        text-decoration: underline;
+    }
 `;
 
-const TimeSelect = styled.select`
-    border: 1px solid #bbb;
-    width: 150px;
-    border-radius: 2%;
-    margin-bottom: 20px;
-    margin-right: 20px;
+const SetupWrapper = styled.div`
+    margin-top: 20px;
+    max-height: ${(props) => (props.isVisible ? "300px" : "0")};
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+`;
+
+const Input = styled.input`
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+`;
+
+const Button = styled.button`
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 `;

@@ -340,15 +340,31 @@ class WiFi():
 
     
         
-    def setting_manual_ip(self,connection_name, ip, subnet, gateway):
+    def setting_manual_ip(self, connection_name, ip, subnet, gateway):
         try:
-            os.system(f"sudo nmcli con mod {connection_name} ipv4.addresses {ip}/{subnet}")
-            os.system(f"sudo nmcli con mod {connection_name} ipv4.gateway {gateway}")
-            os.system(f"sudo nmcli con mod {connection_name} ipv4.method manual")
-            os.system(f"sudo nmcli con up {connection_name}")
+            # IP 주소 설정
+            subprocess.run(
+                ["sudo", "nmcli", "con", "mod", connection_name, "ipv4.addresses", f"{ip}/{subnet}"],
+                check=True
+            )
+            # 게이트웨이 설정
+            subprocess.run(
+                ["sudo", "nmcli", "con", "mod", connection_name, "ipv4.gateway", gateway],
+                check=True
+            )
+            # 수동 IP 모드 활성화
+            subprocess.run(
+                ["sudo", "nmcli", "con", "mod", connection_name, "ipv4.method", "manual"],
+                check=True
+            )
+            # 네트워크 연결 활성화
+            subprocess.run(
+                ["sudo", "nmcli", "con", "up", connection_name],
+                check=True
+            )
             print("IP configuration updated successfully.")
             return True
-        except Exception as e:
+        except subprocess.CalledProcessError as e:
             print(f"Failed to set manual IP: {e}")
             return False
 
