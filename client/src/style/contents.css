@@ -169,6 +169,16 @@ input[type="text"]:focus {
     background-color: #4a4a4a;   
 }
 
+.wifi-setup-container.disabledInput {
+    width: 450px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    box-sizing: border-box;
+    padding: 18px 28px;
+    border-radius: 5px;
+}
+
 .disabledInput {
     width: 678px;
     border: none;
