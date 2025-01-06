@@ -196,11 +196,11 @@ const General = () => {
                             <div className="cont_Tit mb23">
                                 <img src="images/setup_icon.png" />
                                 <h2>WIFI SETUP</h2>
-                            </div>
-                            <div className="selected-ssid">
-                                <p>Selected SSID: <strong>{selectedSSID || "None"}</strong></p>
-                            </div>
+                            </div>                            
                             <div className="contBox">
+                                <div className="selected-ssid">
+                                    <p>Selected SSID: <strong>{selectedSSID || "None"}</strong></p>
+                                </div>
                                 <ul className="d-flex mb35">
                                     <li className="contBoxtit">
                                         <input
