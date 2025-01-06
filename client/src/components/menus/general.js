@@ -122,35 +122,7 @@ const General = () => {
             console.error('Failed to connect Wi-Fi:', error);
         }
     };
-    /* const handleSubmit = async () => {
-        try {
-            const params = {
-                param: 'set_network',
-                method,
-            };
-
-            if (method === 'manual') {
-                if (!ipAddress || !subnetMask || !gateway) {
-                    alert("Please enter valid IP, Subnet Mask, and Gateway.");
-                    return;
-                }
-                params.set_ip = ipAddress;
-                params.set_subnet = subnetMask;
-                params.set_gateway = gateway;
-            }
-
-            const response = await axios.get('/api/network/setup', { params });
-
-            if (response.status === 200) {
-                alert('Network setup successful!');
-            } else {
-                alert('Network setup failed!');
-            }
-        } catch (error) {
-            console.error('Error during network setup:', error);
-            alert('An error occurred while setting up the network.');
-        }
-    }; */
+    
     return (
         <body>
             <div className="wrap WiFi">

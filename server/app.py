@@ -223,10 +223,9 @@ def connect_wifi():
             if not all([set_ip, set_subnet, set_gateway]):
                 return jsonify({"error": "Missing manual network configuration parameters"}), 400
             wifi.set_wificonfig(method, set_ip, set_subnet, set_gateway)
-        elif method == 'auto':
-            wifi.set_wificonfig(method)
+    
         else:
-            return jsonify({"error": "Invalid method"}), 400
+            wifi.set_wificonfig('auto', None, None, None)
 
         # Wi-Fi 연결 시도
         rst = wifi.connect_to_wifi(ssid, password, method)
