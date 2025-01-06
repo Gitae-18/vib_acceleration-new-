@@ -356,10 +356,13 @@ class WiFi():
         subnet_mask = self.wifi_config.subnet
         gateway = self.wifi_config.gateway
         try:
-            subprocess.run(['nmcli', 'connection', 'modify', ssid, 'ipv4.method', 'manual', 'ipv4.addresses', ip_address, 'ipv4.gateway', gateway, 'ipv4.dns', "8.8.8.8"], check=True)
+            subprocess.run(['nmcli', 'connection', 'modify', f'"{ssid}"', 'ipv4.method', 'manual', 'ipv4.addresses', ip_address, 'ipv4.gateway', gateway, 'ipv4.dns', "8.8.8.8"], check=True)
 
-            subprocess.run(['nmcli', 'connection', 'down', ssid], check=True)
-            subprocess.run(['nmcli', 'connection', 'up', ssid], check=True)
+            subprocess.run(['nmcli', 'connection', 'down', f'"{ssid}"'], check=True)
+            subprocess.run(['nmcli', 'connection', 'up', f'"{ssid}"'], check=True)
+            subprocess.run(['nmcli', 'connection', 'save', ssid], check=True)
+
+            print(f"Manual IP configuration saved for SSID: {ssid}")
         except Exception as e:
             print(f"Error occurred: {e}")
 
@@ -369,8 +372,11 @@ class WiFi():
             return
 
         try:
-            subprocess.run(['nmcli', 'connection', 'down', ssid], check=True)
-            subprocess.run(['nmcli', 'connection', 'up', ssid], check=True)
+            subprocess.run(['nmcli', 'connection', 'down', f'"{ssid}"'], check=True)
+            subprocess.run(['nmcli', 'connection', 'up', f'"{ssid}"'], check=True)
+            subprocess.run(['nmcli', 'connection', 'save', ssid], check=True)
+
+            print(f"Manual IP configuration saved for SSID: {ssid}")
         except Exception as e:
             print(f"Error occurred: {e}")
 

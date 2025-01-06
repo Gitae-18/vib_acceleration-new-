@@ -181,7 +181,8 @@ def setup_network():
                 set_ip = request.args.get('set_ip')
                 set_subnet = request.args.get('set_subnet')
                 set_gateway = request.args.get('set_gateway')
-
+                
+                print(f"Received manual config: IP={set_ip}, Subnet={set_subnet}, Gateway={set_gateway}")
                 # 필요한 값이 모두 전달되었는지 확인
                 if not all([set_ip, set_subnet, set_gateway]):
                     return jsonify({"error": "Missing manual network configuration parameters"}), 400

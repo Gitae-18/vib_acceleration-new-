@@ -116,8 +116,11 @@ const General = () => {
                 method,
             };
 
-            // Include manual settings only if method is 'manual'
             if (method === 'manual') {
+                if (!ipAddress || !subnetMask || !gateway) {
+                    alert("Please enter valid IP, Subnet Mask, and Gateway.");
+                    return;
+                }
                 params.set_ip = ipAddress;
                 params.set_subnet = subnetMask;
                 params.set_gateway = gateway;
