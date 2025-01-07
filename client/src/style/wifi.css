@@ -38,7 +38,7 @@ wifi-setup {
 
 /* 호버 효과 */
 .ssid-list .ssid-item:hover {
-    background-color: #555;
+    background-color: #333;
 }
 
 /* 리스트가 길 경우 스크롤 가능하도록 설정 */
