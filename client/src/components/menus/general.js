@@ -208,7 +208,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="ip-address">IP</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'147px'}}>
+                                                                <li style={{marginLeft:'155px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="ip-address"
@@ -225,7 +225,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="subnet-mask">Subnet Mask</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'67px'}}>
+                                                                <li style={{marginLeft:'69px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="subnet-mask"
