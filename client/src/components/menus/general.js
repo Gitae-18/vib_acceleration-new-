@@ -208,7 +208,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="ip-address">IP</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'108px'}}>
+                                                                <li style={{marginLeft:'138px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="ip-address"
@@ -225,7 +225,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="subnet-mask">Subnet Mask</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'20px'}}>
+                                                                <li style={{marginLeft:'47px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="subnet-mask"
@@ -242,7 +242,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="gateway">Default Gateway</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'53px'}}>
+                                                                <li style={{marginLeft:'50px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="gateway"
