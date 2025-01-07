@@ -93,7 +93,8 @@ const Server = () => {
             })
             if(response.ok) {
                 const result = await response.json();
-                console.log('response server:', result);                
+                console.log('response server:', result);    
+                alert('Server Config Changed Successfully!');            
             } else {
                 console.error('Failed to reload device info');
             }
@@ -101,8 +102,7 @@ const Server = () => {
         catch(error) {
             console.error('Invalid Port Number')
         }
-    } 
-    console.log(devInfo)
+    }     
     return(
         <body>
         <div className="wrap Network">
