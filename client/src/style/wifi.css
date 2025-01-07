@@ -47,14 +47,9 @@ wifi-setup {
     overflow-y: auto;
 }
 
-.ssid-item.d-flex {
-    display: flex !important;
-    align-items: center !important; 
-    justify-content: flex-start !important; 
-    gap: 10px !important; 
-}
-
-/* input 요소를 우측 정렬 */
-.ssid-item.d-flex li:last-child {
-    margin-left: auto !important; 
+.wifi-setup .disabledInput {
+    width: 100%; /* 부모 요소의 너비에 맞춰 확장 */
+    max-width: 678px; /* 기존 width 유지 */
+    margin-left: auto; /* 오른쪽으로 정렬 */
+    display: block; /* 블록 요소로 설정 */
 }
