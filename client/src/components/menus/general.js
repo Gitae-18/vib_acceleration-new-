@@ -206,7 +206,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="ip-address">Config IP</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'118px'}}>
+                                                                <li style={{marginLeft:'108px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="ip-address"
