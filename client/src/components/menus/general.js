@@ -206,7 +206,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="ip-address">Config IP</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'88px'}}>
+                                                                <li style={{marginLeft:'118px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="ip-address"
@@ -223,7 +223,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="subnet-mask">Config Subnet Mask</label>
                                                                 </li>
-                                                                <li>
+                                                                <li style={{marginLeft:'20px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="subnet-mask"
@@ -240,7 +240,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="gateway">Config Gateway</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'33px'}}>
+                                                                <li style={{marginLeft:'53px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="gateway"
@@ -257,7 +257,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="password">Wi-Fi Password</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'35px'}}>
+                                                                <li style={{marginLeft:'55px'}}>
                                                                     <input
                                                                         type="password"
                                                                         id="password"
