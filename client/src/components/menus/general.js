@@ -163,7 +163,7 @@ const General = () => {
                                                 <li className="ssid-item wifi-setup-container">
                                                     <section className="wifi-setup visible">
                                                         <div className="contIn">                                                            
-                                                            <div style={{padding:'20px 50px !important', border:'none', overflowY:'auto', whiteSpace:'nowrap'}}>
+                                                            <div style={{padding:'20px 50px', border:'none', overflowY:'auto', whiteSpace:'nowrap'}}>
                                                                 <div className="selected-ssid">
                                                                     <p>
                                                                         Selected SSID: <strong>{selectedSSID || "None"}</strong>
