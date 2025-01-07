@@ -186,7 +186,7 @@ const General = () => {
                                                                         onChange={(e) => setMethod(e.target.value)}
                                                                         disabled={isApMode}
                                                                     />
-                                                                    <span style={{ marginLeft: "15px" }}>SetUp IP By Auto</span>
+                                                                    <span style={{ marginLeft: "15px" }}>DHCP Ip</span>
                                                                 </li>
                                                             </ul>
                                                             <ul className="d-flex mb35">
@@ -199,12 +199,14 @@ const General = () => {
                                                                         onChange={(e) => setMethod(e.target.value)}
                                                                         disabled={isApMode}
                                                                     />
-                                                                    <span style={{ marginLeft: "15px" }}>SetUp IP By Manual</span>
+                                                                    <span style={{ marginLeft: "15px" }}>Static IP</span>
                                                                 </li>
                                                             </ul>
+                                                            {method === "manual" && (
+                                                            <>
                                                             <ul className="d-flex mb35">
                                                                 <li>
-                                                                    <label htmlFor="ip-address">Config IP</label>
+                                                                    <label htmlFor="ip-address">IP</label>
                                                                 </li>
                                                                 <li style={{marginLeft:'108px'}}>
                                                                     <input
@@ -221,7 +223,7 @@ const General = () => {
                                                             </ul>
                                                             <ul className="d-flex mb35">
                                                                 <li>
-                                                                    <label htmlFor="subnet-mask">Config Subnet Mask</label>
+                                                                    <label htmlFor="subnet-mask">Subnet Mask</label>
                                                                 </li>
                                                                 <li style={{marginLeft:'20px'}}>
                                                                     <input
@@ -238,7 +240,7 @@ const General = () => {
                                                             </ul>
                                                             <ul className="d-flex mb35">
                                                                 <li>
-                                                                    <label htmlFor="gateway">Config Gateway</label>
+                                                                    <label htmlFor="gateway">Default Gateway</label>
                                                                 </li>
                                                                 <li style={{marginLeft:'53px'}}>
                                                                     <input
@@ -269,18 +271,20 @@ const General = () => {
                                                                     />
                                                                 </li>
                                                             </ul>
-                                                            <button
-                                                                className="default_button connect-btn"
-                                                                style={{ marginLeft: "30%" }}
-                                                                onClick={() => handleConnectWiFi(selectedSSID, password)}
-                                                            >
-                                                                Connect
-                                                            </button>
+                                                            </>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </section>
                                             </li>
                                             )}
+                                            <button
+                                                                className="default_button connect-btn"
+                                                                style={{ marginLeft: "30%" }}
+                                                                onClick={() => handleConnectWiFi(selectedSSID, password)}
+                                                            >
+                                                                Connect
+                                            </button>
                                         </React.Fragment>
                                     ))}
                                 </ul>

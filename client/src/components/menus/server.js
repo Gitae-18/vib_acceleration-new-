@@ -9,8 +9,7 @@ import { useSelector } from 'react-redux';
 import { setWifiInfo, setDeviceInfo } from '../../store/store';
 
 const Server = () => {
-    const wifiInfo = useSelector((state) => state.network.wifi_info);
-    //const devInfo = useSelector((state) => state.network.dev_info);
+    const wifiInfo = useSelector((state) => state.network.wifi_info);    
     const [devInfo, setDevInfo] = useState({
             deviceId: '',
             IP:'',
