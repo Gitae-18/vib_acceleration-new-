@@ -140,7 +140,7 @@ const General = () => {
                                     <h2>Wi-Fi Network</h2>
                                 </div>
                                 <button className="default_button Rescan_btn" onClick={scanSsidList}>
-                                    Rescan
+                                    Scan
                                 </button>
                             </div>
                             <div className="contBox">
