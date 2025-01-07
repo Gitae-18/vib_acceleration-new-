@@ -23,7 +23,9 @@ wifi-setup {
     margin: 0;
     display: block !important;
 }
-
+.selected-ssid{
+    margin-bottom:20px;
+}
 .ssid-list .ssid-item {
     display: block !important;
     cursor: pointer;

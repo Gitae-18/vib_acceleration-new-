@@ -161,118 +161,92 @@ const General = () => {
                                             </li>
                                             {selectedIndex === index && isSetupVisible && (
                                                 <li className="ssid-item wifi-setup-container">
-                                                    <section className="wifi-setup visible">
-                                                        <div className="contIn">                                                            
-                                                            <div style={{padding:'20px 50px', border:'none', overflowY:'auto', whiteSpace:'nowrap'}}>
-                                                                <div className="selected-ssid">
-                                                                    <p>
-                                                                        Selected SSID: <strong>{selectedSSID || "None"}</strong>
-                                                                    </p>
-                                                                </div>
-                                                                <ul className="d-flex mb35">
-                                                                    <li className="contBoxtit">
-                                                                        <input
-                                                                            type="radio"
-                                                                            name="ip-setting"
-                                                                            value="auto"
-                                                                            checked={method === "auto"}
-                                                                            onChange={(e) => setMethod(e.target.value)}
-                                                                            disabled={isApMode}
-                                                                        />
-                                                                        <span style={{ marginLeft: "15px" }}>SetUp IP By Auto</span>
-                                                                    </li>
-                                                                </ul>
-                                                                <ul className="d-flex mb35">
-                                                                    <li className="contBoxtit">
-                                                                        <input
-                                                                            type="radio"
-                                                                            name="ip-setting"
-                                                                            value="manual"
-                                                                            checked={method === "manual"}
-                                                                            onChange={(e) => setMethod(e.target.value)}
-                                                                            disabled={isApMode}
-                                                                        />
-                                                                        <span style={{ marginLeft: "15px" }}>SetUp IP By Manual</span>
-                                                                    </li>
-                                                                </ul>
-                                                                <ul className="d-flex mb35">
-                                                                    <li>
-                                                                        <label htmlFor="ip-address">Config IP</label>
-                                                                    </li>
-                                                                    <li>
-                                                                        <input
-                                                                            type="text"
-                                                                            id="ip-address"
-                                                                            name="ip-address"
-                                                                            className="disabledInput"
-                                                                            placeholder="IP"
-                                                                            value={ipAddress}
-                                                                            onChange={(e) => setIpAddress(e.target.value)}
-                                                                            disabled={method !== "manual"}
-                                                                        />
-                                                                    </li>
-                                                                </ul>
-                                                                <ul className="d-flex mb35">
-                                                                    <li>
-                                                                        <label htmlFor="subnet-mask">Config Subnet Mask</label>
-                                                                    </li>
-                                                                    <li>
-                                                                        <input
-                                                                            type="text"
-                                                                            id="subnet-mask"
-                                                                            name="subnet-mask"
-                                                                            className="disabledInput"
-                                                                            placeholder="SUBNET MASK"
-                                                                            value={subnetMask}
-                                                                            onChange={(e) => setSubnetMask(e.target.value)}
-                                                                            disabled={method !== "manual"}
-                                                                        />
-                                                                    </li>
-                                                                </ul>
-                                                                <ul className="d-flex mb35">
-                                                                    <li>
-                                                                        <label htmlFor="gateway">Config Gateway</label>
-                                                                    </li>
-                                                                    <li>
-                                                                        <input
-                                                                            type="text"
-                                                                            id="gateway"
-                                                                            name="gateway"
-                                                                            className="disabledInput"
-                                                                            placeholder="Gateway"
-                                                                            value={gateway}
-                                                                            onChange={(e) => setGateway(e.target.value)}
-                                                                            disabled={method !== "manual"}
-                                                                        />
-                                                                    </li>
-                                                                </ul>
-                                                                <ul className="d-flex mb35">
-                                                                    <li>
-                                                                        <label htmlFor="password">Wi-Fi Password</label>
-                                                                    </li>
-                                                                    <li>
-                                                                        <input
-                                                                            type="password"
-                                                                            id="password"
-                                                                            name="password"
-                                                                            className="disabledInput"
-                                                                            placeholder="Enter Password"
-                                                                            value={password}
-                                                                            onChange={(e) => setPassword(e.target.value)}
-                                                                        />
-                                                                    </li>
-                                                                </ul>
-                                                                <button
-                                                                    className="default_button connect-btn"
-                                                                    style={{ marginLeft : '30%'}}
-                                                                    onClick={() => handleConnectWiFi(selectedSSID, password)}
-                                                                >
-                                                                    Connect
-                                                                </button>
+                                                <section className="wifi-setup visible">
+                                                    <div className="contIn">
+                                                        <div
+                                                            style={{
+                                                                padding: "20px 50px !important",
+                                                                border: "none",
+                                                                overflowY: "auto",
+                                                                whiteSpace: "nowrap",
+                                                            }}
+                                                        >
+                                                            <div className="selected-ssid">
+                                                                <p>
+                                                                    Selected SSID: <strong>{selectedSSID || "None"}</strong>
+                                                                </p>
                                                             </div>
+                                                            <ul className="d-flex mb35">
+                                                                <li>
+                                                                    <label htmlFor="ip-address">Config IP</label>
+                                                                </li>
+                                                                <li>
+                                                                    <input
+                                                                        type="text"
+                                                                        id="ip-address"
+                                                                        name="ip-address"
+                                                                        className="disabledInput"
+                                                                        placeholder="IP"
+                                                                        value={ipAddress}
+                                                                        onChange={(e) => setIpAddress(e.target.value)}
+                                                                        disabled={method !== "manual"}
+                                                                    />
+                                                                </li>
+                                                            </ul>
+                                                            <ul className="d-flex mb35">
+                                                                <li>
+                                                                    <label htmlFor="subnet-mask">Config Subnet Mask</label>
+                                                                </li>
+                                                                <li>
+                                                                    <input
+                                                                        type="text"
+                                                                        id="subnet-mask"
+                                                                        name="subnet-mask"
+                                                                        className="disabledInput"
+                                                                        placeholder="SUBNET MASK"
+                                                                        value={subnetMask}
+                                                                        onChange={(e) => setSubnetMask(e.target.value)}
+                                                                        disabled={method !== "manual"}
+                                                                    />
+                                                                </li>
+                                                            </ul>
+                                                            <ul className="d-flex mb35">
+                                                                <li>
+                                                                    <label htmlFor="gateway">Config Gateway</label>
+                                                                </li>
+                                                                <li>
+                                                                    <input
+                                                                        type="text"
+                                                                        id="gateway"
+                                                                        name="gateway"
+                                                                        className="disabledInput"
+                                                                        placeholder="Gateway"
+                                                                        value={gateway}
+                                                                        onChange={(e) => setGateway(e.target.value)}
+                                                                        disabled={method !== "manual"}
+                                                                    />
+                                                                </li>
+                                                            </ul>
+                                                            <ul className="d-flex mb35">
+                                                                <li>
+                                                                    <label htmlFor="password">Wi-Fi Password</label>
+                                                                </li>
+                                                                <li>
+                                                                    <input
+                                                                        type="password"
+                                                                        id="password"
+                                                                        name="password"
+                                                                        className="disabledInput"
+                                                                        placeholder="Enter Password"
+                                                                        value={password}
+                                                                        onChange={(e) => setPassword(e.target.value)}
+                                                                    />
+                                                                </li>
+                                                            </ul>
                                                         </div>
-                                                    </section>
-                                                </li>
+                                                    </div>
+                                                </section>
+                                            </li>
                                             )}
                                         </React.Fragment>
                                     ))}
