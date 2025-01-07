@@ -173,7 +173,7 @@ const General = () => {
                                                         >
                                                             <div className="selected-ssid">
                                                                 <p>
-                                                                    Selected SSID: <strong>{selectedSSID || "None"}</strong>
+                                                                    Selected SSID: <strong style={{marginLeft:'88px'}}>{selectedSSID || "None"}</strong>
                                                                 </p>
                                                             </div>
                                                             <ul className="d-flex mb35">
