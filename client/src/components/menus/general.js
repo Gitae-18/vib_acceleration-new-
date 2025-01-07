@@ -177,6 +177,32 @@ const General = () => {
                                                                 </p>
                                                             </div>
                                                             <ul className="d-flex mb35">
+                                                                <li className="contBoxtit">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="ip-setting"
+                                                                        value="auto"
+                                                                        checked={method === "auto"}
+                                                                        onChange={(e) => setMethod(e.target.value)}
+                                                                        disabled={isApMode}
+                                                                    />
+                                                                    <span style={{ marginLeft: "15px" }}>SetUp IP By Auto</span>
+                                                                </li>
+                                                            </ul>
+                                                            <ul className="d-flex mb35">
+                                                                <li className="contBoxtit">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="ip-setting"
+                                                                        value="manual"
+                                                                        checked={method === "manual"}
+                                                                        onChange={(e) => setMethod(e.target.value)}
+                                                                        disabled={isApMode}
+                                                                    />
+                                                                    <span style={{ marginLeft: "15px" }}>SetUp IP By Manual</span>
+                                                                </li>
+                                                            </ul>
+                                                            <ul className="d-flex mb35">
                                                                 <li>
                                                                     <label htmlFor="ip-address">Config IP</label>
                                                                 </li>
