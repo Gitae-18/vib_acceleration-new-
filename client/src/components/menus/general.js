@@ -180,7 +180,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="ip-address">Config IP</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'80px'}}>
+                                                                <li style={{marginLeft:'90px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="ip-address"
@@ -214,7 +214,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="gateway">Config Gateway</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'40px'}}>
+                                                                <li style={{marginLeft:'35px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="gateway"
@@ -231,7 +231,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="password">Wi-Fi Password</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'40px'}}>
+                                                                <li style={{marginLeft:'35px'}}>
                                                                     <input
                                                                         type="password"
                                                                         id="password"
