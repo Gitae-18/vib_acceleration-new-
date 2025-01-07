@@ -180,7 +180,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="ip-address">Config IP</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'90px'}}>
+                                                                <li style={{marginLeft:'88px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="ip-address"
@@ -214,7 +214,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="gateway">Config Gateway</label>
                                                                 </li>
-                                                                <li style={{marginLeft:'35px'}}>
+                                                                <li style={{marginLeft:'33px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="gateway"
