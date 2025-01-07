@@ -273,18 +273,18 @@ const General = () => {
                                                             </ul>
                                                             </>
                                                             )}
-                                                        </div>
-                                                    </div>
-                                                </section>
-                                            </li>
-                                            )}
-                                            <button
+                                                            <button
                                                                 className="default_button connect-btn"
                                                                 style={{ marginLeft: "30%" }}
                                                                 onClick={() => handleConnectWiFi(selectedSSID, password)}
                                                             >
                                                                 Connect
-                                            </button>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            </li>
+                                            )}                                            
                                         </React.Fragment>
                                     ))}
                                 </ul>
