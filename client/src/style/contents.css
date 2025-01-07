@@ -169,7 +169,7 @@ input[type="text"]:focus {
     background-color: #4a4a4a;   
 }
 
-.wifi-setup-container.disabledInput {
+.wifi-setup-container.wifi-setup.contIn.d-flex.contBoxTit.disabledInput {
     width: 450px !important;
     border: none;
     border-radius: 5px;
