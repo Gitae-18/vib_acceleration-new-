@@ -46,3 +46,17 @@ wifi-setup {
     min-height: 580px; /* 원하는 높이로 조정 */
     overflow-y: auto;
 }
+.ssid-item .disabledInput {
+    
+}
+.ssid-item.d-flex {
+    display: flex;
+    align-items: center; 
+    justify-content: flex-start; 
+    gap: 10px; 
+}
+
+/* input 요소를 우측 정렬 */
+.ssid-item.d-flex li:last-child {
+    margin-left: auto; 
+}
