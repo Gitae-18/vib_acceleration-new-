@@ -194,10 +194,10 @@ const General = () => {
                                                                 </li>
                                                             </ul>
                                                             <ul className="d-flex mb35">
-                                                                <li>
+                                                                <li style={{flex: '1'}}>
                                                                     <label htmlFor="subnet-mask">Config Subnet Mask</label>
                                                                 </li>
-                                                                <li>
+                                                                <li style={{flex: '2'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="subnet-mask"
