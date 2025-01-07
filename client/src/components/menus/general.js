@@ -254,7 +254,9 @@ const General = () => {
                                                                         disabled={method !== "manual"}
                                                                     />
                                                                 </li>
-                                                            </ul>
+                                                            </ul>                                                            
+                                                            </>
+                                                            )}
                                                             <ul className="d-flex mb35">
                                                                 <li>
                                                                     <label htmlFor="password">Wi-Fi Password</label>
@@ -271,8 +273,6 @@ const General = () => {
                                                                     />
                                                                 </li>
                                                             </ul>
-                                                            </>
-                                                            )}
                                                             <button
                                                                 className="default_button connect-btn"
                                                                 style={{ marginLeft: "30%" }}
