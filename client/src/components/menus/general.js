@@ -180,7 +180,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="ip-address">Config IP</label>
                                                                 </li>
-                                                                <li>
+                                                                <li style={{marginLeft:'20px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="ip-address"
@@ -194,10 +194,10 @@ const General = () => {
                                                                 </li>
                                                             </ul>
                                                             <ul className="d-flex mb35">
-                                                                <li style={{flex: '1'}}>
+                                                                <li>
                                                                     <label htmlFor="subnet-mask">Config Subnet Mask</label>
                                                                 </li>
-                                                                <li style={{flex: '2'}}>
+                                                                <li>
                                                                     <input
                                                                         type="text"
                                                                         id="subnet-mask"
@@ -214,7 +214,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="gateway">Config Gateway</label>
                                                                 </li>
-                                                                <li>
+                                                                <li style={{marginLeft:'10px'}}>
                                                                     <input
                                                                         type="text"
                                                                         id="gateway"
@@ -231,7 +231,7 @@ const General = () => {
                                                                 <li>
                                                                     <label htmlFor="password">Wi-Fi Password</label>
                                                                 </li>
-                                                                <li>
+                                                                <li style={{marginLeft:'10px'}}>
                                                                     <input
                                                                         type="password"
                                                                         id="password"
