@@ -405,6 +405,7 @@ class WiFi():
             return
 
         try:
+            subprocess.run(['nmcli', 'connection', 'modify', ssid, 'ipv4.method', 'auto'], check=True)
             subprocess.run(['nmcli', 'connection', 'down', ssid], check=True)
             subprocess.run(['nmcli', 'connection', 'up', ssid], check=True)
             subprocess.run(['nmcli', 'connection', 'save', ssid], check=True)
