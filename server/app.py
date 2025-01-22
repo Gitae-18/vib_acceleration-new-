@@ -250,6 +250,8 @@ def connect_wifi():
 def scan_wifi():
     try:
         # Wi-Fi 스캔 실행
+        os.system('sudo iw dev wlan0 set type managed')
+        
         wifi.scan_ssid()
 
         # 검색된 SSID 목록 가져오기

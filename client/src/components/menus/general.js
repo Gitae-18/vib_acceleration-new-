@@ -186,7 +186,7 @@ const General = () => {
                                                                         onChange={(e) => setMethod(e.target.value)}
                                                                         disabled={isApMode}
                                                                     />
-                                                                    <span style={{ marginLeft: "15px" }}>DHCP Ip</span>
+                                                                    <span style={{ marginLeft: "15px" }}>DHCP IP</span>
                                                                 </li>
                                                             </ul>
                                                             <ul className="d-flex mb35">
