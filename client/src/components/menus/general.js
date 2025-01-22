@@ -54,7 +54,7 @@ const General = () => {
     useEffect(() => {
         async function fetchApMode() {
           try {
-            const response = await axios.get('http://192.168.0.12/api/network/check_ap');
+            const response = await axios.get('/api/network/check_ap');
             console.log(response.data.is_ap)
             setIsApMode(response.data.is_ap);
           } catch (error) {
