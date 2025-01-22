@@ -6,6 +6,7 @@ import '../../style/contents.css';
 import '../../style/common.css';
 import styled from "styled-components";
 import { useSelector } from 'react-redux';
+import { Tooltip } from 'react-tooltip';
 import { setWifiInfo, setDeviceInfo } from '../../store/store';
 
 const Server = () => {
@@ -66,12 +67,15 @@ const Server = () => {
         },[ updateNetworkInfo, fetchNetworkInfo])
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        // 입력값 검증        
+
         setInputDeviceInfo((prevState) => ({
             ...prevState,
             [name]: value,
         }))
         setIsEditing(true);
     }
+
     const handleReload = async() => {
         try{
 
@@ -81,6 +85,10 @@ const Server = () => {
                 push_port: inputDeviceInfo.PushPort || devInfo.PushPort,
                 sub_port: inputDeviceInfo.SubPort || devInfo.SubPort,
                 req_port: inputDeviceInfo.ReqPort || devInfo.ReqPort,                
+            }
+            if (!/^D00000[1-4]$/.test(inputDeviceInfo.deviceId)) {
+                alert("Invalid input value. Please enter a value between D000001 and D000004.");
+                return;
             }
             const response = await fetch(`/api/reload`, {
                 method:'POST',
@@ -121,8 +129,10 @@ const Server = () => {
                                 Device ID
                             </li>
                             <li>
-                                <input type="text" id="" name="deviceId" className="disabledInput" value={inputDeviceInfo.deviceId || devInfo.deviceId} onChange={handleInputChange}/>
-                            </li>
+                                <input type="text" id="" name="deviceId" className="disabledInput" value={inputDeviceInfo.deviceId || devInfo.deviceId} onChange={handleInputChange}  data-tooltip-id="deviceId-tooltip"
+                                    data-tooltip-content="ID must be between D000001 and D000004. Do not input duplicate ID value."/>
+                                <Tooltip id="deviceId-tooltip" place="bottom" style={{ backgroundColor: '#333', color: '#fff', fontSize: '12px' }} />
+                            </li>                    
                         </ul>
                         <ul className="d-flex mb35">
                             <li className="contBoxtit">
