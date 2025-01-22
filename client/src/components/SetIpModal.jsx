@@ -103,7 +103,7 @@ const SetIpModal = ({ isOpen, onClose }) => {
 
       if (response.status === 200) {
         alert(response.data.message);
-        onClose(); // Close the modal on success
+        onClose(); 
       } else {
         setError(`Error: ${response.data.error}`);
       }

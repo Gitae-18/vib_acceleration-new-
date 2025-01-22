@@ -217,34 +217,32 @@ def connect_wifi():
             wifi.stop_ap_mode()
             time.sleep(3)
             print('AP mode stopped, waiting...')
-
-        # 네트워크 설정 적용
-        if method == 'manual':
-            if not all([set_ip, set_subnet, set_gateway]):
-                return jsonify({"error": "Missing manual network configuration parameters"}), 400
-            wifi.set_wificonfig(method, set_ip, set_subnet, set_gateway)
-    
-        else:
-            wifi.set_wificonfig('auto', None, None, None)
-
-        # Wi-Fi 연결 시도
+            
         rst = wifi.connect_to_wifi(ssid, password, method)
         if rst:
-            restart_vibnet()
-            return jsonify({
-                "success": True,
-                "message": "Wi-Fi connected successfully",
-                "ap_mode": wifi.check_ap_mode()
-            })
+            if method == 'manual':
+                if not all([set_ip, set_subnet, set_gateway]):
+                    return jsonify({"error": "Missing manual network configuration parameters"}), 400
+                wifi.set_wificonfig(method, set_ip, set_subnet, set_gateway)
+
+            else:
+                wifi.set_wificonfig('auto', None, None, None)
+                restart_vibnet()
+                return jsonify({
+                    "success": True,
+                    "message": "Wi-Fi connected successfully",
+                    "ap_mode": wifi.check_ap_mode()
+                })
         else:
             # 연결 실패 시 AP 모드 다시 시작
             if is_ap:
                 wifi.start_ap_mode()
-            return jsonify({
-                "success": False,
-                "message": "Wi-Fi connection failed",
-                "ap_mode": wifi.check_ap_mode()
-            })
+                return jsonify({
+                    "success": False,
+                    "message": "Wi-Fi connection failed",
+                    "ap_mode": wifi.check_ap_mode()
+                })
+                        
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
     
