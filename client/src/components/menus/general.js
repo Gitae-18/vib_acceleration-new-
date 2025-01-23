@@ -19,7 +19,7 @@ const General = () => {
     const [selectedSSID, setSelectedSSID] = useState('');
     const [isSetupVisible, setIsSetupVisible] = useState(false);
     const [ssidList, setSSIDList] = useState([]);
-    const [password, setPassword] = useState('');
+    const [password, setPasswords] = useState({});
     const [isApMode, setIsApMode] = useState(false);    
     const [method, setMethod] = useState('auto');
     const [ipAddress, setIpAddress] = useState('');
@@ -51,6 +51,12 @@ const General = () => {
             console.error('Failed to fetch device info:', error);
         }
     }, [devId]); */
+    const handlePasswordChange = (ssid, value) => {
+        setPasswords((prev) => ({
+            ...prev,
+            [ssid]: value,
+        }));
+    };
     useEffect(() => {
         async function fetchApMode() {
           try {
@@ -87,7 +93,7 @@ const General = () => {
         }
     },[]);
 
-    const handleConnectWiFi = async (network) => {
+    const handleConnectWiFi = async (network, password) => {
         try {
             const body = {
                 ssid: network,
@@ -267,14 +273,19 @@ const General = () => {
                                                                         className="disabledInput"
                                                                         placeholder="Enter Password"
                                                                         value={password}
-                                                                        onChange={(e) => setPassword(e.target.value)}
+                                                                        onChange={(e) => {
+                                                                            setPasswords({
+                                                                                ...password,
+                                                                                [index]: e.target.value, // index를 키로 사용하여 SSID별로 저장
+                                                                            });
+                                                                        }}
                                                                     />
                                                                 </li>
                                                             </ul>
                                                             <button
                                                                 className="default_button connect-btn"
                                                                 style={{ marginLeft: "30%" }}
-                                                                onClick={() => handleConnectWiFi(selectedSSID, password)}
+                                                                onClick={() => handleConnectWiFi(selectedSSID, password[selectedIndex] || "")}
                                                             >
                                                                 Connect
                                                             </button>
