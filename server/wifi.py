@@ -134,9 +134,7 @@ class WiFi():
         new_list = []
         try:
             # nmcli를 사용하여 Wi-Fi 네트워크 스캔            
-            result = subprocess.check_output(
-                ["nmcli", "-t", "-f", "SSID", "device", "wifi"], universal_newlines=True
-            )
+            result = subprocess.check_output(["iw", self.interface, "scan"], universal_newlines=True)
             
             # 결과에서 SSID 추출
             for line in result.split("\n"):
