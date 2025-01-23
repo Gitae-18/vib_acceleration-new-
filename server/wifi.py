@@ -133,8 +133,7 @@ class WiFi():
     def scan_ssid(self):
         new_list = []
         try:
-            # nmcli를 사용하여 Wi-Fi 네트워크 스캔
-            subprocess.run(["sudo", "nmcli", "radio", "wifi", "on"], check=True)
+            # nmcli를 사용하여 Wi-Fi 네트워크 스캔            
             result = subprocess.check_output(
                 ["nmcli", "-t", "-f", "SSID", "device", "wifi"], universal_newlines=True
             )
