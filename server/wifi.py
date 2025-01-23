@@ -324,10 +324,9 @@ class WiFi():
         return True
 
     def get_current_ssid(self):
-        try:
-            # 'iwgetid -r' 명령어를 실행하고 출력값을 읽어옵니다.
+        try:            
             result = subprocess.run(['iwgetid', '-r'], capture_output=True, text=True, check=True)
-            ssid = result.stdout.strip()  # 출력값에서 공백을 제거합니다.
+            ssid = result.stdout.strip()
             return ssid
         except subprocess.CalledProcessError as e:
 #print(f"Error occurred: {e}")
@@ -397,6 +396,7 @@ class WiFi():
 
     def set_manual_ip(self):
         ssid = self.get_current_ssid()
+        print(f'current ssid : {ssid}')
         if ssid == None:
             return
 
