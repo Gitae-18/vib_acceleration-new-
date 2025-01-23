@@ -169,6 +169,8 @@ class WiFi():
 
     def connect_to_wifi(self, ssid, password, method):
         try:
+            if self.ap_mode:
+                self.stop_ap_mode()
             # nmcli 명령 실행하여 WiFi에 연결
             subprocess.run(["nmcli", "-w", "30",  "device", "wifi", "connect", ssid, "password", password], check=True)
             print(f"Connection WiFi {ssid}")
