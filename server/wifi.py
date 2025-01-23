@@ -172,9 +172,9 @@ class WiFi():
         try:           
             # nmcli 명령 실행하여 WiFi에 연결
             if method == 'manual':
-                self.set_manual_ip()
+                self.set_manual_ip(ssid)
             else: #auto
-                self.set_auto_ip()
+                self.set_auto_ip(ssid)
             subprocess.run(["nmcli", "-w", "30",  "device", "wifi", "connect", ssid, "password", password], check=True)
             print(f"Connection WiFi {ssid}")
             self.update_network_info()
@@ -394,8 +394,8 @@ class WiFi():
             return False
 
 
-    def set_manual_ip(self):
-        ssid = self.get_current_ssid()
+    def set_manual_ip(self, ssid):
+        #ssid = self.get_current_ssid()
         print(f'current ssid : {ssid}')
         if ssid == None:
             return
@@ -414,8 +414,8 @@ class WiFi():
         except Exception as e:
             print(f"Error occurred: {e}")
 
-    def set_auto_ip(self):
-        ssid = self.get_current_ssid()
+    def set_auto_ip(self, ssid):
+        #ssid = self.get_current_ssid()
         print(f'current ssid : {ssid}')
         if ssid == None:
             return
