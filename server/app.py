@@ -213,7 +213,7 @@ def connect_wifi():
         is_ap = wifi.check_ap_mode()
         if is_ap:
             wifi.stop_ap_mode()
-            time.sleep(5)
+            time.sleep(10)
             print('AP mode stopped, waiting...')
             
         rst = wifi.connect_to_wifi(ssid, password, method)
