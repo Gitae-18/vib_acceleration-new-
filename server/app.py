@@ -211,37 +211,27 @@ def connect_wifi():
         if not method:
             return jsonify({"success": False, "error": "Method (manual/auto) is required"}), 400
 
-        # AP 모드인지 확인
-        is_ap = wifi.check_ap_mode()
-        if is_ap:
-            wifi.stop_ap_mode()
-            time.sleep(3)
-            print('AP mode stopped, waiting...')
-            
         rst = wifi.connect_to_wifi(ssid, password, method)
         if rst:
             if method == 'manual':
                 if not all([set_ip, set_subnet, set_gateway]):
                     return jsonify({"error": "Missing manual network configuration parameters"}), 400
                 wifi.set_wificonfig(method, set_ip, set_subnet, set_gateway)
-
             else:
                 wifi.set_wificonfig('auto', None, None, None)
-                restart_vibnet()
-                return jsonify({
-                    "success": True,
-                    "message": "Wi-Fi connected successfully",
-                    "ap_mode": wifi.check_ap_mode()
-                })
+
+            restart_vibnet()
+            return jsonify({
+                "success": True,
+                "message": "Wi-Fi connected successfully",
+                "ap_mode": wifi.check_ap_mode()
+            })
         else:
-            # 연결 실패 시 AP 모드 다시 시작
-            if is_ap:
-                wifi.start_ap_mode()
-                return jsonify({
-                    "success": False,
-                    "message": "Wi-Fi connection failed",
-                    "ap_mode": wifi.check_ap_mode()
-                })
+            return jsonify({
+                "success": False,
+                "message": "Wi-Fi connection failed",
+                "ap_mode": wifi.check_ap_mode()
+            })
                         
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
