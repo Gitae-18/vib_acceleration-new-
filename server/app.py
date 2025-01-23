@@ -201,7 +201,6 @@ def connect_wifi():
         set_ip = data.get('set_ip')
         set_subnet = data.get('set_subnet')
         set_gateway = data.get('set_gateway')
-        print(f'gateway: {set_gateway}')
         # SSID와 Password 필수 확인
         if not ssid:
             return jsonify({"success": False, "error": "SSID is required"}), 400
@@ -214,7 +213,7 @@ def connect_wifi():
         is_ap = wifi.check_ap_mode()
         if is_ap:
             wifi.stop_ap_mode()
-            time.sleep(3)
+            time.sleep(10)
             print('AP mode stopped, waiting...')
             
         rst = wifi.connect_to_wifi(ssid, password, method)

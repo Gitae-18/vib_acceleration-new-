@@ -120,7 +120,7 @@ const General = () => {
             if (!res.ok) {
                 console.error('Server responded with status:', res.status);
             } else {
-                alert('Wi-Fi connecting');
+                alert('Wi-Fi not connected');
             }
     
             const json = await res.json();
