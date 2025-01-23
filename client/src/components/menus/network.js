@@ -74,7 +74,7 @@ const Network = ({}) => {
             console.error('Failed to fetch network info:', error);
         }        
     }, [isEditing]);
-    useEffect(() => {
+    /* useEffect(() => {
         if (netInfo || devInfo) {
             if (netInfo) {
                 dispatch(setWifiInfo({
@@ -95,7 +95,7 @@ const Network = ({}) => {
                 }));
             }
         }
-    }, [netInfo, devInfo, dispatch]);
+    }, [netInfo, devInfo, dispatch]); */
 
     useEffect(() => {        
         updateNetworkInfo();
