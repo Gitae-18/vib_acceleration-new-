@@ -298,7 +298,8 @@ class WiFi():
 
     def stop_ap_mode(self):
         try:
-            # AP 모드 관련 서비스 종료            
+            # AP 모드 관련 서비스 종료  
+            subprocess.run(['systemctl', 'restart', 'NetworkManager'], check=True)              
             subprocess.run(['systemctl', 'stop', 'hostapd'], check=True)
             subprocess.run(['systemctl', 'stop', 'dnsmasq'], check=True)
 
