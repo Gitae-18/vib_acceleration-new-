@@ -272,7 +272,7 @@ const General = () => {
                                                                         name="password"
                                                                         className="disabledInput"
                                                                         placeholder="Enter Password"
-                                                                        value={password}
+                                                                        value={password[index] || ""}
                                                                         onChange={(e) => {
                                                                             setPasswords({
                                                                                 ...password,
