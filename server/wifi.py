@@ -301,19 +301,18 @@ class WiFi():
 
     def stop_ap_mode(self):
         try:
-            # AP 모드 관련 서비스 종료
-            print("AP 모드 종료 중...")
+            # AP 모드 관련 서비스 종료            
             subprocess.run(['systemctl', 'stop', 'hostapd'], check=True)
             subprocess.run(['systemctl', 'stop', 'dnsmasq'], check=True)
 
-            # 인터페이스 초기화
+            """ # 인터페이스 초기화
             if self.is_network_manager_active():
                 print("NetworkManager 활성화 상태 - 재시작 진행 중...")
                 subprocess.run(['systemctl', 'restart', 'NetworkManager'], check=True)
             else:
                 print("NetworkManager 비활성화 상태 - 수동으로 인터페이스 초기화 중...")
                 subprocess.run(['sudo', 'ifconfig', self.interface, 'down'], check=True)
-                subprocess.run(['sudo', 'ifconfig', self.interface, 'up'], check=True)
+                subprocess.run(['sudo', 'ifconfig', self.interface, 'up'], check=True) """
 
             print("AP 모드 종료 및 인터페이스 초기화 완료")
         except subprocess.CalledProcessError as e:
