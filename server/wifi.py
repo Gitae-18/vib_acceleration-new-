@@ -118,7 +118,7 @@ class WiFi():
     def scan_ssid(self):
         new_list = []
         try:
-            result = subprocess.check_output(["iwlist", self.interface, "scan"], universal_newlines=True)
+            result = subprocess.check_output(["iw", self.interface, "scan"], universal_newlines=True)
             # 결과에서 SSID 정보 추출
             for line in result.split("\n"):
                 if "ESSID" in line:
