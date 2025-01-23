@@ -251,9 +251,9 @@ def scan_wifi():
     try:
         is_ap = wifi.check_ap_mode()
         # Wi-Fi 스캔 실행
-        if is_ap:
+        """ if is_ap:
             print("현재 AP 모드입니다. 스캔 실행을 위해 모드를 전환합니다.")
-            os.system('sudo iw dev wlan0 set type managed')
+            os.system('sudo iw dev wlan0 set type managed') """
 
         wifi.scan_ssid()
 

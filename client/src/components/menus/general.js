@@ -183,8 +183,7 @@ const General = () => {
                                                                         name="ip-setting"
                                                                         value="auto"
                                                                         checked={method === "auto"}
-                                                                        onChange={(e) => setMethod(e.target.value)}
-                                                                        disabled={isApMode}
+                                                                        onChange={(e) => setMethod(e.target.value)}                                                                        
                                                                     />
                                                                     <span style={{ marginLeft: "15px" }}>DHCP IP</span>
                                                                 </li>
@@ -196,8 +195,7 @@ const General = () => {
                                                                         name="ip-setting"
                                                                         value="manual"
                                                                         checked={method === "manual"}
-                                                                        onChange={(e) => setMethod(e.target.value)}
-                                                                        disabled={isApMode}
+                                                                        onChange={(e) => setMethod(e.target.value)}                                                                        
                                                                     />
                                                                     <span style={{ marginLeft: "15px" }}>Static IP</span>
                                                                 </li>
