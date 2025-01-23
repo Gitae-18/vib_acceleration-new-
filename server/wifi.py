@@ -172,14 +172,15 @@ class WiFi():
             if self.ap_mode:
                 self.stop_ap_mode()
             # nmcli 명령 실행하여 WiFi에 연결
-            subprocess.run(["nmcli", "-w", "30",  "device", "wifi", "connect", ssid, "password", password], check=True)
-            print(f"Connection WiFi {ssid}")
-            self.update_network_info()
-            print(f'method : {method}')
             if method == 'manual':
                 self.set_manual_ip()
             else: #auto
                 self.set_auto_ip()
+            subprocess.run(["nmcli", "-w", "30",  "device", "wifi", "connect", ssid, "password", password], check=True)
+            print(f"Connection WiFi {ssid}")
+            self.update_network_info()
+            print(f'method : {method}')
+            
 
             self.connection_wifi = True
         except subprocess.CalledProcessError as e:
@@ -298,18 +299,31 @@ class WiFi():
 
     def stop_ap_mode(self):
         try:
-            # AP 모드 종료
-            subprocess.run(['systemctl', 'restart', 'NetworkManager'], check=True)
+            # AP 모드 관련 서비스 종료
+            print("AP 모드 종료 중...")
             subprocess.run(['systemctl', 'stop', 'hostapd'], check=True)
             subprocess.run(['systemctl', 'stop', 'dnsmasq'], check=True)
-            # IP forwarding 비활성화
-            #subprocess.run(['sudo', 'sh', '-c', 'echo 0 > /proc/sys/net/ipv4/ip_forward'], check=True)
+
+            # 인터페이스 초기화
+            if self.is_network_manager_active():
+                print("NetworkManager 활성화 상태 - 재시작 진행 중...")
+                subprocess.run(['systemctl', 'restart', 'NetworkManager'], check=True)
+            else:
+                print("NetworkManager 비활성화 상태 - 수동으로 인터페이스 초기화 중...")
+                subprocess.run(['sudo', 'ifconfig', self.interface, 'down'], check=True)
+                subprocess.run(['sudo', 'ifconfig', self.interface, 'up'], check=True)
+
+            print("AP 모드 종료 및 인터페이스 초기화 완료")
         except subprocess.CalledProcessError as e:
-            print("오류가 발생했습니다: ", e)
+            print(f"AP 모드 종료 중 오류 발생: {e}")
+            return False
+        except Exception as e:
+            print(f"예기치 못한 오류 발생: {e}")
             return False
 
         self.ap_mode = self.check_ap_mode()
         return True
+
     def get_current_ssid(self):
         try:
             # 'iwgetid -r' 명령어를 실행하고 출력값을 읽어옵니다.
