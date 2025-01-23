@@ -3,6 +3,7 @@ import RPi.GPIO as GPIO
 import re
 import configparser
 import os.path
+import time
 
 #CONFIG_FILE = 'vib_wifi.conf'
 CONFIG_FILE = '/etc/vib_wifi.conf'
@@ -171,6 +172,7 @@ class WiFi():
         try:
             if self.ap_mode:
                 self.stop_ap_mode()
+                time.sleep(3)
             # nmcli 명령 실행하여 WiFi에 연결
             if method == 'manual':
                 self.set_manual_ip()
