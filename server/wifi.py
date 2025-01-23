@@ -134,15 +134,17 @@ class WiFi():
         new_list = []
         try:
             # nmcli를 사용하여 Wi-Fi 네트워크 스캔
+            subprocess.run(["sudo", "nmcli", "radio", "wifi", "on"], check=True)
             result = subprocess.check_output(
                 ["nmcli", "-t", "-f", "SSID", "device", "wifi"], universal_newlines=True
             )
             
             # 결과에서 SSID 추출
-            for line in result.splitlines():
-                ssid = line.strip()
-                if ssid:  # 빈 문자열 제외
-                    new_list.append(ssid)
+            for line in result.split("\n"):
+                if "ESSID" in line:
+                    ssid = line.split(":")[1].strip().replace('"', '')  # 큰따옴표 제거
+                    if len(ssid) > 0 and not ssid.startswith('\x00'):
+                        new_list.append(ssid)
 
         except subprocess.CalledProcessError as e:
             print(f"Error during Wi-Fi scan: {e}")
