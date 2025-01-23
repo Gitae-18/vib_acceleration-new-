@@ -118,7 +118,7 @@ class WiFi():
     def scan_ssid(self):
         new_list = []
         try:
-            result = subprocess.check_output( ["sudo", "iw", self.interface, "scan"], universal_newlines=True)
+            result = subprocess.check_output(["iw", self.interface, "scan"], universal_newlines=True)
             # 결과에서 SSID 정보 추출
             for line in result.split("\n"):
                 if "ESSID" in line:
@@ -130,26 +130,7 @@ class WiFi():
             print(f"Error: {e}")
         
         self.ssid_list = new_list
-    """ def scan_ssid(self):
-        new_list = []
-        try:
-            # nmcli를 사용하여 Wi-Fi 네트워크 스캔            
-            result = subprocess.check_output(["iw", self.interface, "scan"], universal_newlines=True)
-            
-            # 결과에서 SSID 추출
-            for line in result.split("\n"):
-                if "ESSID" in line:
-                    ssid = line.split(":")[1].strip().replace('"', '')  # 큰따옴표 제거
-                    if len(ssid) > 0 and not ssid.startswith('\x00'):
-                        new_list.append(ssid)
 
-        except subprocess.CalledProcessError as e:
-            print(f"Error during Wi-Fi scan: {e}")
-        except Exception as e:
-            print(f"Unexpected error: {e}")
-
-        # 스캔 결과를 ssid_list에 저장
-        self.ssid_list = new_list """
     def update_network_info(self):
         # ip, netmask, mac
         try:
