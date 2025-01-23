@@ -201,7 +201,7 @@ def connect_wifi():
         set_ip = data.get('set_ip')
         set_subnet = data.get('set_subnet')
         set_gateway = data.get('set_gateway')
-
+        print(f'gateway: {set_gateway}')
         # SSID와 Password 필수 확인
         if not ssid:
             return jsonify({"success": False, "error": "SSID is required"}), 400
