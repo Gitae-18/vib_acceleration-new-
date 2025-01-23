@@ -48,8 +48,7 @@ def get_device_info():
     cfg_devinfo = vib_config.GetConfig()
     print(f"Config Data: {cfg_devinfo}")
 
-    def parse_address(address):
-        print(f"now address : {address}")        
+    def parse_address(address):          
         if address.startswith("tcp://"):
             address = address.split("tcp://")[1]
 

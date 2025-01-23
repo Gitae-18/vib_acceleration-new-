@@ -416,6 +416,7 @@ class WiFi():
 
     def set_auto_ip(self):
         ssid = self.get_current_ssid()
+        print(f'current ssid : {ssid}')
         if ssid == None:
             return
 
