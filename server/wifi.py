@@ -115,20 +115,34 @@ class WiFi():
     def get_ssid_list(self):
         return self.ssid_list
 
-    def scan_ssid(self):
+    def scan_ssid(self, retries=2):
         new_list = []
-        try:
-            result = subprocess.check_output(["iwlist", self.interface, "scan"], universal_newlines=True)
-            # 결과에서 SSID 정보 추출
-            for line in result.split("\n"):
-                if "ESSID" in line:
-                    ssid = line.split(":")[1].strip().replace('"', '')  # 큰따옴표 제거
-                    if len(ssid) > 0 and not ssid.startswith('\x00'):
-                        new_list.append(ssid)
+        attempt = 0  # 재시도 횟수
 
-        except subprocess.CalledProcessError as e:
-            print(f"Error: {e}")
-        
+        while attempt < retries:
+            try:
+                # Wi-Fi 스캔 실행
+                result = subprocess.check_output(["iwlist", self.interface, "scan"], universal_newlines=True)
+
+                # 결과에서 SSID 정보 추출
+                for line in result.split("\n"):
+                    if "ESSID" in line:
+                        ssid = line.split(":")[1].strip().replace('"', '')  # 큰따옴표 제거
+                        if len(ssid) > 0 and not ssid.startswith('\x00'):
+                            new_list.append(ssid)
+
+                # 성공 시 루프 종료
+                break
+
+            except subprocess.CalledProcessError as e:
+                print(f"Error during Wi-Fi scan: {e}")
+                attempt += 1  # 재시도 횟수 증가
+                if attempt < retries:
+                    print(f"Retrying... ({attempt}/{retries})")
+                    time.sleep(1)  # 1초 대기
+                else:
+                    print("Max retries reached. Wi-Fi scan failed.")
+
         self.ssid_list = new_list
 
     def update_network_info(self):
