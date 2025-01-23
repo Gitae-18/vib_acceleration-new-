@@ -169,10 +169,7 @@ class WiFi():
                 print("Error:", e.stderr)
 
     def connect_to_wifi(self, ssid, password, method):
-        try:
-            if self.ap_mode:
-                self.stop_ap_mode()
-                time.sleep(3)
+        try:           
             # nmcli 명령 실행하여 WiFi에 연결
             if method == 'manual':
                 self.set_manual_ip()
