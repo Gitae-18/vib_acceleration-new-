@@ -183,23 +183,34 @@ class WiFi():
                 print("Error:", e.stderr)
 
     def connect_to_wifi(self, ssid, password, method):
-        try:           
-            # nmcli 명령 실행하여 WiFi에 연결
-            if method == 'manual':
-                self.set_manual_ip(ssid)
-            else: #auto
-                self.set_auto_ip(ssid)
-            subprocess.run(["nmcli", "-w", "30",  "device", "wifi", "connect", ssid, "password", password], check=True)
-            print(f"Connection WiFi {ssid}")
-            self.update_network_info()
-            print(f'method : {method}')
-            
+        retries = 3
+        attempt = 0
+        while attempt < retries:
+            try:           
+                # nmcli 명령 실행하여 WiFi에 연결
+                if method == 'manual':
+                    self.set_manual_ip(ssid)
+                else: #auto
+                    self.set_auto_ip(ssid)
+                subprocess.run(["nmcli", "-w", "30",  "device", "wifi", "connect", ssid, "password", password], check=True)
+                print(f"Connection WiFi {ssid}")
+                self.update_network_info()
+                print(f'method : {method}')
+                
 
-            self.connection_wifi = True
-        except subprocess.CalledProcessError as e:
-            print(f"Error: {e}")
-            print(f"Fail Connection WiFi {ssid}")
-            self.connection_wifi = False
+                self.connection_wifi = True
+                break
+            except subprocess.CalledProcessError as e:
+                attempt += 1
+                
+                print(f"Error: {e}")
+                print(f"Fail Connection WiFi {ssid} (Attempt {attempt}/{retries})")
+
+                if attempt < retries:
+                    print("Retrying...")
+                    time.sleep(3)
+                else:
+                    print("Max retries reached. Wi-Fi connection failed.")
 
         return self.connection_wifi
 
