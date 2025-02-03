@@ -86,10 +86,10 @@ const Server = () => {
                 sub_port: inputDeviceInfo.SubPort || devInfo.SubPort,
                 req_port: inputDeviceInfo.ReqPort || devInfo.ReqPort,                
             }
-            if (!/^D00000[1-4]$/.test(inputDeviceInfo.deviceId)) {
+            /* if (!/^D00000[1-4]$/.test(inputDeviceInfo.deviceId)) {
                 alert("Invalid input value. Please enter a value between D000001 and D000004.");
                 return;
-            }
+            } */
             const response = await fetch(`/api/reload`, {
                 method:'POST',
                 headers: { 'Content-Type': 'application/json' },

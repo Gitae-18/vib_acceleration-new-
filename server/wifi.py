@@ -208,7 +208,7 @@ class WiFi():
 
                 if attempt < retries:
                     print("Retrying...")
-                    time.sleep(3)
+                    time.sleep(5)
                 else:
                     print("Max retries reached. Wi-Fi connection failed.")
 
