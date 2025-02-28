@@ -433,7 +433,7 @@ class WiFi():
 
             subprocess.run(['nmcli', 'connection', 'down', ssid], check=True)
             subprocess.run(['nmcli', 'connection', 'up', ssid], check=True)
-            subprocess.run(['nmcli', 'connection', 'save', ssid], check=True)
+            subprocess.run(['nmcli', 'connection', 'modify', ssid, 'connection.autoconnect', 'yes'], check=True)
 
             print(f"Manual IP configuration saved for SSID: {ssid}")
         except Exception as e:
