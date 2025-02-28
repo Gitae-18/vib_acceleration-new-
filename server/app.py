@@ -237,7 +237,7 @@ def connect_wifi():
                 return jsonify({
                     "success": False,
                     "message": "Wi-Fi connection failed",
-                    "ap_mode": wifi.check_ap_mode()
+                    "ap_mode": False
                 })
                         
     except Exception as e:
