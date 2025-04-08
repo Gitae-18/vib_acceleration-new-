@@ -19,11 +19,11 @@ const Server = () => {
             ReqPort:'',
         })
     const [inputDeviceInfo, setInputDeviceInfo] = useState({
-        deviceId: '',
-        IP:'',
-        SubPort:'',
-        PushPort:'',
-        ReqPort:'',
+        deviceId: undefined,
+        IP: undefined,
+        SubPort: undefined,
+        PushPort: undefined,
+        ReqPort: undefined,
     })    
     const [isEditing, setIsEditing] = useState(false);
     const isMounted = useRef(true);
@@ -130,7 +130,7 @@ const Server = () => {
                             </li>
                             <li>
                                 <input type="text" name="deviceId" className="disabledInput"
-                                    value={inputDeviceInfo.deviceId !== '' ? inputDeviceInfo.deviceId : devInfo.deviceId}
+                                    value={inputDeviceInfo.deviceId !== undefined ? inputDeviceInfo.deviceId : devInfo.deviceId}
                                     onChange={handleInputChange} data-tooltip-id="deviceId-tooltip"
                                     data-tooltip-content="ID must be between D000001 and D000004. Do not input duplicate ID value."/>
                                 <Tooltip id="deviceId-tooltip" place="bottom" style={{ backgroundColor: '#333', color: '#fff', fontSize: '12px' }} />
@@ -142,7 +142,7 @@ const Server = () => {
                             </li>
                             <li>
                                 <input type="text" name="IP" className="disabledInput"
-                                     value={inputDeviceInfo.IP !== '' ? inputDeviceInfo.IP : devInfo.IP}
+                                    value={inputDeviceInfo.IP !== undefined ? inputDeviceInfo.IP : devInfo.IP}
                                     onChange={handleInputChange}/>
                             </li>
                         </ul>
@@ -152,7 +152,7 @@ const Server = () => {
                             </li>
                             <li>
                                 <input type="text" name="SubPort" className="disabledInput"
-                                    value={inputDeviceInfo.SubPort !== '' ? inputDeviceInfo.SubPort : devInfo.SubPort}
+                                    value={inputDeviceInfo.SubPort !== undefined ? inputDeviceInfo.SubPort : devInfo.SubPort}
                                     onChange={handleInputChange}/>
                             </li>
                         </ul>
@@ -162,7 +162,7 @@ const Server = () => {
                             </li>
                             <li>
                                 <input type="text" name="PushPort" className="disabledInput"
-                                    value={inputDeviceInfo.PushPort !== '' ? inputDeviceInfo.PushPort : devInfo.PushPort}
+                                    value={inputDeviceInfo.PushPort !== undefined ? inputDeviceInfo.PushPort : devInfo.PushPort}
                                     onChange={handleInputChange}/>
                             </li>
                         </ul>
@@ -172,7 +172,7 @@ const Server = () => {
                             </li>
                             <li>
                                 <input type="text" name="ReqPort" className="disabledInput"
-                                    value={inputDeviceInfo.ReqPort !== '' ? inputDeviceInfo.ReqPort : devInfo.ReqPort}
+                                    value={inputDeviceInfo.ReqPort !== undefined ? inputDeviceInfo.ReqPort : devInfo.ReqPort}
                                     onChange={handleInputChange}/>
                             </li>
                         </ul>                        
